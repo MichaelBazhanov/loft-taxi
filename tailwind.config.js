@@ -12,6 +12,9 @@ module.exports = {
       },
       backgroundImage: {
         'map': "url('./assets/images/bg-map.jpg')",
+      },
+      boxShadow: {
+        'me': '0px 3px 20px rgba(0, 0, 0, 0.2)',
       }
     },
   },

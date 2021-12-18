@@ -9,7 +9,7 @@ import Profile from './pages/Profile'
 import Header from './components/Header'
 
 const App = () => {
-  const [currentPage, setPage] = useState('login') // // is Default state
+  const [currentPage, setPage] = useState('map') // // is Default state
 
   const navigateTo = page => setPage(page)
 

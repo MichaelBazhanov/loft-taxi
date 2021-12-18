@@ -44,6 +44,7 @@ const Login = ({ navigate }) => {
 							value={email}
 							type="email"
 							name="email"
+							required
 							placeholder="mail@mail.ru"
 							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
@@ -57,6 +58,7 @@ const Login = ({ navigate }) => {
 							value={password}
 							type="password"
 							name="password"
+							required
 							placeholder="*************"
 							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me

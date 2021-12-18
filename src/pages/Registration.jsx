@@ -45,6 +45,7 @@ const Registration = ({ navigate }) => {
 							type="email"
 							name="email"
 							placeholder="mail@mail.ru"
+							required
 							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 						placeholder:text-gray-me"/>
@@ -58,6 +59,7 @@ const Registration = ({ navigate }) => {
 							type="text"
 							name="name"
 							placeholder="Michael"
+							required
 							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 						placeholder:text-gray-me"/>
@@ -71,6 +73,7 @@ const Registration = ({ navigate }) => {
 							type="password"
 							name="password"
 							placeholder="*************"
+							required
 							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 						placeholder:text-gray-me"/>
