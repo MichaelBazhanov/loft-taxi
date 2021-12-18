@@ -19,7 +19,7 @@ const App = () => {
       <main>
         <section className="bg-black-me">
           {currentPage === 'login' && <Login navigate={navigateTo} />}
-          {currentPage === 'registration' && <Registration />}
+          {currentPage === 'registration' && <Registration navigate={navigateTo} />}
           {currentPage === 'map' && <Map />}
           {currentPage === 'profile' && <Profile />}
         </section>
