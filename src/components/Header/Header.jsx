@@ -1,5 +1,5 @@
 import React from "react";
-import logoTaxi from '../../images/logo-taxi.svg';
+import LogoTaxi from '../../images/logo-taxi.svg';
 
 const Header = () => {
 	return (
@@ -7,7 +7,7 @@ const Header = () => {
 			<div className="container mx-auto py-5 px-8">
 
 				<div className="flex justify-between items-center">
-					<img src={logoTaxi} className="logo-taxi" alt="logo" />
+					<img src={LogoTaxi} className="logo-taxi" alt="logo" />
 
 					<nav className="flex text-white space-x-7">
 						<a className="hover:text-yellow-me text-xl" href="#map">Карта</a>

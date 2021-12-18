@@ -16,14 +16,14 @@ import Profile from './components/Profile/Profile.jsx'
 import Login from './components/Login/Login.jsx'
 
 const PAGES = {
-  home: <Home />,
-  map: <Map />,
-  profile: <Profile />,
-  login: <Login />,
+  'home': <Home />,
+  'map': <Map />,
+  'profile': <Profile />,
+  'login': <Login />,
 }
 
 class App extends React.Component {
-  state = { currentPage: 'home' }
+  state = { currentPage: 'login' } //home
 
   navigateTo = (page) => {
     this.setState({ currentPage: page })
@@ -79,7 +79,7 @@ class App extends React.Component {
           </nav>
         </header>
         <main>
-          <section>{PAGES[this.state.currentPage]}</section>
+          <section className='bg-gray-300'>{PAGES[this.state.currentPage]}</section>
         </main>
       </>
     )
