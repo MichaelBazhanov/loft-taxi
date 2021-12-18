@@ -10,6 +10,9 @@ module.exports = {
         'yellow-me': '#fdbf5a',
         'gray-me': '#828282',
       },
+      backgroundImage: {
+        'map': "url('./assets/images/bg-map.jpg')",
+      }
     },
   },
   plugins: [],

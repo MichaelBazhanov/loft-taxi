@@ -1,5 +1,5 @@
 import React from "react";
-import LogoTaxiVertical from '../../images/logo-taxi-vertical.svg';
+import logoTaxiVertical from '../assets/images/logo-taxi-vertical.svg';
 
 class Login extends React.Component {
 	state = { email: '', password: '', }
@@ -8,8 +8,7 @@ class Login extends React.Component {
 		event.preventDefault()
 
 		// делаем что то с данными
-		// console.log(this.state.email, this.state.password)
-		alert('Форма отправлена!')
+		alert(`Форма отправлена! ${this.state.email} ${this.state.password}`)
 	}
 
 	handleChange = (event) => {
@@ -20,17 +19,18 @@ class Login extends React.Component {
 		const { email, password } = this.state
 
 		return (
-			<section
-				className="container mx-auto flex h-screen">
+			<div
+				className="container mx-auto flex h-screen bg-map bg-center">
 				<div
 					className="w-1/3 bg-black-me flex justify-center items-center">
 					<img
-						src={LogoTaxiVertical}
+						src={logoTaxiVertical}
 						className="logo-taxi-vertical"
 						alt="logo" />
 				</div>
 				<div
-					className="w-2/3 flex justify-center items-center">
+					className="w-2/3 flex justify-center items-center"
+				>
 					<form
 						onSubmit={this.handleSubmit} className="max-w-xl bg-white px-28 py-14 shadow-sm rounded-2xl">
 						<h4
@@ -67,11 +67,11 @@ class Login extends React.Component {
 
 						<p
 							className="mt-3 text-right">
-							<a
-								href="#test"
-								className=" text-gray-me cursor-pointer hover:text-yellow-me">
+							<button
+								type="button"
+								className="inline-block text-gray-me cursor-pointer hover:text-yellow-me">
 								Забыли пароль?
-							</a>
+							</button>
 						</p>
 
 						<button
@@ -82,16 +82,17 @@ class Login extends React.Component {
 
 						<p
 							className="mt-8 text-gray-me">
-							Новый пользователь?
-							<a
-								href="#map"
-								className="text-yellow-me">
+							Новый пользователь?&nbsp;
+							<button
+								onClick={() => { this.props.navigate('registration') }}
+								type="button"
+								className="inline-block text-yellow-me">
 								Регистрация
-							</a>
+							</button>
 						</p>
 					</form>
 				</div>
-			</section>
+			</div>
 		)
 	}
 }
