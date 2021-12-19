@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Select from '../components/Select'
 
 //img
@@ -6,13 +6,30 @@ import imgStandart from '../assets/images/car-standart.jpg'
 import imgPremium from '../assets/images/car-premium.jpg'
 import imgBusiness from '../assets/images/car-business.jpg'
 
+function classNames(...classes) {
+	return classes.filter(Boolean).join(' ')
+}
+
 const Map = (props) => {
+	const [state, setState] = useState({ active: false })
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		// делаем что то с данными
+		// alert(`Форма отправлена! ${state.active}`)
+	}
+
+	const handleChange = (active) => {
+		setState({ ...state, 'active': active })
+	}
+	const { active } = state
+
 	return (
 		<div className="bg-map bg-center">
 			<div className="container mx-auto h-screen ">
 				<div className="flex flex-col">
 
-					<form className="max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg">
+					<form onClick={handleSubmit} className={classNames(active ? 'hidden' : '', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg')}>
 						{/* Select что то должен вернуть и я запишу это в инпуты */}
 						<input type="hidden" name="rout-1" />
 						<input type="hidden" name="rout-2" />
@@ -52,10 +69,16 @@ const Map = (props) => {
 								</div>
 							</div>
 							{/* верхний блок что то должен вернуть и я запишу это в инпуты */}
-							<input type="hidden" name="car"/>
-							<button type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7">Заказать</button>
+							<input type="hidden" name="car" />
+							<button onClick={() => { handleChange(true) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7">Заказать</button>
 						</div>
 					</form>
+
+					<div className={classNames(active ? '' : 'hidden', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg py-10 px-11')}>
+						<p className="font-bold text-4xl">Заказ размещен</p>
+						<p className="mt-4 text-lg text-gray-me">Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.</p>
+						<button onClick={() => { handleChange(false) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7">Сделать новый заказ</button>
+					</div>
 
 				</div>
 			</div>
