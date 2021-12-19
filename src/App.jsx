@@ -9,7 +9,7 @@ import Profile from './pages/Profile'
 import Header from './components/Header'
 
 const App = () => {
-  const [currentPage, setPage] = useState('map') // // is Default state
+  const [currentPage, setPage] = useState('profile') // // is Default state
 
   const navigateTo = page => setPage(page)
 
@@ -21,7 +21,7 @@ const App = () => {
           {currentPage === 'login' && <Login navigate={navigateTo} />}
           {currentPage === 'registration' && <Registration navigate={navigateTo} />}
           {currentPage === 'map' && <Map />}
-          {currentPage === 'profile' && <Profile />}
+          {currentPage === 'profile' && <Profile navigate={navigateTo}/>}
         </section>
       </main>
     </div>
