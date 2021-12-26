@@ -81,28 +81,25 @@ const Registration = ({ navigate }) => {
 
 					<p
 						className="mt-3 text-right">
-						<button
-							type="button"
+						<span
 							className="inline-block text-gray-me cursor-pointer hover:text-yellow-me">
 							Забыли пароль?
-						</button>
+						</span>
 					</p>
 
-					<button
-						type="submit"
-						className="mt-11 bg-yellow-me w-full py-4 text-2xl rounded-full">
+					<span
+						className="block text-center cursor-pointer mt-11 bg-yellow-me w-full py-4 text-2xl rounded-full">
 						Зарегистрироваться
-					</button>
+					</span>
 
 					<p
 						className="mt-8 text-gray-me text-center">
-						Уже зарегестрированны?&nbsp;
-						<button
+						Уже зарегистрированы?&nbsp;
+						<span
 							onClick={() => { navigate('login') }}
-							type="button"
-							className="inline-block text-yellow-me">
+							className="inline-block text-yellow-me cursor-pointer">
 							Войти
-						</button>
+						</span>
 					</p>
 				</form>
 			</div>
