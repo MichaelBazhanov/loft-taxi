@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 export const AuthContext = React.createContext()
 
 export const AuthProvider = ({ children }) => { // компонент принимает в себя ребенка
-	const { isLoggedIn, setIsLoggedIn } = React.useState(false) // устанавливаем простой state
+	const [ isLoggedIn, setIsLoggedIn ] = useState(false) // устанавливаем простой state
 
 	const logIn = ({ email, password }) => {
 		// Если email, password правильные то мы меняет state на TRUE

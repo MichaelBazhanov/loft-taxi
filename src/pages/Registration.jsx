@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import logoTaxiVertical from '../assets/images/logo-taxi-vertical.svg';
+import { withAuth } from "../containers/AuthContext";
 
 const Registration = ({ navigate }) => {
 	const [state, setState] = useState({ email: '', name: '', password: '' })
@@ -109,3 +110,4 @@ const Registration = ({ navigate }) => {
 }
 
 export default Registration
+export const RegistrationWithAuth = withAuth(Registration)

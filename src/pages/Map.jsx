@@ -25,22 +25,6 @@ class Map extends Component {
 	render() {
 
 		return (
-			// <div className="bg-map bg-center">
-			// 	<div className="container mx-auto h-screen ">
-
-			// 		{/* <FormForMap /> */}
-
-			// 		<div className="map-wrapper">
-			// 			<div
-			// 				data-testid='map'
-			// 				className="map"
-			// 				ref={this.mapContainer}
-			// 			>
-			// 			</div>
-			// 		</div>
-
-			// 	</div>
-			// </div>
 			<div className="relative">
 				<div
 					data-testid='map'
@@ -48,7 +32,7 @@ class Map extends Component {
 					ref={this.mapContainer}
 				>
 				</div>
-					<FormForMap />
+				<FormForMap />
 			</div>
 		)
 	}

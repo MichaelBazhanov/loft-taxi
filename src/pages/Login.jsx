@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import logoTaxiVertical from '../assets/images/logo-taxi-vertical.svg';
+import { withAuth } from "../containers/AuthContext";
 
-const Login = ({ navigate }) => {
-	const [state, setState] = useState({ email: '', password: '' })
+const Login = ({ navigate, logIn, isLoggedIn }) => { // logIn из Provider
+	const [state, setState] = useState({ email: 'valid@email.com', password: 'correctpassword' }) // hard code
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
 		// делаем что то с данными
-		alert(`Форма отправлена! ${state.email} ${state.password}`)
+		// alert(`Форма отправлена! ${state.email} ${state.password}`)
+
+		const { email, password } = state // получаем из state
+		logIn({ email, password }) // отдаем данные для авторизации
 	}
 
 	const handleChange = (event) => {
-		setState({...state,  [event.target.name]: event.target.value })
+		setState({ ...state, [event.target.name]: event.target.value })
 	}
 
 	const { email, password } = state
@@ -29,65 +33,77 @@ const Login = ({ navigate }) => {
 			<div
 				className="w-2/3 flex justify-center items-center"
 			>
-				<form
-					onSubmit={handleSubmit} className="max-w-xl w-full bg-white px-28 py-14 shadow-lg rounded-2xl ">
-					<h4
-						className="font-bold text-3xl text-black text-center mb-14">
-						Войти
-					</h4>
+				{
+					isLoggedIn
+						?
+						<span
+							onClick={() => { navigate('map') }}
+							className="block text-center cursor-pointer mt-11 bg-yellow-me py-4 px-10 text-2xl rounded-full">
+							Перейти на карту
+						</span>
+						:
+						<form
+							onSubmit={handleSubmit} className="max-w-xl w-full bg-white px-28 py-14 shadow-lg rounded-2xl ">
+							<h4
+								className="font-bold text-3xl text-black text-center mb-14">
+								Войти
+							</h4>
 
-					<label
-						className="flex flex-col justify-between font-bold cursor-pointer">
-						<span>Email*</span>
-						<input
-							onChange={handleChange}
-							value={email}
-							type="email"
-							name="email"
-							required
-							placeholder="mail@mail.ru"
-							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
+							<label
+								className="flex flex-col justify-between font-bold cursor-pointer">
+								<span>Email*</span>
+								<input
+									onChange={handleChange}
+									value={email}
+									type="email"
+									name="email"
+									required
+									placeholder="mail@mail.ru"
+									className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 						placeholder:text-gray-me"/>
-					</label>
+							</label>
 
-					<label className="flex flex-col justify-between font-bold cursor-pointer mt-6">
-						<span>Password*</span>
-						<input
-							onChange={handleChange}
-							value={password}
-							type="password"
-							name="password"
-							required
-							placeholder="*************"
-							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
+							<label className="flex flex-col justify-between font-bold cursor-pointer mt-6">
+								<span>Password*</span>
+								<input
+									onChange={handleChange}
+									value={password}
+									type="password"
+									name="password"
+									required
+									placeholder="*************"
+									className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 						placeholder:text-gray-me"/>
-					</label>
+							</label>
 
-					<p
-						className="mt-3 text-right">
-						<span
-							className="inline-block text-gray-me cursor-pointer hover:text-yellow-me">
-							Забыли пароль?
-						</span>
-					</p>
+							<p
+								className="mt-3 text-right">
+								<span
+									className="inline-block text-gray-me cursor-pointer hover:text-yellow-me">
+									Забыли пароль?
+								</span>
+							</p>
 
-					<span
-						className="block text-center cursor-pointer mt-11 bg-yellow-me w-full py-4 text-2xl rounded-full">
-						Войти
-					</span>
+							<button
+								type="submit"
+								className="block text-center cursor-pointer mt-11 bg-yellow-me w-full py-4 text-2xl rounded-full">
+								Войти
+							</button>
 
-					<p
-						className="mt-8 text-gray-me text-center">
-						Новый пользователь?&nbsp;
-						<span
-							onClick={() => { navigate('registration') }}
-							className="inline-block text-yellow-me cursor-pointer">
-							Регистрация
-						</span>
-					</p>
-				</form>
+							<p
+								className="mt-8 text-gray-me text-center">
+								Новый пользователь?&nbsp;
+								<span
+									onClick={() => { navigate('registration') }}
+									className="inline-block text-yellow-me cursor-pointer">
+									Регистрация
+								</span>
+							</p>
+						</form>
+				}
+
 			</div>
 		</div>
 	)
@@ -95,3 +111,4 @@ const Login = ({ navigate }) => {
 }
 
 export default Login
+export const LoginWithAuth = withAuth(Login)
