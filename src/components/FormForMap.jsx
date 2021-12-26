@@ -11,7 +11,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const FormForMap = (props) => {
+const FormForMap = () => {
 	const [state, setState] = useState({ active: false })
 
 	const handleSubmit = (event) => {

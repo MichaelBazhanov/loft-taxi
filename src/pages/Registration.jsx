@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import logoTaxiVertical from '../assets/images/logo-taxi-vertical.svg';
 import { withAuth } from "../containers/AuthContext";
+import PropTypes from "prop-types";
 
 const Registration = ({ navigate }) => {
 	const [state, setState] = useState({ email: '', name: '', password: '' })
@@ -106,7 +107,10 @@ const Registration = ({ navigate }) => {
 			</div>
 		</div>
 	)
+}
 
+Registration.propTypes = {
+	navigate: PropTypes.func.isRequired,
 }
 
 export default Registration

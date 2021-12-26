@@ -1,5 +1,6 @@
 import React from "react";
 import logoTaxi from '../assets/images/logo-taxi.svg';
+import PropTypes from "prop-types";
 
 const Header = (props) => {
 	return (
@@ -22,6 +23,12 @@ const Header = (props) => {
 			</div>
 		</header>
 	)
+}
+Header.propTypes = {
+	props: PropTypes.shape({
+		logOut: PropTypes.func.isRequired,
+		navigate: PropTypes.func.isRequired
+	})
 }
 
 export default Header

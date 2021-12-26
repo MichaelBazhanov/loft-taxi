@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 //img
 import vector from '../assets/images/vector.svg'
@@ -141,6 +142,10 @@ const Profile = ({ navigate }) => {
 			</div>
 		</div>
 	)
+}
+
+Profile.propTypes = {
+	navigate: PropTypes.func.isRequired,
 }
 
 export default Profile

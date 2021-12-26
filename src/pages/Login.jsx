@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import logoTaxiVertical from '../assets/images/logo-taxi-vertical.svg';
 import { withAuth } from "../containers/AuthContext";
+import PropTypes from "prop-types";
 
 const Login = ({ navigate, logIn, isLoggedIn }) => { // logIn из Provider
 	const [state, setState] = useState({ email: 'valid@email.com', password: 'correctpassword' }) // hard code
@@ -108,6 +109,12 @@ const Login = ({ navigate, logIn, isLoggedIn }) => { // logIn из Provider
 		</div>
 	)
 
+}
+
+Login.propTypes = {
+	logIn: PropTypes.func.isRequired,
+	navigate: PropTypes.func.isRequired,
+	isLoggedIn: PropTypes.bool.isRequired
 }
 
 export default Login
