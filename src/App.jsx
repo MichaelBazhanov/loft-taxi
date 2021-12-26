@@ -15,13 +15,13 @@ const App = () => {
 
   return (
     <div className='App sans antialiased'>
-      <Header navigate={navigateTo} />
+      {(currentPage !== 'login' && currentPage !== 'registration') && <Header navigate={navigateTo} />}
       <main>
         <section className="bg-black-me">
           {currentPage === 'login' && <Login navigate={navigateTo} />}
           {currentPage === 'registration' && <Registration navigate={navigateTo} />}
           {currentPage === 'map' && <Map />}
-          {currentPage === 'profile' && <Profile navigate={navigateTo}/>}
+          {currentPage === 'profile' && <Profile navigate={navigateTo} />}
         </section>
       </main>
     </div>
