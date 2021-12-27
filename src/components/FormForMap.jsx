@@ -17,7 +17,7 @@ const FormForMap = () => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		// делаем что то с данными
-		// alert(`Форма отправлена! ${state.active}`)
+		alert(`Форма отправлена! ${state.active}`)
 	}
 
 	const handleChange = (active) => {
@@ -29,7 +29,7 @@ const FormForMap = () => {
 		<div className="container mx-auto h-screen relative pointer-events-none">
 			<div className="flex flex-col">
 
-				<form onClick={handleSubmit} className={classNames(active ? 'hidden' : '', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg pointer-events-auto')}>
+				<form onSubmit={handleSubmit} className={classNames(active ? 'hidden' : '', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg pointer-events-auto')}>
 					{/* Select что то должен вернуть и я запишу это в инпуты */}
 					<input type="hidden" name="rout-1" />
 					<input type="hidden" name="rout-2" />

@@ -12,26 +12,29 @@ import Header from './components/Header'
 import { withAuth } from './containers/AuthContext'
 
 
-const App = (props) => {
+const App = ({ logIn, logOut, isLoggedIn }) => {
   const [currentPage, setPage] = useState('map') // is Default state
 
   // эта функция навигации
-  const navigateTo = page => setPage(page)
-  // const navigateTo = page => {
-  //   if (props.isLoggedIn) { // если пользователь авторизован то иди на любую страницу
-  //     setPage(page)
-  //   } else { // если пользователь не авторизован то иди на страницу LOGIN
-  //     setPage('login')
-  //   }
-  // }
+  // const navigateTo = page => setPage(page)
+
+  // эта функция навигации
+  // Дополнительно функция навигации может еше проверять залогинен ли пользователь при любом роуте
+  const navigateTo = page => {
+    if (isLoggedIn) { // если пользователь авторизован то иди на любую страницу
+      setPage(page)
+    } else { // если пользователь не авторизован то иди на страницу LOGIN
+      setPage('login')
+    }
+  }
 
   return (
     <div className='App sans antialiased'>
-      {(currentPage !== 'login' && currentPage !== 'registration') && <Header navigate={navigateTo} {...props}/>}
+      {(currentPage !== 'login' && currentPage !== 'registration') && <Header navigate={navigateTo} logOut={logOut} />}
       <main>
         <section className="bg-black-me">
-          {currentPage === 'login' && <LoginWithAuth navigate={navigateTo} {...props} />}
-          {currentPage === 'registration' && <RegistrationWithAuth navigate={navigateTo} {...props} />}
+          {currentPage === 'login' && <LoginWithAuth navigate={navigateTo} logIn={logIn} isLoggedIn={isLoggedIn} />}
+          {currentPage === 'registration' && <RegistrationWithAuth navigate={navigateTo} />}
           {currentPage === 'map' && <Map />}
           {currentPage === 'profile' && <Profile navigate={navigateTo} />}
         </section>
