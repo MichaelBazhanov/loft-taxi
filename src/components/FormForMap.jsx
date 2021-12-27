@@ -12,18 +12,13 @@ function classNames(...classes) {
 }
 
 const FormForMap = () => {
-	const [state, setState] = useState({ active: false })
+	const [active, setActive] = useState(false)
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		// делаем что то с данными
-		alert(`Форма отправлена! ${state.active}`)
+		alert(`Форма отправлена! ${active}`)
 	}
-
-	const handleChange = (active) => {
-		setState({ ...state, 'active': active })
-	}
-	const { active } = state
 
 	return (
 		<div className="container mx-auto h-screen relative pointer-events-none">
@@ -70,14 +65,14 @@ const FormForMap = () => {
 						</div>
 						{/* верхний блок что то должен вернуть и я запишу это в инпуты */}
 						<input type="hidden" name="car" />
-						<button onClick={() => { handleChange(true) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7">Заказать</button>
+						<button onClick={() => { setActive(true) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7">Заказать</button>
 					</div>
 				</form>
 
 				<div className={classNames(active ? '' : 'hidden', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg py-10 px-11 pointer-events-auto')}>
 					<p className="font-bold text-4xl">Заказ размещен</p>
 					<p className="mt-4 text-lg text-gray-me">Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.</p>
-					<button onClick={() => { handleChange(false) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7">Сделать новый заказ</button>
+					<button onClick={() => { setActive(false) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7">Сделать новый заказ</button>
 				</div>
 
 			</div>
