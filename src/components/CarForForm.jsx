@@ -1,11 +1,10 @@
-import { useState } from "react"
+import PropTypes from "prop-types";
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
 const CarForForm = ({ price, imgSRC, index, activeIndexCar, setActiveIndexCar }) => {
-
 	const toggleActive = () => {
 		setActiveIndexCar(index)
 	}
@@ -22,4 +21,13 @@ const CarForForm = ({ price, imgSRC, index, activeIndexCar, setActiveIndexCar })
 	)
 }
 
+CarForForm.propTypes = {
+	price: PropTypes.string.isRequired,
+	imgSRC: PropTypes.string.isRequired,
+	index: PropTypes.number.isRequired,
+	activeIndexCar: PropTypes.number.isRequired,
+	setActiveIndexCar: PropTypes.func.isRequired
+}
+
 export default CarForForm
+

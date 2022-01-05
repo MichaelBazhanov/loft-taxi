@@ -11,20 +11,16 @@ import Header from './components/Header'
 //Auth
 import { withAuth } from './containers/AuthContext'
 
-
 const App = ({ logIn, logOut, isLoggedIn }) => {
   const [currentPage, setPage] = useState('map') // is Default state
 
-  // эта функция навигации
-  // const navigateTo = page => setPage(page)
-
-  // эта функция навигации
+  // это функция навигации
   // Дополнительно функция навигации может еше проверять залогинен ли пользователь при любом роуте
   const navigateTo = page => {
     if (isLoggedIn) { // если пользователь авторизован то иди на любую страницу
       setPage(page)
     } else { // если пользователь не авторизован то иди на страницу LOGIN
-      setPage('login')
+      page === 'registration' ? setPage('registration') : setPage('login')
     }
   }
 
