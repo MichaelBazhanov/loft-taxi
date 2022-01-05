@@ -6,6 +6,9 @@ import imgStandart from '../assets/images/car-standart.jpg'
 import imgPremium from '../assets/images/car-premium.jpg'
 import imgBusiness from '../assets/images/car-business.jpg'
 
+//Car
+import CarForForm from './CarForForm'
+
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
@@ -13,6 +16,7 @@ function classNames(...classes) {
 
 const FormForMap = () => {
 	const [active, setActive] = useState(false)
+	const [activeIndexCar, setActiveIndexCar] = useState(1)
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -38,15 +42,18 @@ const FormForMap = () => {
 
 					<div className="py-8 px-10 mt-6 rounded-xl border">
 						<div className="flex -mx-3">
-							<div className="w-1/3 px-3 cursor-pointer">
+							<CarForForm price={'150 ₽'} imgSRC={imgStandart} index={1} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar}  />
+							<CarForForm price={'200 ₽'} imgSRC={imgPremium} index={2} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar}/>
+							<CarForForm price={'300 ₽'} imgSRC={imgBusiness} index={3} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar}/>
+							{/* <div className="w-1/3 px-3 cursor-pointer">
 								<div className="flex flex-col shadow-me rounded-lg p-3">
 									<p>Стандарт</p>
 									<p className="text-xs">Стоимость</p>
 									<p className="text-2xl">150 ₽</p>
 									<img src={imgStandart} alt="car" className="w-full h-auto" />
 								</div>
-							</div>
-							<div className="w-1/3 px-3 cursor-pointer opacity-50">
+							</div> */}
+							{/* <div className="w-1/3 px-3 cursor-pointer opacity-50">
 								<div className="flex flex-col shadow-me rounded-lg p-3">
 									<p>Премиум</p>
 									<p className="text-xs">Стоимость</p>
@@ -61,7 +68,7 @@ const FormForMap = () => {
 									<p className="text-2xl">300 ₽</p>
 									<img src={imgBusiness} alt="car" className="w-full h-auto" />
 								</div>
-							</div>
+							</div> */}
 						</div>
 						{/* верхний блок что то должен вернуть и я запишу это в инпуты */}
 						<input type="hidden" name="car" />
