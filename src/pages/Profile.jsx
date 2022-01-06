@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import { connect } from 'react-redux'
+import { logOut } from '../actions' //просто импортируем action
 
 //img
 import vector from '../assets/images/vector.svg'
@@ -33,7 +35,7 @@ const Profile = ({ navigate }) => {
 						</h4>
 						<p
 							className="mt-3 text-lg text-gray-me text-center">
-							Ввдеите платежные данные
+							Введите платежные данные
 						</p>
 
 						<div className="mt-12 flex justify-between -mx-12">
@@ -136,6 +138,12 @@ const Profile = ({ navigate }) => {
 							className="max-w-xs w-full bg-yellow-me text-xl py-5 mt-10 rounded-full self-center">
 							Перейти на карту
 						</button>
+						<button
+							onClick={() => { logOut(); navigate('login') }}
+							type="button"
+							className="max-w-xs w-full bg-yellow-me text-xl py-5 mt-10 rounded-full self-center">
+							Выйти
+						</button>
 					</div>
 
 				</div>
@@ -148,4 +156,7 @@ Profile.propTypes = {
 	navigate: PropTypes.func.isRequired,
 }
 
-export default Profile
+export default connect(
+	null, // из STORE ничего получать не нужно
+	{ logOut } // просто дергаем ACTION
+)(Profile)

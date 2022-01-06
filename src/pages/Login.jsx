@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import logoTaxiVertical from '../assets/images/logo-taxi-vertical.svg';
-import { withAuth } from "../containers/AuthContext";
+import { connect } from 'react-redux'
+import { logIn } from '../actions' //просто импортируем action
 import PropTypes from "prop-types";
 
 const Login = ({ navigate, logIn, isLoggedIn }) => { // logIn из Provider
@@ -117,5 +118,11 @@ Login.propTypes = {
 	isLoggedIn: PropTypes.bool.isRequired
 }
 
-export default Login
-export const LoginWithAuth = withAuth(Login)
+export const LoginWithAuth = connect(
+	(state) => ({ isLoggedIn: state.auth.isLoggedIn }), // ЭТО СЕЛЕКТОР - (state) (auth - это имя reducers) (isLoggedIn - поле)
+	{ logIn } //диспатчим экшен
+)(Login)
+
+// connect принимает 2 аргумента
+// -----------------------------1 селектор
+// -----------------------------2 мапинг функции dispatch в props
