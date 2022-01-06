@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import logoTaxiVertical from '../assets/images/logo-taxi-vertical.svg';
 import { connect } from 'react-redux'
-import { logIn } from '../actions' //просто импортируем action
+import { authenticate } from '../actions' //просто импортируем action
 import PropTypes from "prop-types";
 
-const Login = ({ navigate, logIn, isLoggedIn }) => { // logIn из Provider
-	const [state, setState] = useState({ email: 'valid@email.com', password: 'correctpassword' }) // hard code
+const Login = ({ navigate, authenticate, isLoggedIn }) => {
+	const [state, setState] = useState({ email: 'test@test.com', password: '123123' }) // hard code
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
@@ -13,7 +13,7 @@ const Login = ({ navigate, logIn, isLoggedIn }) => { // logIn из Provider
 		// alert(`Форма отправлена! ${state.email} ${state.password}`)
 
 		const { email, password } = state // получаем из state
-		logIn({ email, password }) // отдаем данные для авторизации
+		authenticate(email, password ) // отдаем данные для авторизации
 	}
 
 	const handleChange = (event) => {
@@ -113,14 +113,14 @@ const Login = ({ navigate, logIn, isLoggedIn }) => { // logIn из Provider
 }
 
 Login.propTypes = {
-	logIn: PropTypes.func.isRequired,
+	authenticate: PropTypes.func.isRequired,
 	navigate: PropTypes.func.isRequired,
 	isLoggedIn: PropTypes.bool.isRequired
 }
 
 export const LoginWithAuth = connect(
 	(state) => ({ isLoggedIn: state.auth.isLoggedIn }), // ЭТО СЕЛЕКТОР - (state) (auth - это имя reducers) (isLoggedIn - поле)
-	{ logIn } //диспатчим экшен
+	{ authenticate } //диспатчим новый экшен
 )(Login)
 
 // connect принимает 2 аргумента

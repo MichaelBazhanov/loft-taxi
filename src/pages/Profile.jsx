@@ -12,7 +12,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const Profile = ({ navigate }) => {
+const Profile = ({ navigate, logOut }) => {
 	const [state, setState] = useState({ active: false })
 
 	const handleChange = (active) => {
@@ -154,6 +154,7 @@ const Profile = ({ navigate }) => {
 
 Profile.propTypes = {
 	navigate: PropTypes.func.isRequired,
+	logOut: PropTypes.func.isRequired,
 }
 
 export default connect(

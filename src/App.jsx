@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './App.css'
+import { connect } from 'react-redux'
 
 import { LoginWithAuth } from './pages/Login'
 import { RegistrationWithAuth } from './pages/Registration'
@@ -9,9 +10,9 @@ import Profile from './pages/Profile'
 import Header from './components/Header'
 
 //Auth
-import { withAuth } from './containers/AuthContext'
+// import { withAuth } from './containers/AuthContext'
 
-const App = ({ logIn, logOut, isLoggedIn }) => {
+const App = () => {
   const [currentPage, setPage] = useState('map') // is Default state
 
   const navigateTo = page => setPage(page)
@@ -27,10 +28,10 @@ const App = ({ logIn, logOut, isLoggedIn }) => {
 
   return (
     <div className='App sans antialiased'>
-      {(currentPage !== 'login' && currentPage !== 'registration') && <Header navigate={navigateTo} logOut={logOut} />}
+      {(currentPage !== 'login' && currentPage !== 'registration') && <Header navigate={navigateTo} />}
       <main>
         <section className="bg-black-me">
-          {currentPage === 'login' && <LoginWithAuth navigate={navigateTo} logIn={logIn} isLoggedIn={isLoggedIn} />}
+          {currentPage === 'login' && <LoginWithAuth navigate={navigateTo} />}
           {currentPage === 'registration' && <RegistrationWithAuth navigate={navigateTo} />}
           {currentPage === 'map' && <Map />}
           {currentPage === 'profile' && <Profile navigate={navigateTo} />}
@@ -40,4 +41,6 @@ const App = ({ logIn, logOut, isLoggedIn }) => {
   )
 }
 
-export default withAuth(App)
+export default connect(
+  state => ({ isLoggedIn: state.auth.isLoggedIn })
+)(App)

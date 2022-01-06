@@ -1,6 +1,8 @@
 import React from "react";
 import logoTaxi from '../assets/images/logo-taxi.svg';
 import PropTypes from "prop-types";
+import { connect } from 'react-redux'
+import { logOut } from '../actions' //просто импортируем action
 
 const Header = (props) => {
 	return (
@@ -31,4 +33,9 @@ Header.propTypes = {
 	})
 }
 
-export default Header
+// export default Header
+
+export default connect(
+	null,
+	{ logOut } //диспатчим экшен
+)(Header)
