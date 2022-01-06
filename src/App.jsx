@@ -1,31 +1,42 @@
 import React, { useState } from 'react'
 import './App.css'
 
-import Login from './pages/Login'
-import Registration from './pages/Registration'
+import { LoginWithAuth } from './pages/Login'
+import { RegistrationWithAuth } from './pages/Registration'
 import Map from './pages/Map'
 import Profile from './pages/Profile'
 
 import Header from './components/Header'
 
-const App = () => {
-  const [currentPage, setPage] = useState('profile') // // is Default state
+//Auth
+import { withAuth } from './containers/AuthContext'
 
-  const navigateTo = page => setPage(page)
+const App = ({ logIn, logOut, isLoggedIn }) => {
+  const [currentPage, setPage] = useState('map') // is Default state
+
+  // это функция навигации
+  // Дополнительно функция навигации может еше проверять залогинен ли пользователь при любом роуте
+  const navigateTo = page => {
+    if (isLoggedIn) { // если пользователь авторизован то иди на любую страницу
+      setPage(page)
+    } else { // если пользователь не авторизован то иди на страницу LOGIN
+      page === 'registration' ? setPage('registration') : setPage('login')
+    }
+  }
 
   return (
     <div className='App sans antialiased'>
-      <Header navigate={navigateTo} />
+      {(currentPage !== 'login' && currentPage !== 'registration') && <Header navigate={navigateTo} logOut={logOut} />}
       <main>
         <section className="bg-black-me">
-          {currentPage === 'login' && <Login navigate={navigateTo} />}
-          {currentPage === 'registration' && <Registration navigate={navigateTo} />}
+          {currentPage === 'login' && <LoginWithAuth navigate={navigateTo} logIn={logIn} isLoggedIn={isLoggedIn} />}
+          {currentPage === 'registration' && <RegistrationWithAuth navigate={navigateTo} />}
           {currentPage === 'map' && <Map />}
-          {currentPage === 'profile' && <Profile navigate={navigateTo}/>}
+          {currentPage === 'profile' && <Profile navigate={navigateTo} />}
         </section>
       </main>
     </div>
   )
 }
 
-export default App
+export default withAuth(App)
