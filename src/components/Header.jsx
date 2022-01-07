@@ -3,7 +3,9 @@ import logoTaxi from '../assets/images/logo-taxi.svg';
 import PropTypes from "prop-types";
 import { connect } from 'react-redux'
 import { logOut } from '../actions' //просто импортируем action
-import { NavLink} from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+
+const setActive = ({ isActive }) => isActive ? 'text-yellow-me' : ''
 
 const Header = (props) => {
 	return (
@@ -16,17 +18,17 @@ const Header = (props) => {
 					<nav className="flex text-white space-x-7">
 
 						<button type="button" className="hover:text-yellow-me text-xl">
-							<NavLink to={'map'} >Карта</NavLink>
+							<NavLink to={'map'} className={setActive}>Карта</NavLink>
 						</button>
 
 						<button type="button" className="hover:text-yellow-me text-xl">
-							<NavLink to={'profile'} >Профиль</NavLink>
+							<NavLink to={'profile'} className={setActive}>Профиль</NavLink>
 						</button>
 
 						<button onClick={() => {
 							props.logOut()
 						}} type="button" className="hover:text-yellow-me text-xl">
-							<NavLink to={'login'} >Выйти</NavLink>
+							<NavLink to={'login'} className={setActive}>Выйти</NavLink>
 						</button>
 
 					</nav>
