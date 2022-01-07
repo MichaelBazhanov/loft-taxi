@@ -115,13 +115,13 @@ const Profile = ({ logOut }) => {
 								<div className="bg-white px-7 py-5 rounded-xl shadow-me-3">
 									<div className="flex justify-between items-center">
 										<img src={miniLogo} alt="mini-logo" />
-										<span className="text-xs">05/08</span>
+										<span className="text-xs">{data.date}</span>
 									</div>
-									<p className="text-xl mt-7">5545    2300    3432    4521</p>
+									<p className="text-xl mt-7">{data.number}</p>
 									<div className="flex justify-between items-center mt-9">
 										<div className="flex items-center">
 											<img src={vector} alt="vector" />
-											<span className="ml-2">Michael</span>
+											<span className="ml-2">{data.name}</span>
 										</div>
 										<img src={circle} alt="circle" />
 									</div>
