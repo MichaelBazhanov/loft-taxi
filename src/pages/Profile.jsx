@@ -20,18 +20,13 @@ const Profile = ({ logOut }) => {
 		date: '2000-01-01',
 		cvc: '999',
 	})
-	const [state, setState] = useState({ active: false })
+	const [show, setShow] = useState(false)
 
 	const navigate = useNavigate()
 
 	const handleChangeCard = (event) => {
 		setData({ ...data, [event.target.name]: event.target.value })
 	}
-	const handleChange = (active) => {
-		setState({ ...state, 'active': active })
-	}
-
-	const { active } = state
 
 	return (
 		<div className="bg-map bg-center relative">
@@ -40,7 +35,7 @@ const Profile = ({ logOut }) => {
 				<div className="flex justify-center items-center relative w-full h-full">
 
 					<div
-						className={classNames(active ? 'hidden' : '', 'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2')}>
+						className={classNames(show ? 'hidden' : '', 'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2')}>
 						<h4
 							className="font-bold text-4xl text-center">
 							Профиль
@@ -135,14 +130,14 @@ const Profile = ({ logOut }) => {
 						</div>
 
 						<button
-							onClick={() => { handleChange(true) }}
+							onClick={() => { setShow(true) }}
 							type="button" className="w-1/3 bg-yellow-me text-xl py-5 mt-10 rounded-full self-center">
 							Сохранить
 						</button>
 					</div>
 
 					<div
-						className={classNames(active ? '' : 'hidden', 'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2')}
+						className={classNames(show ? '' : 'hidden', 'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2')}
 					>
 						<h4 className="font-bold text-4xl text-center">Профиль</h4>
 						<p
