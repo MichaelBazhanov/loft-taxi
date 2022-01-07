@@ -10,6 +10,8 @@ import Profile from './pages/Profile'
 
 import Layout from './Layout/Layout'
 
+import PrivateRoute from './containers/PrivateRoute'
+
 const App = () => {
 
   return (
@@ -19,8 +21,16 @@ const App = () => {
           <Route index element={<Login />} />
           <Route path='login' element={<Login />} />
           <Route path='registration' element={<Registration />} />
-          <Route path='map' element={<Map />} />
-          <Route path='profile' element={<Profile />} />
+          <Route path='map' element={
+            <PrivateRoute>
+              <Map />
+            </PrivateRoute>
+          } />  {/* Доступно только для авторизованных пользователей */}
+          <Route path='profile' element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          } />  {/* Доступно только для авторизованных пользователей */}
         </Route>
       </Routes>
     </>
