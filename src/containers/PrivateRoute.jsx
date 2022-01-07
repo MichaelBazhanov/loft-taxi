@@ -7,7 +7,7 @@ const PrivateRoute = ({ children, isLoggedIn }) => {
 	const location = useLocation();
 
 	if (!isLoggedIn) {
-		return <Navigate to='/login' state={{ from: location, replace: true }} />
+		return <Navigate to='/login' state={{ replace: true }} />
 		//те в '/login' сможем узнать то откуда мы пришли через {state: location}
 	}
 	return children
