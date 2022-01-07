@@ -3,17 +3,19 @@ import logoTaxiVertical from '../assets/images/logo-taxi-vertical.svg';
 import { connect } from 'react-redux'
 import { authenticate } from '../actions' //просто импортируем action
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-const Login = ({ navigate, authenticate, isLoggedIn }) => {
+const Login = ({ authenticate, isLoggedIn }) => {
 	const [state, setState] = useState({ email: 'test@test.com', password: '123123' }) // hard code
+
+	const navigate = useNavigate()
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
 		// делаем что то с данными
-		// alert(`Форма отправлена! ${state.email} ${state.password}`)
 
 		const { email, password } = state // получаем из state
-		authenticate(email, password ) // отдаем данные для авторизации
+		authenticate(email, password) // отдаем данные для авторизации
 	}
 
 	const handleChange = (event) => {
@@ -39,7 +41,7 @@ const Login = ({ navigate, authenticate, isLoggedIn }) => {
 					isLoggedIn
 						?
 						<span
-							onClick={() => { navigate('map') }}
+							onClick={() => { navigate("/map", { replace: true }) }}
 							className="block text-center cursor-pointer mt-11 bg-yellow-me py-4 px-10 text-2xl rounded-full">
 							Перейти на карту
 						</span>
@@ -98,7 +100,7 @@ const Login = ({ navigate, authenticate, isLoggedIn }) => {
 								className="mt-8 text-gray-me text-center">
 								Новый пользователь?&nbsp;
 								<span
-									onClick={() => { navigate('registration') }}
+									onClick={() => { navigate("/registration") }}
 									className="inline-block text-yellow-me cursor-pointer">
 									Регистрация
 								</span>
@@ -114,11 +116,10 @@ const Login = ({ navigate, authenticate, isLoggedIn }) => {
 
 Login.propTypes = {
 	authenticate: PropTypes.func.isRequired,
-	navigate: PropTypes.func.isRequired,
 	isLoggedIn: PropTypes.bool.isRequired
 }
 
-export const LoginWithAuth = connect(
+export default connect(
 	(state) => ({ isLoggedIn: state.auth.isLoggedIn }), // ЭТО СЕЛЕКТОР - (state) (auth - это имя reducers) (isLoggedIn - поле)
 	{ authenticate } //диспатчим новый экшен
 )(Login)

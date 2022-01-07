@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux'
 import { logOut } from '../actions' //просто импортируем action
+import { useNavigate } from "react-router-dom";
 
 //img
 import vector from '../assets/images/vector.svg'
@@ -12,9 +13,20 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const Profile = ({ navigate, logOut }) => {
+const Profile = ({ logOut }) => {
+	const [data, setData] = useState({
+		name: 'Michael',
+		number: '5545    2300    3432    4521',
+		date: '2000-01-01',
+		cvc: '999',
+	})
 	const [state, setState] = useState({ active: false })
 
+	const navigate = useNavigate()
+
+	const handleChangeCard = (event) => {
+		setData({ ...data, [event.target.name]: event.target.value })
+	}
 	const handleChange = (active) => {
 		setState({ ...state, 'active': active })
 	}
@@ -44,10 +56,10 @@ const Profile = ({ navigate, logOut }) => {
 									className="flex flex-col justify-between font-bold cursor-pointer">
 									<span>Имя владельца*</span>
 									<input
-										// onChange={handleChange}
-										// value={text}
+										onChange={handleChangeCard}
+										value={data.name}
 										type="text"
-										name="text"
+										name="name"
 										required
 										placeholder="Loft"
 										className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
@@ -59,9 +71,9 @@ const Profile = ({ navigate, logOut }) => {
 									className="flex flex-col justify-between font-bold cursor-pointer mt-6">
 									<span>Номер карты*</span>
 									<input
-										// onChange={handleChange}
-										// value={number}
-										type="number"
+										onChange={handleChangeCard}
+										value={data.number}
+										type="text"
 										name="number"
 										required
 										placeholder="0000 0000 0000 0000"
@@ -75,12 +87,12 @@ const Profile = ({ navigate, logOut }) => {
 										className="flex flex-col justify-between font-bold cursor-pointer mt-6">
 										<span>MM/YY*</span>
 										<input
-											// onChange={handleChange}
-											// value={date}
+											onChange={handleChangeCard}
+											value={data.date}
 											type="date"
 											name="date"
 											required
-											placeholder="05/08"
+											placeholder="15/05/08"
 											className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 										focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 										placeholder:text-gray-me"/>
@@ -90,12 +102,14 @@ const Profile = ({ navigate, logOut }) => {
 										className="flex flex-col justify-between font-bold cursor-pointer mt-6">
 										<span>CVC*</span>
 										<input
-											// onChange={handleChange}
-											// value={date}
+											onChange={handleChangeCard}
+											value={data.cvc}
 											type="number"
-											name="number"
+											maxLength={3}
+											name="cvc"
 											required
 											placeholder="667"
+											min="000" max="999"
 											className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 										focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 										placeholder:text-gray-me"/>
@@ -110,7 +124,10 @@ const Profile = ({ navigate, logOut }) => {
 									</div>
 									<p className="text-xl mt-7">5545    2300    3432    4521</p>
 									<div className="flex justify-between items-center mt-9">
-										<img src={vector} alt="vector" />
+										<div className="flex items-center">
+											<img src={vector} alt="vector" />
+											<span className="ml-2">Michael</span>
+										</div>
 										<img src={circle} alt="circle" />
 									</div>
 								</div>
@@ -133,13 +150,13 @@ const Profile = ({ navigate, logOut }) => {
 							Платёжные данные обновлены. Теперь вы можете заказывать такси.
 						</p>
 						<button
-							onClick={() => { navigate('map') }}
+							onClick={() => { navigate('/map') }}
 							type="button"
 							className="max-w-xs w-full bg-yellow-me text-xl py-5 mt-10 rounded-full self-center">
 							Перейти на карту
 						</button>
 						<button
-							onClick={() => { logOut(); navigate('login') }}
+							onClick={() => { logOut(); navigate('/login') }}
 							type="button"
 							className="max-w-xs w-full bg-yellow-me text-xl py-5 mt-10 rounded-full self-center">
 							Выйти
@@ -153,7 +170,6 @@ const Profile = ({ navigate, logOut }) => {
 }
 
 Profile.propTypes = {
-	navigate: PropTypes.func.isRequired,
 	logOut: PropTypes.func.isRequired,
 }
 
