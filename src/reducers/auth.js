@@ -1,17 +1,22 @@
 import { LOG_IN, LOG_OUT } from '../actions'
 
-const initialState = {
-  isLoggedIn: false,
-}
+const data = localStorage.getItem('isLoggedIn') //пытаемся получить данные
+let initialState
+data !== null
+  ? (initialState = { isLoggedIn: Boolean(data) })
+  : (initialState = { isLoggedIn: false })
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case LOG_IN: {
-      return { isLoggedIn: true }
+      localStorage.setItem('isLoggedIn', (state.isLoggedIn = true)) //по типу action устанавливаем значение localStorage
+      return { isLoggedIn: true } //возвращаем новый объект
     }
 
     case LOG_OUT: {
-      return { isLoggedIn: false }
+      localStorage.removeItem('isLoggedIn') //по типу action удаляем значение localStorage
+      localStorage.removeItem('token') //по типу action удаляем значение localStorage
+      return { isLoggedIn: false } //возвращаем новый объект
     }
 
     default:
