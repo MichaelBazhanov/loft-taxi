@@ -4,7 +4,7 @@ import { serverLogin } from '../api'
 
 //MOKI _ мокирование- поставление не настоящей функции serverLogin
 
-jest.mock('../api', () => ({ serverLogin:  jest.fn(() => true) }))
+jest.mock('../api', () => ({ serverLogin: jest.fn(() => true) }))
 // 1 ПАРАМЕТР - мокаем модуль api по адресу ../api.js
 // 2 ПАРАМЕТР - в качестве вывода функция которая возвращает serverLogin (её то мы и мокаем через Jest)
 // ОБРАТИ ВНИМАНИЕ ЧТО ИЗ МОКА ФУНКЦИЯ ВОЗВРАЩАЕТ ПО УМОЛЧАНИЮ TRUE     jest.fn(() => true)
@@ -17,6 +17,7 @@ describe('authMiddleware', () => {
     //внутри нам нужно убедиться что он успешно авторизуется
     //authenticate through api = авторизоваться через апи
     it('authenticate through api', async () => {
+      serverLogin.mockImplementation(async () => true) // имплементация это замена (serverLogin отдаем true)
       const dispatch = jest.fn() // это мок (фейковый stor)
       // dispatch({ type: 'LOG_IN' })
       // передаем фейковый stor первым параметром dispatch
@@ -31,6 +32,17 @@ describe('authMiddleware', () => {
 
       //также мы ожидаем что был вызван dispatch с методом logIn()
       expect(dispatch).toBeCalledWith({ type: 'LOG_IN' })
+    })
+    describe('with wrong credentials', () => { //с неправильными учетными данными
+      it('authenticates through api', async () => {
+        serverLogin.mockImplementation(() => false) // имплементация это замена (serverLogin отдаем false)
+        const dispatch = jest.fn()
+
+        await authMiddleware({ dispatch })()(
+          authenticate('testlogin', 'testpassword'),
+        )
+        expect(dispatch).not.toBeCalled()
+      })
     })
   })
 })

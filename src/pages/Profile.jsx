@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux'
-import { logOut, sendFormCard } from '../actions' //просто импортируем action
+import { logOut, sendFormCard, getFormCard } from '../actions' //просто импортируем action
 import { useNavigate } from "react-router-dom";
 
 //img
@@ -13,13 +13,14 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const Profile = ({ logOut, sendFormCard, cardName, cardNumber, expiryDate, cvc, token }) => {
+const Profile = ({ logOut, sendFormCard, getFormCard, cardName, cardNumber, expiryDate, cvc, token }) => {
 	const [data, setData] = useState({
-		cardName,
-		cardNumber,
-		expiryDate,
-		cvc,
+		cardName: "",
+		cardNumber: "",
+		expiryDate: "",
+		cvc: "",
 	})
+
 	const [show, setShow] = useState(false)
 
 	const navigate = useNavigate()
@@ -36,14 +37,25 @@ const Profile = ({ logOut, sendFormCard, cardName, cardNumber, expiryDate, cvc, 
 		sendFormCard(cardName, cardNumber, expiryDate, cvc, token = token)
 	}
 
+	useEffect(() => {
+		setData({ ...data, cardName, cardNumber, expiryDate, cvc })
+	}, [cardName, cardNumber, expiryDate, cvc])
+
+	useEffect(() => {
+		console.log('============useEffect')
+		getFormCard()
+	}, [])
+
 	return (
 		<div className="bg-map bg-center relative">
 			<div className="absolute inset-0 bg-black-me opacity-30"></div>
 			<div className="container mx-auto h-screen ">
 				<div className="flex justify-center items-center relative w-full h-full">
-
+					{/* {show && } */}
+					{/* {!show && } */}
+					{/* ============================================================================================================= */}
 					<div
-						className={classNames(show ? 'hidden' : '', 'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2')}>
+						className={classNames(show ? 'hidden' : '', 'hidden flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2')}>
 						<h4
 							className="font-bold text-4xl text-center">
 							Профиль
@@ -73,7 +85,7 @@ const Profile = ({ logOut, sendFormCard, cardName, cardNumber, expiryDate, cvc, 
 
 								<label
 									className="flex flex-col justify-between font-bold cursor-pointer mt-6">
-									<span>Номер карты*</span>111
+									<span>Номер карты*</span>
 									<input
 										onChange={handleChangeCard}
 										value={data.cardNumber}
@@ -148,7 +160,7 @@ const Profile = ({ logOut, sendFormCard, cardName, cardNumber, expiryDate, cvc, 
 							Сохранить
 						</button>
 					</div>
-
+					{/* ============================================================================================================= */}
 					<div
 						className={classNames(show ? '' : 'hidden', 'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2')}
 					>
@@ -170,7 +182,7 @@ const Profile = ({ logOut, sendFormCard, cardName, cardNumber, expiryDate, cvc, 
 							Выйти
 						</button>
 					</div>
-
+					{/* ============================================================================================================= */}
 				</div>
 			</div>
 		</div>
@@ -191,5 +203,11 @@ export default connect(
 		cardSendStatus: state.card.cardSendStatus,
 		cardGetStatus: state.card.cardGetStatus,
 	}),
-	{ logOut, sendFormCard } // просто дергаем ACTION
+	{ logOut, sendFormCard, getFormCard } // просто дергаем ACTION
 )(Profile)
+
+
+// Путаюсь что когда в какой поледовательнсоти получать
+// и какие экшен ынужны для того или иного действия
+
+// Атрибут key

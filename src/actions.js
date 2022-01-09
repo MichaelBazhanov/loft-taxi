@@ -12,18 +12,33 @@ export const authenticate = (email, password) => ({
   type: AUTHENTICATE,
   payload: { email, password },
 })
-
+//====================================================================================
 export const SEND_FORM_CARD = 'SEND_FORM_CARD'
-export const FORM_CARD_SUCCESS = 'FORM_CARD_SUCCESS'
-export const FORM_CARD_FAILURE = 'FORM_CARD_FAILURE'
+export const SEND_CARD_SUCCESS = 'SEND_CARD_SUCCESS'
+export const SEND_CARD_FAILURE = 'SEND_CARD_FAILURE'
 
 export const sendFormCard = (cardName, cardNumber, expiryDate, cvc, token) => ({
   type: SEND_FORM_CARD,
   payload: { cardName, cardNumber, expiryDate, cvc, token },
 })
-export const formCardSuccess = () => ({
-  type: FORM_CARD_SUCCESS,
+export const sendCardSuccess = () => ({
+  type: SEND_CARD_SUCCESS,
 })
-export const formCardFailure = () => ({
-  type: FORM_CARD_FAILURE,
+export const sendCardFailure = () => ({
+  type: SEND_CARD_FAILURE,
+})
+//====================================================================================
+export const GET_FORM_CARD = 'GET_FORM_CARD'
+export const GET_CARD_SUCCESS = 'GET_CARD_SUCCESS'
+export const GET_CARD_FAILURE = 'GET_CARD_FAILURE'
+
+export const getFormCard = () => ({
+  type: GET_FORM_CARD,
+})
+export const getCardSuccess = (cardName, cardNumber, expiryDate, cvc, id) => ({
+  type: GET_CARD_SUCCESS,
+  payload: { cardName, cardNumber, expiryDate, cvc, id },
+})
+export const getCardFailure = () => ({
+  type: GET_CARD_FAILURE,
 })

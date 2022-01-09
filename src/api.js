@@ -16,7 +16,8 @@ export const serverLogin = async (email, password) => {
 // glitch.me           => расположен на сервисе этом
 // auth?username=${email}&password=${password} => GET запрос
 
-export const serverCard = async (
+// Отправка данных карты на сервер
+export const serverSendCard = async (
   cardName,
   cardNumber,
   expiryDate,
@@ -34,4 +35,16 @@ export const serverCard = async (
     .then((data) => {
       return data.success
     }) // true / false
+}
+
+// Получение данных карты на клиенте
+export const serverGetCard = async (token) => {
+  return fetch(`https://loft-taxi.glitch.me/card?token=${token}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => (res.status === 200 ? res.json() : ''))
+    .then((data) => data)
 }

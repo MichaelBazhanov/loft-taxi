@@ -1,7 +1,10 @@
 import {
   SEND_FORM_CARD,
-  FORM_CARD_SUCCESS,
-  FORM_CARD_FAILURE,
+  SEND_CARD_SUCCESS,
+  SEND_CARD_FAILURE,
+  GET_FORM_CARD,
+  GET_CARD_SUCCESS,
+  GET_CARD_FAILURE,
 } from '../actions'
 
 const initialState = {
@@ -12,22 +15,49 @@ const initialState = {
   token: 'test+token',
   cardSendStatus: '',
   cardGetStatus: '',
+  id: '',
 }
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case SEND_FORM_CARD: {
-      console.log('Обработка данных в редьюсрее', { ...action.payload })
       return { ...action.payload } // { cardNumber, expiryDate, cardName, cvc, token } = action.payload //возвращаем новый объект
     }
-    case FORM_CARD_SUCCESS: {
+    case SEND_CARD_SUCCESS: {
       return { cardSendStatus: 'success' }
     }
-    case FORM_CARD_FAILURE: {
+    case SEND_CARD_FAILURE: {
       return { cardSendStatus: 'failure' }
+    }
+    // case GET_FORM_CARD: {
+    //   return { ...action.payload }
+    // }
+    case GET_CARD_SUCCESS: {
+      return {
+        cardName: action.payload.cardName,
+        cardNumber: action.payload.cardNumber,
+        expiryDate: action.payload.expiryDate,
+        cvc: action.payload.cvc,
+        id: action.payload.id,
+        cardGetStatus: 'success',
+      }
+    }
+    case GET_CARD_FAILURE: {
+      return { cardGetStatus: 'failure' }
     }
 
     default:
       return state
   }
 }
+// case GET_FORM_CARD: {
+//   const obj = {
+//     cardName: action.payload.cardName,
+//     cardNumber: action.payload.cardNumber,
+//     expiryDate: action.payload.expiryDate,
+//     cvc: action.payload.cvc,
+//     id: action.payload.id,
+//     cardGetStatus: 'success',
+//   }
+//   return obj
+// }

@@ -2,7 +2,7 @@ import { logIn } from './actions'
 import { AUTHENTICATE } from './actions'
 import { serverLogin } from './api'
 
-export const authMiddleware = (store) => (next) => async (action) => { console.log('1111111111111')
+export const authMiddleware = (store) => (next) => async (action) => { console.log('authMiddleware.js')
   //все что здесь называется sideEffect=======================
   if (action.type === AUTHENTICATE) { console.log('22222222222222')
     const { email, password } = action.payload //вынимаем данные из ACTION
