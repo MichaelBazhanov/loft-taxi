@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux'
-import { logOut } from '../actions' //просто импортируем action
+import { logOut, sendFormCard } from '../actions' //просто импортируем action
 import { useNavigate } from "react-router-dom";
 
 //img
@@ -13,12 +13,12 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const Profile = ({ logOut }) => {
+const Profile = ({ logOut, sendFormCard, cardName, cardNumber, expiryDate, cvc, token }) => {
 	const [data, setData] = useState({
-		name: 'Michael',
-		number: '5545    2300    3432    4521',
-		date: '2000-01-01',
-		cvc: '999',
+		cardName,
+		cardNumber,
+		expiryDate,
+		cvc,
 	})
 	const [show, setShow] = useState(false)
 
@@ -26,6 +26,14 @@ const Profile = ({ logOut }) => {
 
 	const handleChangeCard = (event) => {
 		setData({ ...data, [event.target.name]: event.target.value })
+	}
+
+	const handleForm = (event) => {
+		event.preventDefault()
+		setShow(true) // переключаем вид
+
+		const { cardName, cardNumber, expiryDate, cvc } = data // получаем из state
+		sendFormCard(cardName, cardNumber, expiryDate, cvc, token = token)
 	}
 
 	return (
@@ -46,15 +54,16 @@ const Profile = ({ logOut }) => {
 						</p>
 
 						<div className="mt-12 flex justify-between -mx-12">
-							<div className="flex flex-col w-1/2 px-12">
+
+							<form onSubmit={handleForm} id="formProfile" className="flex flex-col w-1/2 px-12">
 								<label
 									className="flex flex-col justify-between font-bold cursor-pointer">
 									<span>Имя владельца*</span>
 									<input
 										onChange={handleChangeCard}
-										value={data.name}
+										value={data.cardName}
 										type="text"
-										name="name"
+										name="cardName"
 										required
 										placeholder="Loft"
 										className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
@@ -64,12 +73,12 @@ const Profile = ({ logOut }) => {
 
 								<label
 									className="flex flex-col justify-between font-bold cursor-pointer mt-6">
-									<span>Номер карты*</span>
+									<span>Номер карты*</span>111
 									<input
 										onChange={handleChangeCard}
-										value={data.number}
+										value={data.cardNumber}
 										type="text"
-										name="number"
+										name="cardNumber"
 										required
 										placeholder="0000 0000 0000 0000"
 										className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
@@ -83,9 +92,9 @@ const Profile = ({ logOut }) => {
 										<span>MM/YY*</span>
 										<input
 											onChange={handleChangeCard}
-											value={data.date}
+											value={data.expiryDate}
 											type="date"
-											name="date"
+											name="expiryDate"
 											required
 											placeholder="15/05/08"
 											className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
@@ -110,28 +119,32 @@ const Profile = ({ logOut }) => {
 										placeholder:text-gray-me"/>
 									</label>
 								</div>
-							</div>
+							</form>
+
+
 							<div className="flex flex-col w-1/2 px-12">
 								<div className="bg-white px-7 py-5 rounded-xl shadow-me-3">
 									<div className="flex justify-between items-center">
 										<img src={miniLogo} alt="mini-logo" />
-										<span className="text-xs">{data.date}</span>
+										<span className="text-xs">{data.expiryDate}</span>
 									</div>
-									<p className="text-xl mt-7">{data.number}</p>
+									<p className="text-xl mt-7">{data.cardNumber}</p>
 									<div className="flex justify-between items-center mt-9">
 										<div className="flex items-center">
 											<img src={vector} alt="vector" />
-											<span className="ml-2">{data.name}</span>
+											<span className="ml-2">{data.cardName}</span>
 										</div>
 										<img src={circle} alt="circle" />
 									</div>
 								</div>
 							</div>
+
 						</div>
 
 						<button
-							onClick={() => { setShow(true) }}
-							type="button" className="w-1/3 bg-yellow-me text-xl py-5 mt-10 rounded-full self-center">
+							form="formProfile"
+							type="submit"
+							className="w-1/3 bg-yellow-me text-xl py-5 mt-10 rounded-full self-center">
 							Сохранить
 						</button>
 					</div>
@@ -169,6 +182,14 @@ Profile.propTypes = {
 }
 
 export default connect(
-	null, // из STORE ничего получать не нужно
-	{ logOut } // просто дергаем ACTION
+	(state) => ({
+		cardName: state.card.cardName,
+		cardNumber: state.card.cardNumber,
+		expiryDate: state.card.expiryDate,
+		cvc: state.card.cvc,
+		token: state.card.token,
+		cardSendStatus: state.card.cardSendStatus,
+		cardGetStatus: state.card.cardGetStatus,
+	}),
+	{ logOut, sendFormCard } // просто дергаем ACTION
 )(Profile)
