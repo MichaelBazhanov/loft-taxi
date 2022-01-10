@@ -38,5 +38,5 @@ const App = () => {
 }
 
 export default connect(
-  state => ({ isLoggedIn: state.auth.isLoggedIn })
+  state => ({ isLoggedIn: state.auth.isLoggedIn, token: state.auth.token })
 )(App)

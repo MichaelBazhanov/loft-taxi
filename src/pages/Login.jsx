@@ -120,7 +120,7 @@ Login.propTypes = {
 }
 
 export default connect(
-	(state) => ({ isLoggedIn: state.auth.isLoggedIn }), // ЭТО СЕЛЕКТОР - (state) (auth - это имя reducers) (isLoggedIn - поле)
+	(state) => ({ isLoggedIn: state.auth.isLoggedIn }), // ЭТО СЕЛЕКТОР - (state) (auth - это имя reducers) (isLoggedIn - поле для роутинга что бы ходить по роутам)
 	{ authenticate } //диспатчим новый экшен
 )(Login)
 

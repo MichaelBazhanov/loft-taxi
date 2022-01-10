@@ -6,11 +6,10 @@ export const serverLogin = async (email, password) => {
       'Content-Type': 'application/json',
     },
   })
-    .then((res) => res.json()) // res = {success: true/false}
+    .then((res) => res.json())
     .then((data) => {
-      localStorage.setItem('token', data.token)
-      return data.success
-    }) // true / false
+      return { success: data.success, token: data.token }
+    })
 }
 // https://loft-taxi   => выполняем запрос по адресу сервера
 // glitch.me           => расположен на сервисе этом

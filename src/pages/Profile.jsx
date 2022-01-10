@@ -13,15 +13,13 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const Profile = ({ logOut, sendFormCard, getFormCard, cardName, cardNumber, expiryDate, cvc, token }) => {
+const Profile = ({ logOut, sendFormCard, getFormCard, cardGetStatus, cardSendStatus, cardName, cardNumber, expiryDate, cvc, token }) => {
 	const [data, setData] = useState({
 		cardName: "",
 		cardNumber: "",
 		expiryDate: "",
 		cvc: "",
 	})
-
-	const [show, setShow] = useState(false)
 
 	const navigate = useNavigate()
 
@@ -31,18 +29,16 @@ const Profile = ({ logOut, sendFormCard, getFormCard, cardName, cardNumber, expi
 
 	const handleForm = (event) => {
 		event.preventDefault()
-		setShow(true) // переключаем вид
 
 		const { cardName, cardNumber, expiryDate, cvc } = data // получаем из state
-		sendFormCard(cardName, cardNumber, expiryDate, cvc, token = token)
+		sendFormCard(cardName, cardNumber, expiryDate, cvc, token)
 	}
 
 	useEffect(() => {
 		setData({ ...data, cardName, cardNumber, expiryDate, cvc })
-	}, [cardName, cardNumber, expiryDate, cvc])
+	}, [cardName, cardNumber, expiryDate, cvc, token])
 
 	useEffect(() => {
-		console.log('============useEffect')
 		getFormCard()
 	}, [])
 
@@ -53,7 +49,11 @@ const Profile = ({ logOut, sendFormCard, getFormCard, cardName, cardNumber, expi
 				<div className="flex justify-center items-center relative w-full h-full">
 
 					{/* ============================================================================================================= */}
-					{!show &&
+					{cardGetStatus === '' &&
+						<h1 className="text-6xl text-white font-bold">Loading bank card data...</h1>
+					}
+					{/* ============================================================================================================= */}
+					{cardGetStatus === 'success' &&
 						< div
 							className={'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2'}>
 							<h4
@@ -134,8 +134,8 @@ const Profile = ({ logOut, sendFormCard, getFormCard, cardName, cardNumber, expi
 								</form>
 
 
-								<div className="flex flex-col w-1/2 px-12">
-									<div className="bg-white px-7 py-5 rounded-xl shadow-me-3">
+								<div className="flex flex-col w-1/2 px-12 justify-center">
+									<div className="bg-white px-7 py-5 rounded-xl shadow-me-3  h-48">
 										<div className="flex justify-between items-center">
 											<img src={miniLogo} alt="mini-logo" />
 											<span className="text-xs">{data.expiryDate}</span>
@@ -161,9 +161,8 @@ const Profile = ({ logOut, sendFormCard, getFormCard, cardName, cardNumber, expi
 							</button>
 						</div>
 					}
-
 					{/* ============================================================================================================= */}
-					{show &&
+					{cardSendStatus === 'success' &&
 						<div
 							className={'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2'}
 						>
@@ -187,6 +186,7 @@ const Profile = ({ logOut, sendFormCard, getFormCard, cardName, cardNumber, expi
 						</div>
 					}
 					{/* ============================================================================================================= */}
+
 				</div>
 			</div>
 		</div >
@@ -203,15 +203,9 @@ export default connect(
 		cardNumber: state.card.cardNumber,
 		expiryDate: state.card.expiryDate,
 		cvc: state.card.cvc,
-		token: state.card.token,
+		token: state.auth.token,
 		cardSendStatus: state.card.cardSendStatus,
 		cardGetStatus: state.card.cardGetStatus,
 	}),
 	{ logOut, sendFormCard, getFormCard } // просто дергаем ACTION
 )(Profile)
-
-
-// Путаюсь что когда в какой поледовательнсоти получать
-// и какие экшен ынужны для того или иного действия
-
-// Атрибут key

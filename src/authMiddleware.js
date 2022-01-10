@@ -6,10 +6,10 @@ export const authMiddleware = (store) => (next) => async (action) => {
   //все что здесь называется sideEffect=======================
   if (action.type === AUTHENTICATE) {
     const { email, password } = action.payload //вынимаем данные из ACTION
-    const success = await serverLogin(email, password) //Отдаем данные в функцию авторизации
-    console.log(success, email, password )
-    if (success) {
-      store.dispatch(logIn())
+    const res = await serverLogin(email, password) //Отдаем данные в функцию авторизации
+
+    if (res.success) {
+      store.dispatch(logIn(res.token))
     }
   } else {
     next(action) // пробрасываем следующий Middleware c action

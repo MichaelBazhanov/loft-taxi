@@ -8,11 +8,10 @@ import {
 } from '../actions'
 
 const initialState = {
-  cardName: 'Michael',
-  cardNumber: '5545 2300 3432 4521',
-  expiryDate: '2000-01-01',
-  cvc: '999',
-  token: 'test+token',
+  cardName: '',
+  cardNumber: '',
+  expiryDate: '',
+  cvc: '',
   cardSendStatus: '',
   cardGetStatus: '',
   id: '',
