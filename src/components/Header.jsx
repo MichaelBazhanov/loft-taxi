@@ -1,6 +1,11 @@
 import React from "react";
 import logoTaxi from '../assets/images/logo-taxi.svg';
 import PropTypes from "prop-types";
+import { connect } from 'react-redux'
+import { logOut } from '../actions' //просто импортируем action
+import { NavLink } from 'react-router-dom'
+
+const setActive = ({ isActive }) => isActive ? 'text-yellow-me' : ''
 
 const Header = (props) => {
 	return (
@@ -11,12 +16,21 @@ const Header = (props) => {
 					<img src={logoTaxi} className="logo-taxi" alt="logo" />
 
 					<nav className="flex text-white space-x-7">
-						<button onClick={() => { props.navigate('map') }} type="button" className="hover:text-yellow-me text-xl">Карта</button>
-						<button onClick={() => { props.navigate('profile') }} type="button" className="hover:text-yellow-me text-xl">Профиль</button>
+
+						<button type="button" className="hover:text-yellow-me text-xl">
+							<NavLink to={'map'} className={setActive}>Карта</NavLink>
+						</button>
+
+						<button type="button" className="hover:text-yellow-me text-xl">
+							<NavLink to={'profile'} className={setActive}>Профиль</NavLink>
+						</button>
+
 						<button onClick={() => {
 							props.logOut()
-							props.navigate('login')
-						}} type="button" className="hover:text-yellow-me text-xl">Выйти</button>
+						}} type="button" className="hover:text-yellow-me text-xl">
+							<NavLink to={'login'} className={setActive}>Выйти</NavLink>
+						</button>
+
 					</nav>
 
 				</div>
@@ -27,8 +41,12 @@ const Header = (props) => {
 Header.propTypes = {
 	props: PropTypes.shape({
 		logOut: PropTypes.func.isRequired,
-		navigate: PropTypes.func.isRequired
 	})
 }
 
-export default Header
+// export default Header
+
+export default connect(
+	null,
+	{ logOut } //диспатчим экшен
+)(Header)

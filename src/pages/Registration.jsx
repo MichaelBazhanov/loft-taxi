@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import logoTaxiVertical from '../assets/images/logo-taxi-vertical.svg';
-import { withAuth } from "../containers/AuthContext";
-import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-const Registration = ({ navigate }) => {
+const Registration = () => {
 	const [state, setState] = useState({ email: '', name: '', password: '' })
+
+	const navigate = useNavigate()
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
@@ -13,7 +14,7 @@ const Registration = ({ navigate }) => {
 	}
 
 	const handleChange = (event) => {
-		setState({...state,  [event.target.name]: event.target.value })
+		setState({ ...state, [event.target.name]: event.target.value })
 	}
 
 	const { email, name, password } = state
@@ -98,7 +99,7 @@ const Registration = ({ navigate }) => {
 						className="mt-8 text-gray-me text-center">
 						Уже зарегистрированы?&nbsp;
 						<span
-							onClick={() => { navigate('login') }}
+							onClick={() => { navigate("/login") }}
 							className="inline-block text-yellow-me cursor-pointer">
 							Войти
 						</span>
@@ -109,9 +110,4 @@ const Registration = ({ navigate }) => {
 	)
 }
 
-Registration.propTypes = {
-	navigate: PropTypes.func.isRequired,
-}
-
 export default Registration
-export const RegistrationWithAuth = withAuth(Registration)

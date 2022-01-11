@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import logoTaxiVertical from '../assets/images/logo-taxi-vertical.svg';
-import { withAuth } from "../containers/AuthContext";
+import { connect } from 'react-redux'
+import { authenticate } from '../actions' //просто импортируем action
 import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-const Login = ({ navigate, logIn, isLoggedIn }) => { // logIn из Provider
-	const [state, setState] = useState({ email: 'valid@email.com', password: 'correctpassword' }) // hard code
+const Login = ({ authenticate, isLoggedIn }) => {
+	const [state, setState] = useState({ email: 'test@test.com', password: '123123' }) // hard code
+
+	const navigate = useNavigate()
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
 		// делаем что то с данными
-		// alert(`Форма отправлена! ${state.email} ${state.password}`)
 
 		const { email, password } = state // получаем из state
-		logIn({ email, password }) // отдаем данные для авторизации
+		authenticate(email, password) // отдаем данные для авторизации
 	}
 
 	const handleChange = (event) => {
@@ -38,7 +41,7 @@ const Login = ({ navigate, logIn, isLoggedIn }) => { // logIn из Provider
 					isLoggedIn
 						?
 						<span
-							onClick={() => { navigate('map') }}
+							onClick={() => { navigate("/map", { replace: true }) }}
 							className="block text-center cursor-pointer mt-11 bg-yellow-me py-4 px-10 text-2xl rounded-full">
 							Перейти на карту
 						</span>
@@ -97,7 +100,7 @@ const Login = ({ navigate, logIn, isLoggedIn }) => { // logIn из Provider
 								className="mt-8 text-gray-me text-center">
 								Новый пользователь?&nbsp;
 								<span
-									onClick={() => { navigate('registration') }}
+									onClick={() => { navigate("/registration") }}
 									className="inline-block text-yellow-me cursor-pointer">
 									Регистрация
 								</span>
@@ -112,10 +115,15 @@ const Login = ({ navigate, logIn, isLoggedIn }) => { // logIn из Provider
 }
 
 Login.propTypes = {
-	logIn: PropTypes.func.isRequired,
-	navigate: PropTypes.func.isRequired,
+	authenticate: PropTypes.func.isRequired,
 	isLoggedIn: PropTypes.bool.isRequired
 }
 
-export default Login
-export const LoginWithAuth = withAuth(Login)
+export default connect(
+	(state) => ({ isLoggedIn: state.auth.isLoggedIn }), // ЭТО СЕЛЕКТОР - (state) (auth - это имя reducers) (isLoggedIn - поле для роутинга что бы ходить по роутам)
+	{ authenticate } //диспатчим новый экшен
+)(Login)
+
+// connect принимает 2 аргумента
+// -----------------------------1 селектор
+// -----------------------------2 мапинг функции dispatch в props
