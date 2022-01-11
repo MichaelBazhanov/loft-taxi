@@ -35,8 +35,9 @@ const Profile = ({ logOut, sendFormCard, getFormCard, cardGetStatus, cardSendSta
 	}
 
 	useEffect(() => {
+		console.log('logOut, sendFormCard, getFormCard, cardGetStatus, cardSendStatus, cardName, cardNumber, expiryDate, cvc, token', {logOut, sendFormCard, getFormCard, cardGetStatus, cardSendStatus, cardName, cardNumber, expiryDate, cvc, token})
 		setData({ ...data, cardName, cardNumber, expiryDate, cvc })
-	}, [cardName, cardNumber, expiryDate, cvc, token])
+	}, [cardName, cardNumber, expiryDate, cvc])
 
 	useEffect(() => {
 		getFormCard()
