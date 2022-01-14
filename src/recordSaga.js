@@ -19,7 +19,6 @@ export const recordSaga = async (saga, initialAction = null) => {
     initialAction, // Action для саги для теста
   ).done
 
-	console.log('RECORD_SAGA********************', dispatched)
   return dispatched // возвращаем массив задиспатченных экшенов
 }
 
