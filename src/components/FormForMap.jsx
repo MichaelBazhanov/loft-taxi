@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux'
+import { getAddressList, getRoutes } from '../actions' //просто импортируем action
 import Select from '../components/Select'
 
 //img
@@ -9,12 +11,11 @@ import imgBusiness from '../assets/images/car-business.jpg'
 //Car
 import CarForForm from './CarForForm'
 
-
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const FormForMap = () => {
+const FormForMap = ({ getAddressList, address, getRoutes }) => {
 	const [active, setActive] = useState(false)
 	const [activeIndexCar, setActiveIndexCar] = useState(1)
 
@@ -23,6 +24,11 @@ const FormForMap = () => {
 		// делаем что то с данными
 		alert(`Форма отправлена! ${active}`)
 	}
+
+	useEffect(() => {
+		getAddressList()
+		// getRoutes() // сюда нужно отдать 2 адреса
+	}, [])
 
 	return (
 		<div className="container mx-auto h-screen relative pointer-events-none">
@@ -42,9 +48,9 @@ const FormForMap = () => {
 
 					<div className="py-8 px-10 mt-6 rounded-xl border">
 						<div className="flex -mx-3">
-							<CarForForm price={'150 ₽'} imgSRC={imgStandart} index={1} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar}  />
-							<CarForForm price={'200 ₽'} imgSRC={imgPremium} index={2} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar}/>
-							<CarForForm price={'300 ₽'} imgSRC={imgBusiness} index={3} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar}/>
+							<CarForForm price={'150 ₽'} imgSRC={imgStandart} index={1} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
+							<CarForForm price={'200 ₽'} imgSRC={imgPremium} index={2} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
+							<CarForForm price={'300 ₽'} imgSRC={imgBusiness} index={3} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
 						</div>
 						{/* верхний блок что то должен вернуть и я запишу это в инпуты */}
 						<input type="hidden" name="car" />
@@ -62,5 +68,9 @@ const FormForMap = () => {
 		</div>
 	)
 }
-
-export default FormForMap
+export default connect(
+	state => ({ address: state.address.address }),
+	// state => ({ address1: state.routes.address1}),
+	// state => ({ address2: state.routes.address2}),
+	{ getAddressList, getRoutes } // просто дергаем ACTION
+)(FormForMap)

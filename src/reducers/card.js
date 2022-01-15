@@ -49,14 +49,3 @@ export default function (state = initialState, action) {
       return state
   }
 }
-// case GET_FORM_CARD: {
-//   const obj = {
-//     cardName: action.payload.cardName,
-//     cardNumber: action.payload.cardNumber,
-//     expiryDate: action.payload.expiryDate,
-//     cvc: action.payload.cvc,
-//     id: action.payload.id,
-//     cardGetStatus: 'success',
-//   }
-//   return obj
-// }

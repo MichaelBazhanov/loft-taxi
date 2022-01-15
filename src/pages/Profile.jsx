@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux'
-import { logOut, sendFormCard, getFormCard } from '../actions' //просто импортируем action
+import { logOut, sendFormCard, getFormCard, getAddressList } from '../actions' //просто импортируем action
 import { useNavigate } from "react-router-dom";
 
 //img
@@ -35,7 +35,9 @@ const Profile = ({ logOut, sendFormCard, getFormCard, cardGetStatus, cardSendSta
 	}
 
 	useEffect(() => {
-		console.log('logOut, sendFormCard, getFormCard, cardGetStatus, cardSendStatus, cardName, cardNumber, expiryDate, cvc, token', {logOut, sendFormCard, getFormCard, cardGetStatus, cardSendStatus, cardName, cardNumber, expiryDate, cvc, token})
+		// ОШИБКА УПРАВЛЯЕМОЙ И НЕ УПРАВЛЯЕМОЙ ФОРМЫ !!!!!!!!!!!!!!!!!!!!!!
+		// console.log('logOut, sendFormCard, getFormCard, cardGetStatus, cardSendStatus, cardName, cardNumber, expiryDate, cvc, token', {logOut, sendFormCard, getFormCard, cardGetStatus, cardSendStatus, cardName, cardNumber, expiryDate, cvc, token})
+
 		setData({ ...data, cardName, cardNumber, expiryDate, cvc })
 	}, [cardName, cardNumber, expiryDate, cvc])
 
