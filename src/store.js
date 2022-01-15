@@ -1,12 +1,9 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import rootReducer from './reducers' // он подхватит index.js а там экспорт по умолчанию
 
-// import { authMiddleware } from './authMiddleware'
-import { cardSendMiddleware, cardGetMiddleware } from './cardMiddleware'
-
 //Подключаем главную SAGA
 import createSagaMiddleware from 'redux-saga'
-import { authSaga } from './authSaga' // saga -  сага авторизации
+import { rootSaga } from './rootSaga' // rootSaga - главная сага в нее входят все саги
 const sagaMiddleware = createSagaMiddleware()
 
 //redux-devtools
@@ -16,12 +13,11 @@ const CreateAppStore = () => {
   const store = createStore(
     rootReducer,
     composeEnhancers(
-      // applyMiddleware(authMiddleware, cardSendMiddleware, cardGetMiddleware), // в нее передаем кастомный middleware
-      applyMiddleware(sagaMiddleware, cardSendMiddleware, cardGetMiddleware), // в нее передаем кастомный middleware
+      applyMiddleware(sagaMiddleware), // в нее передаем кастомный middleware
     ),
   )
 
-  sagaMiddleware.run(authSaga)
+  sagaMiddleware.run(rootSaga)
 
   return store
 }

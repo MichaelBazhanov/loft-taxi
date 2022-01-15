@@ -204,7 +204,7 @@ export default connect(
 		cardNumber: state.card.cardNumber,
 		expiryDate: state.card.expiryDate,
 		cvc: state.card.cvc,
-		token: state.auth.token,
+		token: state.auth.token, // token берем стейта авторизации
 		cardSendStatus: state.card.cardSendStatus,
 		cardGetStatus: state.card.cardGetStatus,
 	}),
