@@ -63,16 +63,31 @@ export const addressListFailure = (error) => ({
 })
 //==================================================================================== БЛОК ПОЛУЧЕНИЯ ДОСТУПНЫХ МАРШРУТОВ
 export const GET_ROUTES = 'GET_ROUTES'
-export const ROUTES_SUCCESS = 'GET_ROUTES_SUCCESS'
+export const GET_ROUTES_COORDINATES = 'GET_ROUTES_COORDINATES'
+// export const ROUTES_SUCCESS = 'GET_ROUTES_SUCCESS'
+export const ROUT_ADDRESS1 = 'ROUT_ADDRESS1'
+export const ROUT_ADDRESS2 = 'ROUT_ADDRESS2'
 export const ROUTES_FAILURE = 'GET_ROUTES_FAILURE'
 
 export const getRoutes = () => ({
   type: GET_ROUTES,
 })
-export const routesSuccess = (address1, address2) => ({
-  type: ROUTES_SUCCESS,
-  payload: { address1, address2 },
+export const getRoutesCoordinates = (coordinates) => ({
+  type: GET_ROUTES_COORDINATES,
+  payload: { coordinates },
 })
+export const routAddress1 = (address1) => ({
+  type: ROUT_ADDRESS1,
+  payload: { address1 },
+})
+export const routAddress2 = (address2) => ({
+  type: ROUT_ADDRESS2,
+  payload: { address2 },
+})
+// export const routesSuccess = (address1, address2) => ({
+//   type: ROUTES_SUCCESS,
+//   payload: { address1, address2 },
+// })
 export const routesFailure = (error) => ({
   type: ROUTES_FAILURE,
   payload: { error },

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import mapboxGl from "mapbox-gl";
+import { connect } from 'react-redux'
+import { getRoutes } from '../actions' //просто импортируем action
 
 import FormForMap from '../components/FormForMap'
 
@@ -14,8 +16,11 @@ class Map extends Component {
 			container: this.mapContainer.current, // это ссылка на элемент которому мы передали референс
 			style: 'mapbox://styles/mapbox/streets-v11', // style URL
 			center: [40.41667, 56.13333], // starting position [lng, lat]
+			// center: this.props.coordinates[2], // starting position [lng, lat]
 			zoom: 12 // starting zoom
 		})
+
+		this.props.getRoutes()
 	}
 
 	componentWillUnmount() {
@@ -32,10 +37,18 @@ class Map extends Component {
 					ref={this.mapContainer}
 				>
 				</div>
+				{/* <h1>========================================</h1>
+				{this.props.coordinates}
+				<h1>========================================</h1> */}
 				<FormForMap />
 			</div>
 		)
 	}
 }
 
-export default Map
+export default connect(
+	state => ({
+		coordinates: state.routes.coordinates,
+	}),
+	{ getRoutes } // просто дергаем ACTION
+)(Map)

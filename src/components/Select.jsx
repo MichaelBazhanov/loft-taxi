@@ -1,32 +1,30 @@
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronDownIcon, LocationMarkerIcon, XIcon } from '@heroicons/react/solid'
-
-const people = [
-	{
-		id: 1,
-		rout: 'Маршрут 1',
-	},
-	{
-		id: 2,
-		rout: 'Маршрут 2',
-	},
-	{
-		id: 3,
-		rout: 'Маршрут 3',
-	},
-]
+import { connect } from 'react-redux'
+import { routAddress1, routAddress2 } from '../actions' //просто импортируем action
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
-	const [selected, setSelected] = useState(people[1])
+function Example({ addressList, currentAddress, routAddress1, routAddress2, idx }) {
+	const [selected, setSelected] = useState(currentAddress)
+
+	useEffect(() => {
+		if (idx === '1') routAddress1(currentAddress)
+		if (idx === '2') routAddress2(currentAddress)
+	}, [])
+
+	const changeSelected = (event) => {
+		setSelected(event)
+		if (idx === '1') routAddress1(event)
+		if (idx === '2') routAddress2(event)
+	}
 
 	return (
-		<Listbox value={selected} onChange={setSelected}>
+		<Listbox value={selected} onChange={changeSelected}>
 			{({ open }) => (
 				<>
 					<div className="mt-1 relative">
@@ -49,7 +47,7 @@ export default function Example() {
 							leaveTo="opacity-0"
 						>
 							<Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-								{people.map((person) => (
+								{addressList.map((person) => (
 									<Listbox.Option
 										key={person.id}
 										className={({ active }) =>
@@ -93,3 +91,8 @@ export default function Example() {
 		</Listbox>
 	)
 }
+
+export default connect(
+	null,
+	{ routAddress1, routAddress2 } // просто дергаем ACTION
+)(Example)

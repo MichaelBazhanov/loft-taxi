@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux'
-import { getAddressList, getRoutes } from '../actions' //просто импортируем action
+import { getAddressList } from '../actions' //просто импортируем action
 import Select from '../components/Select'
 
 //img
@@ -15,9 +15,10 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const FormForMap = ({ getAddressList, address, getRoutes }) => {
+const FormForMap = ({ getAddressList, address }) => {
 	const [active, setActive] = useState(false)
 	const [activeIndexCar, setActiveIndexCar] = useState(1)
+	const [addressUSE, setAddressUSE] = useState([])
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -27,11 +28,23 @@ const FormForMap = ({ getAddressList, address, getRoutes }) => {
 
 	useEffect(() => {
 		getAddressList()
-		// getRoutes() // сюда нужно отдать 2 адреса
 	}, [])
+
+	//================================================================= ЭТО занимает какое то время и до этого компонент не отображаем
+	// console.log('рендер компонента :', address)
+	useEffect(() => { // дополнительная обработка адресов
+		let addr = address.map((el, inx) => {
+			return { id: inx + 1, rout: el }
+		})
+		// console.log('useEffect :', addr)
+		setAddressUSE(addr) // Установка useState запускает перерэндер компонента
+	}, [address])
+	// console.log('Установленный state in useEffect: ', addressUSE)
+	//================================================================= ЭТО занимает какое то время и до этого компонент не отображаем
 
 	return (
 		<div className="container mx-auto h-screen relative pointer-events-none">
+
 			<div className="flex flex-col">
 
 				<form onSubmit={handleSubmit} className={classNames(active ? 'hidden' : '', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg pointer-events-auto')}>
@@ -40,8 +53,8 @@ const FormForMap = ({ getAddressList, address, getRoutes }) => {
 					<input type="hidden" name="rout-2" />
 
 					<div className="p-6 pb-0">
-						<Select />
-						<Select />
+						{addressUSE.length > 0 && <Select addressList={addressUSE} currentAddress={addressUSE[0]} idx='1'/> }
+						{addressUSE.length > 0 && <Select addressList={addressUSE} currentAddress={addressUSE[address.length - 1]} idx='2' /> }
 					</div>
 
 					<hr className="border w-full" />
@@ -70,7 +83,5 @@ const FormForMap = ({ getAddressList, address, getRoutes }) => {
 }
 export default connect(
 	state => ({ address: state.address.address }),
-	// state => ({ address1: state.routes.address1}),
-	// state => ({ address2: state.routes.address2}),
-	{ getAddressList, getRoutes } // просто дергаем ACTION
+	{ getAddressList } // просто дергаем ACTION
 )(FormForMap)

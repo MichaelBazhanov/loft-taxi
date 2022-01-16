@@ -71,6 +71,6 @@ export const serverGetRoutes = async (address1, address2) => {
       },
     },
   )
-    .then((res) => (res.status === 200 ? res.json() : ''))
+    .then((res) => (res.status === 200 ? res.json() : 'error'))
     .then((data) => data)
 }
