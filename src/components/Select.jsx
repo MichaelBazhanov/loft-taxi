@@ -13,9 +13,9 @@ function Example({ addressList, currentAddress, routAddress1, routAddress2, idx 
 	const [selected, setSelected] = useState(currentAddress)
 
 	useEffect(() => {
-		if (idx === '1') routAddress1(currentAddress)
-		if (idx === '2') routAddress2(currentAddress)
-	}, [])
+		if (idx === '1') routAddress1(selected)
+		if (idx === '2') routAddress2(selected)
+	}, [addressList])
 
 	const changeSelected = (event) => {
 		setSelected(event)

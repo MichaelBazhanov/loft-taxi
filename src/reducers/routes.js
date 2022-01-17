@@ -7,8 +7,8 @@ import {
 } from '../actions'
 
 const initialState = {
-  address1: 'Пулково (LED)',
-  address2: 'Эрмитаж',
+  address1: null,
+  address2: null,
   error: null,
   coordinates: [],
 }

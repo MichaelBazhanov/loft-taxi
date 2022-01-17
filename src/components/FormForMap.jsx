@@ -15,7 +15,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const FormForMap = ({ getAddressList, address }) => {
+const FormForMap = ({ getAddressList, address, address1, address2 }) => {
 	const [active, setActive] = useState(false)
 	const [activeIndexCar, setActiveIndexCar] = useState(1)
 	const [addressUSE, setAddressUSE] = useState([])
@@ -38,9 +38,11 @@ const FormForMap = ({ getAddressList, address }) => {
 		})
 		// console.log('useEffect :', addr)
 		setAddressUSE(addr) // Установка useState запускает перерэндер компонента
-	}, [address])
+	}, [address, address1, address2])
 	// console.log('Установленный state in useEffect: ', addressUSE)
 	//================================================================= ЭТО занимает какое то время и до этого компонент не отображаем
+
+
 
 	return (
 		<div className="container mx-auto h-screen relative pointer-events-none">
@@ -48,13 +50,17 @@ const FormForMap = ({ getAddressList, address }) => {
 			<div className="flex flex-col">
 
 				<form onSubmit={handleSubmit} className={classNames(active ? 'hidden' : '', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg pointer-events-auto')}>
-					{/* Select что то должен вернуть и я запишу это в инпуты */}
-					<input type="hidden" name="rout-1" />
-					<input type="hidden" name="rout-2" />
 
 					<div className="p-6 pb-0">
-						{addressUSE.length > 0 && <Select addressList={addressUSE} currentAddress={addressUSE[0]} idx='1'/> }
-						{addressUSE.length > 0 && <Select addressList={addressUSE} currentAddress={addressUSE[address.length - 1]} idx='2' /> }
+						{/* {addressUSE.length > 0 && <Select addressList={addressUSE} currentAddress={addressUSE[0]} idx='1' />}
+						{addressUSE.length > 0 && <Select addressList={addressUSE} currentAddress={addressUSE[address.length - 1]} idx='2' />} */}
+
+						{/* {address1 && <h2> address1 : {address1.rout}</h2>}
+						{addressUSE && <h2>addressUSE : {addressUSE.map(item => item.rout)}</h2>} */}
+
+						{/* {address1 && addressUSE.length > 0 && <Select addressList={addressUSE.filter(item => item.rout !== address1.rout)} currentAddress={addressUSE[0]} idx='1' />} */}
+						{addressUSE.length > 0 && <Select addressList={addressUSE.filter(item => address1 ? item.rout !== address1.rout : true)} currentAddress={addressUSE[0]} idx='1' />}
+						{addressUSE.length > 0 && <Select addressList={addressUSE.filter(item => address2 ? item.rout !== address1.rout : true)} currentAddress={addressUSE[address.length - 1]} idx='2' />}
 					</div>
 
 					<hr className="border w-full" />
@@ -82,6 +88,10 @@ const FormForMap = ({ getAddressList, address }) => {
 	)
 }
 export default connect(
-	state => ({ address: state.address.address }),
+	state => ({
+		address: state.address.address,
+		address1: state.routes.address1,
+		address2: state.routes.address2
+	}),
 	{ getAddressList } // просто дергаем ACTION
 )(FormForMap)

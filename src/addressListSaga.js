@@ -11,7 +11,7 @@ export function* addressList() {
     const { addresses } = yield call(serverGetAddressList)
     yield put(addressListSuccess(addresses))
   } catch (error) {
-    yield put(addressListFailure(error))
+    yield put(addressListFailure(error.message))
   }
 }
 //======================================================= ТЕСТИРОВАНИЕ
