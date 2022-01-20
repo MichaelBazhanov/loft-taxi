@@ -15,7 +15,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const FormForMap = ({ getAddressList, address, address1, address2 }) => {
+const FormForMap = ({ getAddressList, isLoading, error, address, address1, address2 }) => {
 	const [active, setActive] = useState(false)
 	const [activeIndexCar, setActiveIndexCar] = useState(1)
 	const [addressUSE, setAddressUSE] = useState([])
@@ -27,21 +27,40 @@ const FormForMap = ({ getAddressList, address, address1, address2 }) => {
 	}
 
 	useEffect(() => {
-		getAddressList()
+		getAddressList() // Этот dispatch запускает перерэндер компонента путем обновления пропсов
 	}, [])
 
 	//================================================================= ЭТО занимает какое то время и до этого компонент не отображаем
-	// console.log('рендер компонента :', address)
-	useEffect(() => { // дополнительная обработка адресов
-		let addr = address.map((el, inx) => {
-			return { id: inx + 1, rout: el }
-		})
-		// console.log('useEffect :', addr)
-		setAddressUSE(addr) // Установка useState запускает перерэндер компонента
-	}, [address, address1, address2])
-	// console.log('Установленный state in useEffect: ', addressUSE)
+	console.log('рендер компонента 1 :', isLoading, error, address, address1, address2) // Рендер компонента ДО useEffect
+	useEffect(() => {
+		console.log('Установка sate в useEffect')
+		setAddressUSE('123') // Установка useState запускает перерэндер компонента
+	}, [])
+	console.log('рендер компонента 2 :', addressUSE, isLoading, error, address, address1, address2) // Рендер компонента ПОСЛЕ useEffect
 	//================================================================= ЭТО занимает какое то время и до этого компонент не отображаем
 
+	if (isLoading) return (
+		<div className="container mx-auto h-screen relative pointer-events-none">
+			<div className="flex justify-center items-center h-full w-full">
+				<svg className="animate-spin h-10 w-10 text-yellow-me" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+					<circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+					<path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+				</svg>
+			</div>
+		</div>
+	)
+
+	if (error) return (
+		<div className="container mx-auto h-screen relative pointer-events-none">
+			<div className="flex justify-center items-center h-full w-full">
+				<div className="p-3 text-yellow-me text-4xl">{error ? error : 'Произошла сетевая ошибка'}</div>
+			</div>
+		</div>
+	)
+
+	const filterAddress = () => {
+		return address.filter(item => address1 && address2 ? item.rout !== address1.rout && item.rout !== address2.rout : true)
+	}
 
 
 	return (
@@ -52,15 +71,8 @@ const FormForMap = ({ getAddressList, address, address1, address2 }) => {
 				<form onSubmit={handleSubmit} className={classNames(active ? 'hidden' : '', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg pointer-events-auto')}>
 
 					<div className="p-6 pb-0">
-						{/* {addressUSE.length > 0 && <Select addressList={addressUSE} currentAddress={addressUSE[0]} idx='1' />}
-						{addressUSE.length > 0 && <Select addressList={addressUSE} currentAddress={addressUSE[address.length - 1]} idx='2' />} */}
-
-						{/* {address1 && <h2> address1 : {address1.rout}</h2>}
-						{addressUSE && <h2>addressUSE : {addressUSE.map(item => item.rout)}</h2>} */}
-
-						{/* {address1 && addressUSE.length > 0 && <Select addressList={addressUSE.filter(item => item.rout !== address1.rout)} currentAddress={addressUSE[0]} idx='1' />} */}
-						{addressUSE.length > 0 && <Select addressList={addressUSE.filter(item => address1 ? item.rout !== address1.rout : true)} currentAddress={addressUSE[0]} idx='1' />}
-						{addressUSE.length > 0 && <Select addressList={addressUSE.filter(item => address2 ? item.rout !== address1.rout : true)} currentAddress={addressUSE[address.length - 1]} idx='2' />}
+						{address.length > 0 && <Select addressList={filterAddress()} currentAddress={address[0]} idx='1' />}
+						{address.length > 0 && <Select addressList={filterAddress()} currentAddress={address[address.length - 1]} idx='2' />}
 					</div>
 
 					<hr className="border w-full" />
@@ -89,6 +101,8 @@ const FormForMap = ({ getAddressList, address, address1, address2 }) => {
 }
 export default connect(
 	state => ({
+		isLoading: state.address.isLoading,
+		error: state.address.error,
 		address: state.address.address,
 		address1: state.routes.address1,
 		address2: state.routes.address2

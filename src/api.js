@@ -58,11 +58,6 @@ export const serverGetAddressList = async () => {
       },
     })
       .then((res) => res.json())
-      // .then((data) =>
-      //   data.address.map((el, inx) => {
-      //     return { id: inx + 1, rout: el }
-      //   }),
-      // )
       .then((data) => data)
   )
 }
