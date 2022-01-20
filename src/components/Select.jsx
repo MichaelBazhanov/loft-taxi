@@ -3,24 +3,25 @@ import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronDownIcon, LocationMarkerIcon, XIcon } from '@heroicons/react/solid'
 import { connect } from 'react-redux'
-import { routAddress1, routAddress2 } from '../actions' //просто импортируем action
+// import { routAddress1, routAddress2 } from '../actions' //просто импортируем action
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-function Example({ addressList, currentAddress, routAddress1, routAddress2, idx }) {
+function Example({ addressList, currentAddress, onChange }) {
 	const [selected, setSelected] = useState(currentAddress)
 
-	useEffect(() => {
-		if (idx === '1') routAddress1(selected)
-		if (idx === '2') routAddress2(selected)
-	}, [addressList])
+	// useEffect(() => {
+	// 	if (idx === '1') routAddress1(selected)
+	// 	if (idx === '2') routAddress2(selected)
+	// }, [addressList])
 
 	const changeSelected = (event) => {
 		setSelected(event)
-		if (idx === '1') routAddress1(event)
-		if (idx === '2') routAddress2(event)
+		onChange(event)
+		// if (idx === '1') routAddress1(event)
+		// if (idx === '2') routAddress2(event)
 	}
 
 	return (
@@ -94,5 +95,6 @@ function Example({ addressList, currentAddress, routAddress1, routAddress2, idx 
 
 export default connect(
 	null,
-	{ routAddress1, routAddress2 } // просто дергаем ACTION
+	null,
+	// { routAddress1, routAddress2 } // просто дергаем ACTION
 )(Example)
