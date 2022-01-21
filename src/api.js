@@ -50,22 +50,20 @@ export const serverGetCard = async (token) => {
 
 // Получение доступных адресов на клиенте
 export const serverGetAddressList = async () => {
-  return (
-    fetch(`https://loft-taxi.glitch.me/addressList`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => data)
-  )
+  return fetch(`https://loft-taxi.glitch.me/addressList`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => data)
 }
 
 // Получение доступных маршрутов на клиенте
 export const serverGetRoutes = async (address1, address2) => {
   return fetch(
-    `https://loft-taxi.glitch.me/route?address1=${address1}&address2=${address2}`,
+    `https://loft-taxi.glitch.me/route?address1=${address1.rout}&address2=${address2.rout}`,
     {
       method: 'GET',
       headers: {
@@ -73,6 +71,6 @@ export const serverGetRoutes = async (address1, address2) => {
       },
     },
   )
-    .then((res) => (res.status === 200 ? res.json() : 'error'))
+    .then((res) => res.json())
     .then((data) => data)
 }

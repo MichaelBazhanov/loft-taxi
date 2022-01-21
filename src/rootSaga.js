@@ -12,4 +12,7 @@ export function* rootSaga() {
     fork(addressListSaga), // saga - сага получения адресов
     fork(routesSaga), // saga - сага получения маршрутов
   ])
+
+  // yield fork(authSaga) // равнозначность
+  // yield fork(cardSend) // равнозначность
 }

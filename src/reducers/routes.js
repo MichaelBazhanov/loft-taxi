@@ -1,52 +1,39 @@
 import {
-  ROUTES_SUCCESS,
-  ROUTES_FAILURE,
   GET_ROUTES_COORDINATES,
-  // ROUT_ADDRESS1,
-  // ROUT_ADDRESS2,
+  ROUTES_COORDINATES_SUCCESS,
+  ROUTES_COORDINATES_FAILURE,
 } from '../actions'
 
 const initialState = {
-  // address1: null,
-  // address2: null,
-  error: null,
   coordinates: [],
+  address1: null,
+  address2: null,
+  isLoading: false,
+  error: null,
 }
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case GET_ROUTES_COORDINATES: {
       return {
-        coordinates: action.payload.coordinates,
-        // address1: null,
-        // address2: null,
+        ...state,
+        address1: action.payload.address1,
+        address2: action.payload.address2,
+        isLoading: true,
         error: null,
       }
     }
-    // case ROUTES_SUCCESS: {
-    //   return {
-    //     address1: action.payload.address1,
-    //     address2: action.payload.address2,
-    //   }
-    // }
-    // case ROUT_ADDRESS1: {
-    //   return {
-    //     ...state,
-    //     address1: action.payload.address1,
-    //   }
-    // }
-    // case ROUT_ADDRESS2: {
-    //   return {
-    //     ...state,
-    //     address2: action.payload.address2,
-    //   }
-    // }
-    case ROUTES_FAILURE: {
+    case ROUTES_COORDINATES_SUCCESS: {
       return {
+        ...state,
+        coordinates: action.payload.coordinates,
+      }
+    }
+    case ROUTES_COORDINATES_FAILURE: {
+      return {
+        ...state,
         error: action.payload.error,
         coordinates: null,
-        // address1: null,
-        // address2: null,
       }
     }
     default:

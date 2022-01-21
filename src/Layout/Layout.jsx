@@ -10,7 +10,7 @@ const Layout = () => {
 
 	return (
 		<div className='App sans antialiased'>
-			{(location.pathname !== '/login' && location.pathname !== '/registration') && <Header />}
+			{(location.pathname !== '/login' && location.pathname !== '/registration' && location.pathname !== '/') && <Header />}
 			<main>
 				<section className="bg-black-me">
 					<Outlet />

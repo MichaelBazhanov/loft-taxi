@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux'
-import { getAddressList } from '../actions' //просто импортируем action
+import { getAddressList, getRoutesCoordinates } from '../actions' //просто импортируем action
 import Select from '../components/Select'
 
 //img
@@ -21,11 +21,12 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const FormForMap = ({ getAddressList, isLoading, error, address }) => {
+const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, address }) => {
 	const [active, setActive] = useState(false)
 	const [activeIndexCar, setActiveIndexCar] = useState(1)
 	const [addressStart, setAddressStart] = useState(null)
 	const [addressEnd, setAddressEnd] = useState(null)
+	// console.log('RENDER COMPONENT ----------------------')
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
@@ -33,22 +34,23 @@ const FormForMap = ({ getAddressList, isLoading, error, address }) => {
 		alert(`Форма отправлена! ${active}  ${activeIndexCar} ${addressStart.rout} ${addressEnd.rout}`)
 	}
 
+	// console.log('  isLoading, error, address ', isLoading, error, address)
+	// console.log('  addressStart, addressEnd ', addressStart, addressEnd)
+
+	//Все useEffect при первом рендере выполняются !!!
 	useEffect(() => {
-		getAddressList() // Этот dispatch запускает перерэндер компонента путем обновления пропсов
+		// console.log('useEffect : getAddressList')
+		getAddressList()
 	}, [])
 	useEffect(() => {
-		setAddressStart(address[0])
-		setAddressEnd(address[address.length - 1])
+		// console.log('useEffect : address => setAddressStart setAddressEnd')
+		if (address.length > 0) { setAddressStart(address[0]); setAddressEnd(address[address.length - 1]) }
 	}, [address])
+	useEffect(() => {
+		// console.log('useEffect : addressStart && addressEnd => getRoutesCoordinates')
+		if (addressStart && addressEnd && addressStart.rout && addressEnd.rout) { getRoutesCoordinates(addressStart, addressEnd) }
+	}, [addressStart, addressEnd])
 
-	//================================================================= ЭТО занимает какое то время и до этого компонент не отображаем
-	// console.log('рендер компонента 1 :', isLoading, error, address, address1, address2) // Рендер компонента ДО useEffect
-	// useEffect(() => {
-	// 	console.log('Установка sate в useEffect')
-	// 	setAddressUSE('123') // Установка useState запускает перерэндер компонента
-	// }, [])
-	// console.log('рендер компонента 2 :', addressUSE, isLoading, error, address, address1, address2) // Рендер компонента ПОСЛЕ useEffect
-	//================================================================= ЭТО занимает какое то время и до этого компонент не отображаем
 
 	if (isLoading) return <Loading />
 	if (error) return <Error />
@@ -69,9 +71,15 @@ const FormForMap = ({ getAddressList, isLoading, error, address }) => {
 				<form onSubmit={handleSubmit} className={classNames(active ? 'hidden' : '', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg pointer-events-auto')}>
 
 					<div className="p-6 pb-0">
-						{address.length > 0 && <Select addressList={filterAddress()} currentAddress={address[0]}
+						{address.length > 0 && <Select
+							placeholder='Точка отправления'
+							addressList={filterAddress()}
+							currentAddress={address[0]}
 							onChange={changeAddress1} />}
-						{address.length > 0 && <Select addressList={filterAddress()} currentAddress={address[address.length - 1]}
+						{address.length > 0 && <Select
+							placeholder='Точка прибытия'
+							addressList={filterAddress()}
+							currentAddress={address[address.length - 1]}
 							onChange={changeAddress2} />}
 					</div>
 
@@ -105,5 +113,5 @@ export default connect(
 		error: state.address.error,
 		address: state.address.address,
 	}),
-	{ getAddressList } // просто дергаем ACTION
+	{ getAddressList, getRoutesCoordinates } // просто дергаем ACTION
 )(FormForMap)
