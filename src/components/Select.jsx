@@ -9,12 +9,12 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-function Example({ addressList, currentAddress, placeholder, onChange }) {
-	const [selected, setSelected] = useState(currentAddress)
+function Example({ addressList, currentAddress, placeholder, onChange }) { console.log('select: ',addressList)
+	const [selected, setSelected] = useState(addressList)
 
 	const changeSelected = (event) => {
 		setSelected(event)
-		onChange(event)
+		onChange(event) //меняем стайет родителя
 	}
 
 	return (
@@ -25,8 +25,8 @@ function Example({ addressList, currentAddress, placeholder, onChange }) {
 						<Listbox.Button className="relative w-full bg-white border-b border-gray-300 pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-yellow-me focus:border-yellow-me sm:text-sm" placeholder={placeholder}>
 							<span className="flex items-center">
 								<div className="flex-shrink-0 h-3 w-3 rounded-full bg-black" />
-								{/* <span className="ml-3 block truncate">{selected && selected.rout ? selected.rout : ''}</span> */}
-								<span className="ml-3 block truncate">{selected.rout}</span>
+								<span className="ml-3 block truncate">{selected && selected.rout ? selected.rout : placeholder}</span>
+								{/* <span className="ml-3 block truncate">{selected.rout}</span> */}
 							</span>
 							<span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none divide-x-2">
 								<XIcon className="h-5 w-5 text-gray-400 mr-1" aria-hidden="true" />

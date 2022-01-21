@@ -31,7 +31,7 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, ad
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		// делаем что то с данными
-		alert(`Форма отправлена! ${active}  ${activeIndexCar} ${addressStart.rout} ${addressEnd.rout}`)
+		alert(`Форма отправлена! ${active}  ${activeIndexCar}`)
 	}
 
 	// console.log('  isLoading, error, address ', isLoading, error, address)
@@ -42,10 +42,10 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, ad
 		// console.log('useEffect : getAddressList')
 		getAddressList()
 	}, [])
-	useEffect(() => {
-		// console.log('useEffect : address => setAddressStart setAddressEnd')
-		if (address.length > 0) { setAddressStart(address[0]); setAddressEnd(address[address.length - 1]) }
-	}, [address])
+	// useEffect(() => {
+	// 	// console.log('useEffect : address => setAddressStart setAddressEnd')
+	// 	if (address.length > 0) { setAddressStart(address[0]); setAddressEnd(address[address.length - 1]) }
+	// }, [address])
 	useEffect(() => {
 		// console.log('useEffect : addressStart && addressEnd => getRoutesCoordinates')
 		if (addressStart && addressEnd && addressStart.rout && addressEnd.rout) { getRoutesCoordinates(addressStart, addressEnd) }
@@ -56,12 +56,17 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, ad
 	if (error) return <Error />
 
 	const filterAddress = () => {
-		return address.filter(item => addressStart && addressEnd ? item.rout !== addressStart.rout && item.rout !== addressEnd.rout : true)
+		// return address.filter(item => addressStart && addressEnd ? item.rout !== addressStart.rout && item.rout !== addressEnd.rout : true)
+		return address.filter(item => addressStart ? item.rout !== addressStart.rout : true).filter(item => addressEnd ? item.rout !== addressEnd.rout : true)
+
 	}
 
-
-	const changeAddress1 = value => setAddressStart(value)
-	const changeAddress2 = value => setAddressEnd(value)
+	const changeAddress1 = value => {
+		setAddressStart(value)
+	}
+	const changeAddress2 = value => {
+		setAddressEnd(value)
+	}
 
 	return (
 		<div className="container mx-auto h-screen relative pointer-events-none">
@@ -72,14 +77,14 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, ad
 
 					<div className="p-6 pb-0">
 						{address.length > 0 && <Select
-							placeholder='Точка отправления'
+							placeholder='Откуда'
 							addressList={filterAddress()}
-							currentAddress={address[0]}
+							// currentAddress={address[0]}
 							onChange={changeAddress1} />}
 						{address.length > 0 && <Select
-							placeholder='Точка прибытия'
+							placeholder='Куда'
 							addressList={filterAddress()}
-							currentAddress={address[address.length - 1]}
+							// currentAddress={address[address.length - 1]}
 							onChange={changeAddress2} />}
 					</div>
 
@@ -93,14 +98,15 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, ad
 						</div>
 						{/* верхний блок что то должен вернуть и я запишу это в инпуты */}
 						<input type="hidden" name="car" />
-						<button onClick={() => { setActive(true) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7">Заказать</button>
+						<button onClick={() => { setActive(true) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7 disabled:opacity-75"
+							disabled={(!(addressStart && addressStart.rout && addressEnd && addressEnd.rout))}>Заказать</button>
 					</div>
 				</form>
 
 				<div className={classNames(active ? '' : 'hidden', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg py-10 px-11 pointer-events-auto')}>
 					<p className="font-bold text-4xl">Заказ размещен</p>
 					<p className="mt-4 text-lg text-gray-me">Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.</p>
-					<button onClick={() => { setActive(false) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7">Сделать новый заказ</button>
+					<button onClick={() => { setActive(false) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7" >Сделать новый заказ</button>
 				</div>
 
 			</div>
