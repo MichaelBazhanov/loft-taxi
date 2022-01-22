@@ -11,7 +11,6 @@ export const logOut = () => ({
   type: LOG_OUT,
 })
 export const authenticate = (email, password) => ({
-  // dispatch из компонента logIn (ЭТОТ ТИП В reducers не обрабатывается)
   type: AUTHENTICATE,
   payload: { email, password },
 })

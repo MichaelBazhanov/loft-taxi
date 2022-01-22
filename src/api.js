@@ -1,3 +1,4 @@
+// Авторизация
 export const serverLogin = async (email, password) => {
   return fetch(`https://loft-taxi.glitch.me/auth`, {
     method: 'POST',
@@ -11,9 +12,21 @@ export const serverLogin = async (email, password) => {
       return { success: data.success, token: data.token }
     })
 }
-// https://loft-taxi   => выполняем запрос по адресу сервера
-// glitch.me           => расположен на сервисе этом
-// auth?username=${email}&password=${password} => GET запрос
+
+// Регистрация
+export const serverRegistration = async (email, password, name) => {
+  return fetch(`https://loft-taxi.glitch.me/register`, {
+    method: 'POST',
+    body: JSON.stringify({ email, password, name }), // данные могут быть 'строкой' или {объектом}!
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      return { success: data.success, token: data.token }
+    })
+}
 
 // Отправка данных карты на сервер
 export const serverSendCard = async (
