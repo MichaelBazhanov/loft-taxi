@@ -4,6 +4,8 @@ import { cardSend, cardGet } from './cardSaga'
 import { addressListSaga } from './addressListSaga'
 import { routesSaga } from './routesSaga'
 
+import { registrationSaga } from './modules/registration'
+
 export function* rootSaga() {
   yield all([
     fork(authSaga), // saga - сага авторизации
@@ -11,6 +13,8 @@ export function* rootSaga() {
     fork(cardGet), // saga - сага получения карты
     fork(addressListSaga), // saga - сага получения адресов
     fork(routesSaga), // saga - сага получения маршрутов
+
+    fork(registrationSaga), // saga - сага регистрации
   ])
 
   // yield fork(authSaga) // равнозначность

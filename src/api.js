@@ -14,17 +14,18 @@ export const serverLogin = async (email, password) => {
 }
 
 // Регистрация
-export const serverRegistration = async (email, password, name) => {
+export const serverRegistration = async (email, password, name, surname) => {
+  // console.log('serverRegistration in', email, password, name, surname)
   return fetch(`https://loft-taxi.glitch.me/register`, {
     method: 'POST',
-    body: JSON.stringify({ email, password, name }), // данные могут быть 'строкой' или {объектом}!
+    body: JSON.stringify({ email, name, password, surname }), // данные могут быть 'строкой' или {объектом}!
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then((res) => res.json())
     .then((data) => {
-      return { success: data.success, token: data.token }
+      return { success: data.success, token: data.token, error: data.error }
     })
 }
 

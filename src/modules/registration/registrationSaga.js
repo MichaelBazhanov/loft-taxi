@@ -9,14 +9,16 @@ import { call, takeEvery, put } from 'redux-saga/effects'
 //========================================== ЭТА ЧАСТЬ ПОПАДАЕТ НА ТЕСТ!!! ==========================================
 export function* registration(action) {
   try {
-    const { email, password, name } = action.payload
+    const { email, password, name, surname } = action.payload
 
     const { success, token, error } = yield call(
       serverRegistration,
       email,
       password,
       name,
+      surname,
     )
+
     if (success) {
       yield put(registrationSuccess(success, token))
     } else {
@@ -29,6 +31,6 @@ export function* registration(action) {
 }
 //========================================== ЭТА ЧАСТЬ ПОПАДАЕТ НА ТЕСТ!!! ==========================================
 
-export function* authSaga() {
+export function* registrationSaga() {
   yield takeEvery(GET_REGISTRATION, registration) // следим за Action и запускаем Saga
 }

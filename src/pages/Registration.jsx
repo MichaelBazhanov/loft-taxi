@@ -1,23 +1,26 @@
 import React, { useState } from "react";
 import logoTaxiVertical from '../assets/images/logo-taxi-vertical.svg';
 import { useNavigate } from "react-router-dom";
+import { connect } from 'react-redux'
+import { getRegistration } from '../modules/registration'
 
-const Registration = () => {
-	const [state, setState] = useState({ email: '', name: '', password: '' })
+const Registration = ({ getRegistration }) => {
+	const [state, setState] = useState({ email: 'email@example.com', name: 'Name', password: 'password', surname: 'Surname' })
 
 	const navigate = useNavigate()
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
-		// делаем что то с данными
-		alert(`Форма отправлена! ${state.email} ${state.name} ${state.password}`)
+
+		const { email, password, name, surname } = state // получаем из state
+		getRegistration(email, password, name, surname)
 	}
 
 	const handleChange = (event) => {
 		setState({ ...state, [event.target.name]: event.target.value })
 	}
 
-	const { email, name, password } = state
+	const { email, name, password, surname } = state
 
 	return (
 		<div
@@ -69,6 +72,20 @@ const Registration = () => {
 					</label>
 
 					<label className="flex flex-col justify-between font-bold cursor-pointer mt-6">
+						<span>Surname*</span>
+						<input
+							onChange={handleChange}
+							value={surname}
+							type="text"
+							name="surname"
+							placeholder="Bashanov"
+							required
+							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
+						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
+						placeholder:text-gray-me"/>
+					</label>
+
+					<label className="flex flex-col justify-between font-bold cursor-pointer mt-6">
 						<span>Password*</span>
 						<input
 							onChange={handleChange}
@@ -90,10 +107,11 @@ const Registration = () => {
 						</span>
 					</p>
 
-					<span
+					<button
+						type="submit"
 						className="block text-center cursor-pointer mt-11 bg-yellow-me w-full py-4 text-2xl rounded-full">
 						Зарегистрироваться
-					</span>
+					</button>
 
 					<p
 						className="mt-8 text-gray-me text-center">
@@ -110,4 +128,8 @@ const Registration = () => {
 	)
 }
 
-export default Registration
+export default connect(
+	null,
+	// (state) => ({ isLoggedIn: state.auth.isLoggedIn }),
+	{ getRegistration } //диспатчим новый экшен
+)(Registration)
