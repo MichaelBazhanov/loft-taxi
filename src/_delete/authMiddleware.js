@@ -1,6 +1,6 @@
-import { logIn } from './actions'
-import { AUTHENTICATE } from './actions'
-import { serverLogin } from './api'
+import { logIn } from '../actions'
+import { AUTHENTICATE } from '../actions'
+import { serverLogin } from '../api'
 
 export const authMiddleware = (store) => (next) => async (action) => {
   //все что здесь называется sideEffect=======================

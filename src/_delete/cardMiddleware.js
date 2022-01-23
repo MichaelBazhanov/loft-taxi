@@ -3,9 +3,9 @@ import {
   sendCardFailure,
   getCardSuccess,
   getCardFailure,
-} from './actions' //просто actions для одного параметра
-import { SEND_FORM_CARD, GET_FORM_CARD } from './actions' //dispatch из компонента
-import { serverSendCard, serverGetCard } from './api'
+} from '../actions' //просто actions для одного параметра
+import { SEND_FORM_CARD, GET_FORM_CARD } from '../actions' //dispatch из компонента
+import { serverSendCard, serverGetCard } from '../api'
 
 // Отправка данных карты на сервер
 export const cardSendMiddleware = (store) => (next) => async (action) => {

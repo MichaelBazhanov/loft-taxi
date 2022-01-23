@@ -47,3 +47,30 @@ export const serverGetCard = async (token) => {
     .then((res) => (res.status === 200 ? res.json() : ''))
     .then((data) => data)
 }
+
+// Получение доступных адресов на клиенте
+export const serverGetAddressList = async () => {
+  return fetch(`https://loft-taxi.glitch.me/addressList`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => (res.status === 200 ? res.json() : ''))
+    .then((data) => data)
+}
+
+// Получение доступных маршрутов на клиенте
+export const serverGetRoutes = async (address1, address2) => {
+  return fetch(
+    `https://loft-taxi.glitch.me/route?address1=${address1}&address2=${address2}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  )
+    .then((res) => (res.status === 200 ? res.json() : 'error'))
+    .then((data) => data)
+}

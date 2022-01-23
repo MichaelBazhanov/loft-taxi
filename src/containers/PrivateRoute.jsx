@@ -4,11 +4,11 @@ import { connect } from 'react-redux'
 
 //============================================================================Моя вставка на роутер
 const PrivateRoute = ({ children, isLoggedIn }) => {
-	const location = useLocation();
+	// const location = useLocation();
+
 
 	if (!isLoggedIn) {
-		return <Navigate to='/login' state={{ replace: true }} />
-		//те в '/login' сможем узнать то откуда мы пришли через {state: location}
+		return <Navigate to='/login' state={{ replace: true }} /> //те в '/login' сможем узнать то откуда мы пришли через {state: location}
 	}
 	return children
 }
