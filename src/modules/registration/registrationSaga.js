@@ -3,6 +3,7 @@ import {
   registrationSuccess,
   registrationFailure,
 } from './actions'
+import { logIn } from '../authorization'
 import { serverRegistration } from '../../api'
 import { call, takeEvery, put } from 'redux-saga/effects'
 
@@ -18,9 +19,9 @@ export function* registration(action) {
       name,
       surname,
     )
-
     if (success) {
-      yield put(registrationSuccess(success, token))
+      yield put(logIn(token))
+      yield put(registrationSuccess(success))
     } else {
       yield put(registrationFailure(error))
     }

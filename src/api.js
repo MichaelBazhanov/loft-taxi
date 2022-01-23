@@ -9,7 +9,7 @@ export const serverLogin = async (email, password) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      return { success: data.success, token: data.token }
+      return { success: data.success, token: data.token, error: data.error }
     })
 }
 

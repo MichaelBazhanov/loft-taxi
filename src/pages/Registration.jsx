@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logoTaxiVertical from '../assets/images/logo-taxi-vertical.svg';
 import { useNavigate } from "react-router-dom";
 import { connect } from 'react-redux'
@@ -7,7 +7,7 @@ import { getRegistration } from '../modules/registration'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 
-const Registration = ({ getRegistration, isLoading, error }) => {
+const Registration = ({ getRegistration, isLoggedIn, isLoading, error }) => {
 	const [state, setState] = useState({ email: 'email@example.com', name: 'Name', password: 'password', surname: 'Surname' })
 
 	const navigate = useNavigate()
@@ -22,6 +22,10 @@ const Registration = ({ getRegistration, isLoading, error }) => {
 	const handleChange = (event) => {
 		setState({ ...state, [event.target.name]: event.target.value })
 	}
+
+	useEffect(() => { // Следим за isLoggedIn в redux
+		isLoggedIn ? navigate("/map", { replace: true }) : navigate("/registration", { replace: true })
+	}, [isLoggedIn])
 
 	const { email, name, password, surname } = state
 
@@ -42,7 +46,7 @@ const Registration = ({ getRegistration, isLoading, error }) => {
 				className="w-2/3 flex justify-center items-center"
 			>
 				<form
-					onSubmit={handleSubmit} className="max-w-xl w-full bg-white px-28 py-14 shadow-lg rounded-2xl">
+					onSubmit={handleSubmit} className="max-w-xl w-full bg-white px-28 py-14 shadow-lg rounded-2xl" autoComplete="off">
 					<h4
 						className="font-bold text-3xl text-black text-center mb-14">
 						Регистрация
@@ -58,6 +62,7 @@ const Registration = ({ getRegistration, isLoading, error }) => {
 							name="email"
 							placeholder="mail@mail.ru"
 							required
+							autoComplete="off"
 							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 						placeholder:text-gray-me"/>
@@ -72,6 +77,7 @@ const Registration = ({ getRegistration, isLoading, error }) => {
 							name="name"
 							placeholder="Michael"
 							required
+							autoComplete="off"
 							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 						placeholder:text-gray-me"/>
@@ -86,6 +92,7 @@ const Registration = ({ getRegistration, isLoading, error }) => {
 							name="surname"
 							placeholder="Bashanov"
 							required
+							autoComplete="off"
 							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 						placeholder:text-gray-me"/>
@@ -100,6 +107,7 @@ const Registration = ({ getRegistration, isLoading, error }) => {
 							name="password"
 							placeholder="*************"
 							required
+							autoComplete="off"
 							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 						placeholder:text-gray-me"/>
@@ -136,6 +144,7 @@ const Registration = ({ getRegistration, isLoading, error }) => {
 
 export default connect(
 	(state) => ({
+		isLoggedIn: state.authorizationReducer.isLoggedIn,
 		isLoading: state.registrationReducer.isLoading,
 		error: state.registrationReducer.error
 	}),

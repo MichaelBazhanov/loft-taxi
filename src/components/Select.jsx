@@ -2,19 +2,17 @@
 import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronDownIcon, LocationMarkerIcon, XIcon } from '@heroicons/react/solid'
-import { connect } from 'react-redux'
-// import { routAddress1, routAddress2 } from '../actions' //просто импортируем action
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-function Example({ addressList, currentAddress, placeholder, onChange }) { console.log('select: ',addressList)
+function Example({ addressList, placeholder, onChange }) {
 	const [selected, setSelected] = useState(addressList)
 
 	const changeSelected = (event) => {
 		setSelected(event)
-		onChange(event) //меняем стайет родителя
+		onChange(event)
 	}
 
 	return (
@@ -26,7 +24,6 @@ function Example({ addressList, currentAddress, placeholder, onChange }) { conso
 							<span className="flex items-center">
 								<div className="flex-shrink-0 h-3 w-3 rounded-full bg-black" />
 								<span className="ml-3 block truncate">{selected && selected.rout ? selected.rout : placeholder}</span>
-								{/* <span className="ml-3 block truncate">{selected.rout}</span> */}
 							</span>
 							<span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none divide-x-2">
 								<XIcon className="h-5 w-5 text-gray-400 mr-1" aria-hidden="true" />
@@ -87,8 +84,4 @@ function Example({ addressList, currentAddress, placeholder, onChange }) { conso
 	)
 }
 
-export default connect(
-	null,
-	null,
-	// { routAddress1, routAddress2 } // просто дергаем ACTION
-)(Example)
+export default Example

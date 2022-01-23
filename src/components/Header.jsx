@@ -2,7 +2,7 @@ import React from "react";
 import logoTaxi from '../assets/images/logo-taxi.svg';
 import PropTypes from "prop-types";
 import { connect } from 'react-redux'
-import { logOut } from '../actions' //просто импортируем action
+import { logOut } from '../modules/authorization' //просто импортируем action
 import { NavLink } from 'react-router-dom'
 
 const setActive = ({ isActive }) => isActive ? 'text-yellow-me' : ''

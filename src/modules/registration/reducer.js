@@ -6,7 +6,6 @@ import {
 
 const initialState = {
   success: null,
-  token: null,
   isLoading: false,
   error: null,
 }
@@ -25,7 +24,6 @@ export default function (state = initialState, action) {
         ...state,
         isLoading: false,
         success: action.payload.success,
-        token: action.payload.token,
       }
     }
 

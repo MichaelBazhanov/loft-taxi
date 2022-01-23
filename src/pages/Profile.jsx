@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux'
-import { logOut, sendFormCard, getFormCard, getAddressList } from '../actions' //просто импортируем action
+import { logOut } from '../modules/authorization'
+import { sendFormCard, getFormCard, getAddressList } from '../actions' //просто импортируем action
 import { useNavigate } from "react-router-dom";
 
 //img
@@ -206,7 +207,7 @@ export default connect(
 		cardNumber: state.card.cardNumber,
 		expiryDate: state.card.expiryDate,
 		cvc: state.card.cvc,
-		token: state.auth.token, // token берем стейта авторизации
+		token: state.authorizationReducer.token, // token берем стейта авторизации
 		cardSendStatus: state.card.cardSendStatus,
 		cardGetStatus: state.card.cardGetStatus,
 	}),
