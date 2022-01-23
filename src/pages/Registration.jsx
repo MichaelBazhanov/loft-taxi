@@ -4,7 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { connect } from 'react-redux'
 import { getRegistration } from '../modules/registration'
 
-const Registration = ({ getRegistration }) => {
+import Loading from '../components/Loading'
+import Error from '../components/Error'
+
+const Registration = ({ getRegistration, isLoading, error }) => {
 	const [state, setState] = useState({ email: 'email@example.com', name: 'Name', password: 'password', surname: 'Surname' })
 
 	const navigate = useNavigate()
@@ -21,6 +24,9 @@ const Registration = ({ getRegistration }) => {
 	}
 
 	const { email, name, password, surname } = state
+
+	if (isLoading) return <Loading />
+	if (error) return <Error error={error} />
 
 	return (
 		<div
@@ -129,7 +135,9 @@ const Registration = ({ getRegistration }) => {
 }
 
 export default connect(
-	null,
-	// (state) => ({ isLoggedIn: state.auth.isLoggedIn }),
+	(state) => ({
+		isLoading: state.registrationReducer.isLoading,
+		error: state.registrationReducer.error
+	}),
 	{ getRegistration } //диспатчим новый экшен
 )(Registration)
