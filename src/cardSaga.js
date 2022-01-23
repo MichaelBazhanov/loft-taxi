@@ -9,7 +9,7 @@ import { serverSendCard, serverGetCard } from './api'
 
 import { call, put, select, takeEvery } from 'redux-saga/effects'
 //===========================================================================================================
-const getToken = (state) => state.auth.token
+const getToken = (state) => state.authorizationReducer.token
 
 // возвращает token redux
 export function* checkToken() {
