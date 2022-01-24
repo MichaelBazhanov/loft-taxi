@@ -9,7 +9,6 @@ export function* authenticateSaga(action) {
     const { email, password } = action.payload //вынимаем данные из ACTION
 
     const { success, token, error } = yield call(serverLogin, email, password)
-    console.log(success, token, error)
 
     if (success) {
       yield put(logIn(token)) // dispatch logIn с payload: token (ЭТУ ЧАСТЬ И ЛОВИМ В ТЕСТАХ!!!! {type: 'LIG_IN'})

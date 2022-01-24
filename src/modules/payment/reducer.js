@@ -16,17 +16,20 @@ const initialState = {
   expiryDate: '',
   cvc: '',
   id: '',
+  //get
   isLoadingGetPaymentCard: false,
   errorGetPaymentCard: null,
+  //send
   isLoadingSendPaymentCard: false,
   errorSendPaymentCard: null,
+  //send new user
   isLoadingSendPaymentCardNewUser: false,
   errorSendPaymentCardNewUser: null,
 }
 
 export default function (state = initialState, action) {
   switch (action.type) {
-		// ================================================== Получение карты
+    // ================================================== Получение карты
     case GET_PAYMENT_CARD: {
       return {
         ...state,
@@ -57,24 +60,29 @@ export default function (state = initialState, action) {
     case SEND_PAYMENT_CARD: {
       return {
         ...state,
-        ...action.payload,
-      } // { cardNumber, expiryDate, cardName, cvc, token } = action.payload //возвращаем новый объект
+        cardName: action.payload.cardName,
+        cardNumber: action.payload.cardNumber,
+        expiryDate: action.payload.expiryDate,
+        cvc: action.payload.cvc,
+        isLoadingSendPaymentCard: true,
+      }
     }
 
     case SEND_PAYMENT_CARD_SUCCESS: {
       return {
         ...state,
-        // cardSendStatus: 'success',
+        isLoadingSendPaymentCard: false,
       }
     }
 
     case SEND_PAYMENT_CARD_FAILURE: {
       return {
         ...state,
-        // cardSendStatus: 'failure',
+        isLoadingSendPaymentCard: false,
+        errorSendPaymentCard: action.payload.error,
       }
     }
-       // ================================================== Установка карты для нового пользователя
+    // ================================================== Установка карты для нового пользователя
     case SEND_PAYMENT_CARD_NEW_USER: {
       return {
         ...state,
@@ -93,7 +101,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoadingSendPaymentCardNewUser: false,
-				errorSendPaymentCardNewUser: action.payload.error,
+        errorSendPaymentCardNewUser: action.payload.error,
       }
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////

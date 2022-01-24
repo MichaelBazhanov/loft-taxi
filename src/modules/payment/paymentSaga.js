@@ -84,10 +84,10 @@ export function* sendingCardNewUser() {
 
     // default object
     const paymentCardNewUser = {
-      cardName: '0000 0000 0000 0000',
-      cardNumber: '',
-      expiryDate: '',
-      cvc: '',
+      cardName: ' ',
+      cardNumber: ' ',
+      expiryDate: ' ',
+      cvc: ' ',
     }
     const { cardName, cardNumber, expiryDate, cvc } = paymentCardNewUser
 
@@ -103,7 +103,7 @@ export function* sendingCardNewUser() {
     if (success) {
       yield put(sendPaymentCardNewUserSuccess())
     } else {
-			console.log('error', error)
+			console.error(error)
       yield put(sendPaymentCardNewUserFailure(error))
     }
   } catch (error) {

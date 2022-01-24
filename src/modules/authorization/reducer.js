@@ -44,6 +44,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isLoggedIn: false,
+        isLoading: false,
         token: null,
       } //возвращаем новый объект
     }

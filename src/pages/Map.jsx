@@ -39,32 +39,32 @@ class Map extends Component {
 	map = null
 	mapContainer = React.createRef(); // создаем ссылку
 
-	componentDidMount() {
-		mapboxGl.accessToken = 'pk.eyJ1IjoibWljaGFlbDMzIiwiYSI6ImNreG4xYWVycjA0NDgybm9lbW55ZTN6d2EifQ.v5o2tFYQgax6FxvwN-Vd1g'
+	// componentDidMount() {
+	// 	mapboxGl.accessToken = 'pk.eyJ1IjoibWljaGFlbDMzIiwiYSI6ImNreG4xYWVycjA0NDgybm9lbW55ZTN6d2EifQ.v5o2tFYQgax6FxvwN-Vd1g'
 
-		this.map = new mapboxGl.Map({ // создаем карту и вкладываем настройки
-			container: this.mapContainer.current, // это ссылка на элемент которому мы передали референс
-			style: 'mapbox://styles/mapbox/streets-v11', // style URL
-			center: [40.41667, 56.13333], // starting position [lng, lat]
-		})
+	// 	this.map = new mapboxGl.Map({ // создаем карту и вкладываем настройки
+	// 		container: this.mapContainer.current, // это ссылка на элемент которому мы передали референс
+	// 		style: 'mapbox://styles/mapbox/streets-v11', // style URL
+	// 		center: [40.41667, 56.13333], // starting position [lng, lat]
+	// 	})
 
-	}
+	// }
 
-	componentDidUpdate() {
-		if (this.map.getLayer('route')) {
-			this.map.removeLayer('route');
-		}
-		if (this.map.getSource('route')) {
-			this.map.removeSource('route');
-		}
-		if (this.props.coordinates.length > 0) {
-			drawRoute(this.map, [...this.props.coordinates])
-		}
-	}
+	// componentDidUpdate() {
+	// 	if (this.map.getLayer('route')) {
+	// 		this.map.removeLayer('route');
+	// 	}
+	// 	if (this.map.getSource('route')) {
+	// 		this.map.removeSource('route');
+	// 	}
+	// 	if (this.props.coordinates.length > 0) {
+	// 		drawRoute(this.map, [...this.props.coordinates])
+	// 	}
+	// }
 
-	componentWillUnmount() {
-		this.map.remove(); // удаляем карту
-	}
+	// componentWillUnmount() {
+	// 	this.map.remove(); // удаляем карту
+	// }
 
 	render() {
 

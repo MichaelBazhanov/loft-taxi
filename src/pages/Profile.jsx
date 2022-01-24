@@ -34,7 +34,7 @@ const Profile = ({
 		setData({ ...data, [event.target.name]: event.target.value })
 	}
 
-	const handleForm = (event) => { console.log('handleForm')
+	const handleForm = (event) => {
 		event.preventDefault()
 		setSwitchView(false) // переключаем представление
 
@@ -42,9 +42,9 @@ const Profile = ({
 		sendPaymentCard(cardName, cardNumber, expiryDate, cvc, token)
 	}
 
-	// useEffect(() => {
-	// 	setData({ ...data, cardName, cardNumber, expiryDate, cvc })
-	// }, [cardName, cardNumber, expiryDate, cvc])
+	useEffect(() => {
+		setData({ ...data, cardName, cardNumber, expiryDate, cvc })
+	}, [cardName, cardNumber, expiryDate, cvc])
 
 	useEffect(() => {
 		getPaymentCard()
@@ -109,7 +109,7 @@ const Profile = ({
 										placeholder:text-gray-me"/>
 									</label>
 
-									<div className="flex">
+									<div className="flex justify-between">
 										<label
 											className="flex flex-col justify-between font-bold cursor-pointer mt-6">
 											<span>MM/YY*</span>

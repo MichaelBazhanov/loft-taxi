@@ -39,7 +39,7 @@ export const sendPaymentCardNewUser = () => ({
 export const sendPaymentCardNewUserSuccess = () => ({
   type: SEND_PAYMENT_CARD_NEW_USER_SUCCESS,
 })
-export const sendPaymentCardNewUserFailure = ({error}) => ({
+export const sendPaymentCardNewUserFailure = (error) => ({
   type: SEND_PAYMENT_CARD_NEW_USER_FAILURE,
 	payload: { error },
 })
