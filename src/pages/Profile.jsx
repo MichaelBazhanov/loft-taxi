@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from 'react-redux'
 import { logOut } from '../modules/authorization'
-import { sendFormCard, getFormCard, getAddressList } from '../actions' //просто импортируем action
+import { sendPaymentCard, getPaymentCard } from '../modules/payment' //просто импортируем action
 import { useNavigate } from "react-router-dom";
 
 //img
@@ -10,17 +10,23 @@ import vector from '../assets/images/vector.svg'
 import miniLogo from '../assets/images/mini-logo.svg'
 import circle from '../assets/images/circle.svg'
 
+import Loading from '../components/Loading'
+import Error from '../components/Error'
+
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const Profile = ({ logOut, sendFormCard, getFormCard, cardGetStatus, cardSendStatus, cardName, cardNumber, expiryDate, cvc, token }) => {
+const Profile = ({
+	logOut, sendPaymentCard, getPaymentCard, isLoadingGetPaymentCard, errorGetPaymentCard, isLoadingSendPaymentCard, errorSendPaymentCard, isLoadingSendPaymentCardNewUser, errorSendPaymentCardNewUser, cardName, cardNumber, expiryDate, cvc, token
+}) => {
 	const [data, setData] = useState({
 		cardName: "",
 		cardNumber: "",
 		expiryDate: "",
 		cvc: "",
 	})
+	const [switchView, setSwitchView] = useState(true)
 
 	const navigate = useNavigate()
 
@@ -28,36 +34,37 @@ const Profile = ({ logOut, sendFormCard, getFormCard, cardGetStatus, cardSendSta
 		setData({ ...data, [event.target.name]: event.target.value })
 	}
 
-	const handleForm = (event) => {
+	const handleForm = (event) => { console.log('handleForm')
 		event.preventDefault()
+		setSwitchView(false) // переключаем представление
 
 		const { cardName, cardNumber, expiryDate, cvc } = data // получаем из state
-		sendFormCard(cardName, cardNumber, expiryDate, cvc, token)
+		sendPaymentCard(cardName, cardNumber, expiryDate, cvc, token)
 	}
 
-	useEffect(() => {
-		// ОШИБКА УПРАВЛЯЕМОЙ И НЕ УПРАВЛЯЕМОЙ ФОРМЫ !!!!!!!!!!!!!!!!!!!!!!
-		// console.log('logOut, sendFormCard, getFormCard, cardGetStatus, cardSendStatus, cardName, cardNumber, expiryDate, cvc, token', {logOut, sendFormCard, getFormCard, cardGetStatus, cardSendStatus, cardName, cardNumber, expiryDate, cvc, token})
-
-		setData({ ...data, cardName, cardNumber, expiryDate, cvc })
-	}, [cardName, cardNumber, expiryDate, cvc])
+	// useEffect(() => {
+	// 	setData({ ...data, cardName, cardNumber, expiryDate, cvc })
+	// }, [cardName, cardNumber, expiryDate, cvc])
 
 	useEffect(() => {
-		getFormCard()
+		getPaymentCard()
 	}, [])
+
+	if (isLoadingGetPaymentCard) return <Loading />
+	if (errorGetPaymentCard) return <Error error={errorGetPaymentCard} />
+	if (isLoadingSendPaymentCard) return <Loading />
+	if (errorSendPaymentCard) return <Error error={errorSendPaymentCard} />
+	if (isLoadingSendPaymentCardNewUser) return <Loading />
+	if (errorSendPaymentCardNewUser) return <Error error={errorSendPaymentCardNewUser} />
 
 	return (
 		<div className="bg-map bg-center relative">
 			<div className="absolute inset-0 bg-black-me opacity-30"></div>
 			<div className="container mx-auto h-screen ">
 				<div className="flex justify-center items-center relative w-full h-full">
-
 					{/* ============================================================================================================= */}
-					{cardGetStatus === '' &&
-						<h1 className="text-6xl text-white font-bold">Loading bank card data...</h1>
-					}
-					{/* ============================================================================================================= */}
-					{cardGetStatus === 'success' &&
+					{/* {cardGetStatus === 'success' && */}
+					{switchView &&
 						< div
 							className={'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2'}>
 							<h4
@@ -166,7 +173,8 @@ const Profile = ({ logOut, sendFormCard, getFormCard, cardGetStatus, cardSendSta
 						</div>
 					}
 					{/* ============================================================================================================= */}
-					{cardSendStatus === 'success' &&
+					{/* {cardSendStatus === 'success' && */}
+					{!switchView &&
 						<div
 							className={'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2'}
 						>
@@ -176,13 +184,13 @@ const Profile = ({ logOut, sendFormCard, getFormCard, cardGetStatus, cardSendSta
 								Платёжные данные обновлены. Теперь вы можете заказывать такси.
 							</p>
 							<button
-								onClick={() => { navigate('/map') }}
+								onClick={() => { setSwitchView(false); navigate('/map') }}
 								type="button"
 								className="max-w-xs w-full bg-yellow-me text-xl py-5 mt-10 rounded-full self-center">
 								Перейти на карту
 							</button>
 							<button
-								onClick={() => { logOut(); navigate('/login') }}
+								onClick={() => { setSwitchView(false); logOut(); navigate('/login') }}
 								type="button"
 								className="max-w-xs w-full bg-yellow-me text-xl py-5 mt-10 rounded-full self-center">
 								Выйти
@@ -190,7 +198,6 @@ const Profile = ({ logOut, sendFormCard, getFormCard, cardGetStatus, cardSendSta
 						</div>
 					}
 					{/* ============================================================================================================= */}
-
 				</div>
 			</div>
 		</div >
@@ -203,13 +210,18 @@ Profile.propTypes = {
 
 export default connect(
 	(state) => ({
-		cardName: state.card.cardName,
-		cardNumber: state.card.cardNumber,
-		expiryDate: state.card.expiryDate,
-		cvc: state.card.cvc,
-		token: state.authorizationReducer.token, // token берем стейта авторизации
-		cardSendStatus: state.card.cardSendStatus,
-		cardGetStatus: state.card.cardGetStatus,
+		token: state.authorizationReducer.token,
+		cardName: state.paymentReducer.cardName,
+		cardNumber: state.paymentReducer.cardNumber,
+		expiryDate: state.paymentReducer.expiryDate,
+		cvc: state.paymentReducer.cvc,
+
+		isLoadingGetPaymentCard: state.paymentReducer.isLoadingGetPaymentCard,
+		errorGetPaymentCard: state.paymentReducer.errorGetPaymentCard,
+		isLoadingSendPaymentCard: state.paymentReducer.isLoadingSendPaymentCard,
+		errorSendPaymentCard: state.paymentReducer.errorSendPaymentCard,
+		isLoadingSendPaymentCardNewUser: state.paymentReducer.isLoadingSendPaymentCardNewUser,
+		errorSendPaymentCardNewUser: state.paymentReducer.errorSendPaymentCardNewUser,
 	}),
-	{ logOut, sendFormCard, getFormCard } // просто дергаем ACTION
+	{ logOut, sendPaymentCard, getPaymentCard }
 )(Profile)

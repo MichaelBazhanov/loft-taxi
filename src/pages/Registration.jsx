@@ -3,11 +3,12 @@ import logoTaxiVertical from '../assets/images/logo-taxi-vertical.svg';
 import { useNavigate } from "react-router-dom";
 import { connect } from 'react-redux'
 import { getRegistration } from '../modules/registration'
+import { sendPaymentCardNewUser } from '../modules/payment'
 
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 
-const Registration = ({ getRegistration, isLoggedIn, isLoading, error }) => {
+const Registration = ({ getRegistration, sendPaymentCardNewUser, isLoggedIn, isLoading, error }) => {
 	const [state, setState] = useState({ email: 'email@example.com', name: 'Name', password: 'password', surname: 'Surname' })
 
 	const navigate = useNavigate()
@@ -16,7 +17,7 @@ const Registration = ({ getRegistration, isLoggedIn, isLoading, error }) => {
 		event.preventDefault()
 
 		const { email, password, name, surname } = state // получаем из state
-		getRegistration(email, password, name, surname)
+		getRegistration(email, password, name, surname) // Регистрируем пользователя
 	}
 
 	const handleChange = (event) => {
@@ -24,7 +25,13 @@ const Registration = ({ getRegistration, isLoggedIn, isLoading, error }) => {
 	}
 
 	useEffect(() => { // Следим за isLoggedIn в redux
-		isLoggedIn ? navigate("/map", { replace: true }) : navigate("/registration", { replace: true })
+		if (isLoggedIn) {
+			sendPaymentCardNewUser() // Устанавливаем ему платежную карт пустую по умолчанию
+			navigate("/map", { replace: true })
+		} else {
+			navigate("/registration", { replace: true })
+		}
+
 	}, [isLoggedIn])
 
 	const { email, name, password, surname } = state
@@ -148,5 +155,5 @@ export default connect(
 		isLoading: state.registrationReducer.isLoading,
 		error: state.registrationReducer.error
 	}),
-	{ getRegistration } //диспатчим новый экшен
+	{ getRegistration, sendPaymentCardNewUser } //диспатчим новый экшен
 )(Registration)

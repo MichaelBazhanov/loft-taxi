@@ -15,7 +15,6 @@ export const serverLogin = async (email, password) => {
 
 // Регистрация
 export const serverRegistration = async (email, password, name, surname) => {
-  // console.log('serverRegistration in', email, password, name, surname)
   return fetch(`https://loft-taxi.glitch.me/register`, {
     method: 'POST',
     body: JSON.stringify({ email, name, password, surname }), // данные могут быть 'строкой' или {объектом}!
@@ -44,10 +43,10 @@ export const serverSendCard = async (
       'Content-Type': 'application/json',
     },
   })
-    .then((res) => res.json()) // res = {success: true/false}
+    .then((res) => res.json())
     .then((data) => {
-      return data.success
-    }) // true / false
+      return { success: data.success, error: data.error }
+    })
 }
 
 // Получение данных карты на клиенте
@@ -58,7 +57,7 @@ export const serverGetCard = async (token) => {
       'Content-Type': 'application/json',
     },
   })
-    .then((res) => (res.status === 200 ? res.json() : ''))
+    .then((res) => res.json())
     .then((data) => data)
 }
 
