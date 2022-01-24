@@ -10,8 +10,9 @@ export const getPaymentCardSuccess = (cardName, cardNumber, expiryDate, cvc, id)
 	type: GET_PAYMENT_CARD_SUCCESS,
 	payload: { cardName, cardNumber, expiryDate, cvc, id },
 })
-export const getPaymentCardFailure = () => ({
+export const getPaymentCardFailure = (error) => ({
 	type: GET_PAYMENT_CARD_FAILURE,
+	payload: { error },
 })
 //==================================================================================== БЛОК ОТПРАВКИ КАРТЫ
 export const SEND_PAYMENT_CARD = 'SEND_PAYMENT_CARD'

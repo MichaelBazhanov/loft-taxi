@@ -9,24 +9,19 @@ import imgStandart from '../assets/images/car-standart.jpg'
 import imgPremium from '../assets/images/car-premium.jpg'
 import imgBusiness from '../assets/images/car-business.jpg'
 
-//Error
+
+import Loading from "./Loading/index";
 import Error from "./Error";
 
-//Loading
-import Loading from "./Loading/index";
-
-//Car
+//Card
 import CarForForm from './CarForForm'
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, address }) => {
+const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, address, cardName, cardNumber, expiryDate, cvc, }) => {
 	const [activeIndex, setActiveIndex] = useState(1)
-	// 1 - первая часть
-	// 2 - втрокая часть
-	// 3 - данные не заполенны
 	const [activeIndexCar, setActiveIndexCar] = useState(1)
 	const [addressStart, setAddressStart] = useState(null)
 	const [addressEnd, setAddressEnd] = useState(null)
@@ -35,28 +30,33 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, ad
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		alert(`Форма отправлена! ${activeIndexCar}`)
+		if (addressStart && addressEnd && addressStart.rout && addressEnd.rout) {
+			getRoutesCoordinates(addressStart, addressEnd)
+		}
 	}
 
 	//Все useEffect при первом рендере выполняются !!!
 	useEffect(() => {
 		getAddressList()
 	}, [])
-	// useEffect(() => {
-	// 	if (address.length > 0) { setAddressStart(address[0]); setAddressEnd(address[address.length - 1]) }
-	// }, [address])
 	useEffect(() => {
-		if (addressStart && addressEnd && addressStart.rout && addressEnd.rout) { getRoutesCoordinates(addressStart, addressEnd) }
-	}, [addressStart, addressEnd])
+		if (
+			(cardName === '' || cardName === ' ') ||
+			(cardNumber === '' || cardNumber === ' ') ||
+			(expiryDate === '' || expiryDate === ' ') ||
+			(cvc === '' || cvc === ' ')
+
+		) {
+			setActiveIndex(3)
+		}
+	}, [cardName, cardNumber, expiryDate, cvc,])
 
 
 	if (isLoading) return <Loading />
 	if (error) return <Error />
 
 	const filterAddress = () => {
-		// return address.filter(item => addressStart && addressEnd ? item.rout !== addressStart.rout && item.rout !== addressEnd.rout : true)
 		return address.filter(item => addressStart ? item.rout !== addressStart.rout : true).filter(item => addressEnd ? item.rout !== addressEnd.rout : true)
-
 	}
 
 	const changeAddress1 = value => {
@@ -122,6 +122,11 @@ export default connect(
 		isLoading: state.address.isLoading,
 		error: state.address.error,
 		address: state.address.address,
+
+		cardName: state.paymentReducer.cardName,
+		cardNumber: state.paymentReducer.cardNumber,
+		expiryDate: state.paymentReducer.expiryDate,
+		cvc: state.paymentReducer.cvc,
 	}),
 	{ getAddressList, getRoutesCoordinates } // просто дергаем ACTION
 )(FormForMap)

@@ -54,23 +54,22 @@ export function* paymentCardSendSaga() {
 
 //==========================================================================================Получение карты
 export function* gettingCard() {
-  const token = yield call(checkToken)
+	try {
+		const token = yield call(checkToken)
 
-  // const response= yield call(
-  //   serverGetCard,
-  //   token,
-  // )
-  // console.log(response)
-  const { cardName, cardNumber, expiryDate, cvc, id } = yield call(
-    serverGetCard,
-    token,
-  )
-
-  if (token) {
-    yield put(getPaymentCardSuccess(cardName, cardNumber, expiryDate, cvc, id))
-  } else {
-    yield put(getPaymentCardFailure())
-  }
+		const { cardName, cardNumber, expiryDate, cvc, id, error } = yield call(
+			serverGetCard,
+			token,
+		)
+		if (token) {
+			yield put(getPaymentCardSuccess(cardName, cardNumber, expiryDate, cvc, id))
+		} else {
+			yield put(getPaymentCardFailure(error))
+		}
+	} catch (error) {
+		console.error(error.message)
+    yield put(getPaymentCardFailure(error.response))
+	}
 }
 
 export function* paymentCardGetSaga() {
