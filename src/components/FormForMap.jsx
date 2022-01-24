@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux'
 import { getAddressList, getRoutesCoordinates } from '../actions' //просто импортируем action
 import Select from '../components/Select'
+import { useNavigate } from "react-router-dom";
 
 //img
 import imgStandart from '../assets/images/car-standart.jpg'
@@ -22,32 +23,29 @@ function classNames(...classes) {
 }
 
 const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, address }) => {
-	const [active, setActive] = useState(false)
+	const [activeIndex, setActiveIndex] = useState(1)
+	// 1 - первая часть
+	// 2 - втрокая часть
+	// 3 - данные не заполенны
 	const [activeIndexCar, setActiveIndexCar] = useState(1)
 	const [addressStart, setAddressStart] = useState(null)
 	const [addressEnd, setAddressEnd] = useState(null)
-	// console.log('RENDER COMPONENT ----------------------')
+
+	const navigate = useNavigate()
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		// делаем что то с данными
-		alert(`Форма отправлена! ${active}  ${activeIndexCar}`)
+		alert(`Форма отправлена! ${activeIndexCar}`)
 	}
-
-	// console.log('  isLoading, error, address ', isLoading, error, address)
-	// console.log('  addressStart, addressEnd ', addressStart, addressEnd)
 
 	//Все useEffect при первом рендере выполняются !!!
 	useEffect(() => {
-		// console.log('useEffect : getAddressList')
 		getAddressList()
 	}, [])
 	// useEffect(() => {
-	// 	// console.log('useEffect : address => setAddressStart setAddressEnd')
 	// 	if (address.length > 0) { setAddressStart(address[0]); setAddressEnd(address[address.length - 1]) }
 	// }, [address])
 	useEffect(() => {
-		// console.log('useEffect : addressStart && addressEnd => getRoutesCoordinates')
 		if (addressStart && addressEnd && addressStart.rout && addressEnd.rout) { getRoutesCoordinates(addressStart, addressEnd) }
 	}, [addressStart, addressEnd])
 
@@ -73,7 +71,7 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, ad
 
 			<div className="flex flex-col">
 
-				<form onSubmit={handleSubmit} className={classNames(active ? 'hidden' : '', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg pointer-events-auto')}>
+				<form onSubmit={handleSubmit} className={classNames(activeIndex === 1 ? '' : 'hidden', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg pointer-events-auto')}>
 
 					<div className="p-6 pb-0">
 						{address.length > 0 && <Select
@@ -98,15 +96,21 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, ad
 						</div>
 						{/* верхний блок что то должен вернуть и я запишу это в инпуты */}
 						<input type="hidden" name="car" />
-						<button onClick={() => { setActive(true) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7 disabled:opacity-75"
+						<button onClick={() => { setActiveIndex(2) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7 disabled:opacity-75"
 							disabled={(!(addressStart && addressStart.rout && addressEnd && addressEnd.rout))}>Заказать</button>
 					</div>
 				</form>
 
-				<div className={classNames(active ? '' : 'hidden', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg py-10 px-11 pointer-events-auto')}>
+				<div className={classNames(activeIndex === 2 ? '' : 'hidden', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg py-10 px-11 pointer-events-auto')}>
 					<p className="font-bold text-4xl">Заказ размещен</p>
 					<p className="mt-4 text-lg text-gray-me">Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.</p>
-					<button onClick={() => { setActive(false) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7" >Сделать новый заказ</button>
+					<button onClick={() => { setActiveIndex(1) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7" >Сделать новый заказ</button>
+				</div>
+
+				<div className={classNames(activeIndex === 3 ? '' : 'hidden', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg py-10 px-11 pointer-events-auto')}>
+					<p className="font-bold text-4xl">Заполните платежные данные</p>
+					<p className="mt-4 text-lg text-gray-me">Укажите информацию о платежной карте что бы сделать заказ.</p>
+					<button onClick={() => { navigate('/profile') }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7" >Перейти в профиль</button>
 				</div>
 
 			</div>

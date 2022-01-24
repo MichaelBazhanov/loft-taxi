@@ -62,8 +62,6 @@ const Profile = ({
 			<div className="absolute inset-0 bg-black-me opacity-30"></div>
 			<div className="container mx-auto h-screen ">
 				<div className="flex justify-center items-center relative w-full h-full">
-					{/* ============================================================================================================= */}
-					{/* {cardGetStatus === 'success' && */}
 					{switchView &&
 						< div
 							className={'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2'}>
@@ -172,8 +170,6 @@ const Profile = ({
 							</button>
 						</div>
 					}
-					{/* ============================================================================================================= */}
-					{/* {cardSendStatus === 'success' && */}
 					{!switchView &&
 						<div
 							className={'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2'}
@@ -197,7 +193,6 @@ const Profile = ({
 							</button>
 						</div>
 					}
-					{/* ============================================================================================================= */}
 				</div>
 			</div>
 		</div >
