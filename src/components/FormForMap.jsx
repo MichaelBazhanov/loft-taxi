@@ -13,7 +13,7 @@ import imgBusiness from '../assets/images/car-business.jpg'
 import Loading from "./Loading/index";
 import Error from "./Error";
 
-//Card
+//Car
 import CarForForm from './CarForForm'
 
 function classNames(...classes) {
