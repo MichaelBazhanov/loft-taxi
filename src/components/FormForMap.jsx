@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux'
-import { getAddressList, getRoutesCoordinates } from '../actions' //просто импортируем action
-import { getPaymentCard } from '../modules/payment' //просто импортируем action
+import { getRoutesCoordinates } from '../actions'
+import { getPaymentCard } from '../modules/payment'
+import { getAddressList } from '../modules/address'
 import Select from '../components/Select'
 import { useNavigate } from "react-router-dom";
 
@@ -126,9 +127,9 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 }
 export default connect(
 	state => ({
-		isLoading: state.address.isLoading,
-		error: state.address.error,
-		address: state.address.address,
+		isLoading: state.addressReducer.isLoading,
+		error: state.addressReducer.error,
+		address: state.addressReducer.address,
 
 		cardName: state.paymentReducer.cardName,
 		cardNumber: state.paymentReducer.cardNumber,
