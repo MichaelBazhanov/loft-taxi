@@ -1,16 +1,16 @@
 import { recordSaga } from '../recordSaga'
-import { authenticateSaga } from '../authSaga'
+import { authenticateSaga } from '../modules/authorization'
 import { serverLogin } from '../api'
 
 //Это ACTION с которого начинается исполнение SAGA (this action creator)
-import { authenticate } from '../actions'
+import { authenticate } from '../modules/authorization'
 
 // jest.mock('../api', () => ({ serverLogin: jest.fn(() => true) }))
-jest.mock('../api')
+jest.mock('../api') //Мы мокаем api для того что бы была доступна функция serverLogin внутри теста
 
-describe('authSaga', () => {
+describe('authorizationSaga', () => {
   describe('#AUTHENTICATE', () => {
-    it('authenticate through api', async () => {
+    it('Авторизоваться через api', async () => {
 
       serverLogin.mockImplementation(async () => ({ //serverLogin используется внутри authenticateSaga
         success: true,
@@ -26,6 +26,26 @@ describe('authSaga', () => {
         {
           type: 'LOG_IN',
           payload: { token: '123' },
+        },
+      ])
+    })
+    // ===============================================================================================
+    it('Авторизоваться через api с неверными данными', async () => {
+
+      serverLogin.mockImplementation(async () => ({ //serverLogin используется внутри authenticateSaga
+        success: false,
+        error: 'error',
+      }))
+
+      const dispatched = await recordSaga(
+        authenticateSaga, // сама сага для теста
+        authenticate('testLogin', 'testPassword'), // отдаем action creator
+      )
+
+      expect(dispatched).toEqual([
+        {
+          type: 'LOG_IN_FAILURE',
+          payload: { error: 'error' },
         },
       ])
     })
