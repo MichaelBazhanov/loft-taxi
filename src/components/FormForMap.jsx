@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux'
 import { getAddressList, getRoutesCoordinates } from '../actions' //просто импортируем action
+import { getPaymentCard } from '../modules/payment' //просто импортируем action
 import Select from '../components/Select'
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +11,7 @@ import imgPremium from '../assets/images/car-premium.jpg'
 import imgBusiness from '../assets/images/car-business.jpg'
 
 
-import Loading from "./Loading/index";
+import Loading from "./Loading";
 import Error from "./Error";
 
 //Car
@@ -20,7 +21,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, address, cardName, cardNumber, expiryDate, cvc, }) => {
+const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLoadingGetPaymentCard, errorGetPaymentCard, isLoading, error, address, cardName, cardNumber, expiryDate, cvc, }) => {
 	const [activeIndex, setActiveIndex] = useState(1)
 	const [activeIndexCar, setActiveIndexCar] = useState(1)
 	const [addressStart, setAddressStart] = useState(null)
@@ -38,6 +39,7 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, ad
 	//Все useEffect при первом рендере выполняются !!!
 	useEffect(() => {
 		getAddressList()
+		getPaymentCard()
 	}, [])
 	useEffect(() => {
 		if (
@@ -45,15 +47,18 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, isLoading, error, ad
 			(cardNumber === '' || cardNumber === ' ') ||
 			(expiryDate === '' || expiryDate === ' ') ||
 			(cvc === '' || cvc === ' ')
-
 		) {
-			setActiveIndex(3)
+			setActiveIndex(3) // Данные карты пустые!
+		} else {
+			setActiveIndex(1) // Данные карты НЕ пустые!
 		}
 	}, [cardName, cardNumber, expiryDate, cvc,])
 
 
 	if (isLoading) return <Loading />
 	if (error) return <Error />
+	if (isLoadingGetPaymentCard) return <Loading />
+	if (errorGetPaymentCard) return <Error />
 
 	const filterAddress = () => {
 		return address.filter(item => addressStart ? item.rout !== addressStart.rout : true).filter(item => addressEnd ? item.rout !== addressEnd.rout : true)
@@ -127,6 +132,9 @@ export default connect(
 		cardNumber: state.paymentReducer.cardNumber,
 		expiryDate: state.paymentReducer.expiryDate,
 		cvc: state.paymentReducer.cvc,
+
+		isLoadingGetPaymentCard: state.paymentReducer.isLoadingGetPaymentCard,
+		errorGetPaymentCard: state.paymentReducer.errorGetPaymentCard,
 	}),
-	{ getAddressList, getRoutesCoordinates } // просто дергаем ACTION
+	{ getAddressList, getRoutesCoordinates, getPaymentCard } // просто дергаем ACTION
 )(FormForMap)
