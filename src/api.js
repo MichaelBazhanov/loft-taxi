@@ -58,7 +58,9 @@ export const serverGetCard = async (token) => {
     },
   })
     .then((res) => res.json())
-    .then((data) => data)
+    .then((data) => {
+      return data
+    })
 }
 
 // Получение доступных адресов на клиенте

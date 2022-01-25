@@ -21,7 +21,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLoadingGetPaymentCard, errorGetPaymentCard, isLoading, error, address, cardName, cardNumber, expiryDate, cvc, }) => {
+const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLoadingSendPaymentCardNewUser, errorSendPaymentCardNewUser, isLoading, error, address, cardName, cardNumber, expiryDate, cvc, }) => {
 	const [activeIndex, setActiveIndex] = useState(1)
 	const [activeIndexCar, setActiveIndexCar] = useState(1)
 	const [addressStart, setAddressStart] = useState(null)
@@ -39,8 +39,10 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 	//Все useEffect при первом рендере выполняются !!!
 	useEffect(() => {
 		getAddressList()
-		getPaymentCard()
 	}, [])
+	useEffect(() => {
+		if(!isLoadingSendPaymentCardNewUser) getPaymentCard() // Если для нового пользователя карта уже установлена то ...
+	}, [isLoadingSendPaymentCardNewUser])
 	useEffect(() => {
 		if (
 			(cardName === '' || cardName === ' ') ||
@@ -57,8 +59,8 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 
 	if (isLoading) return <Loading />
 	if (error) return <Error />
-	if (isLoadingGetPaymentCard) return <Loading />
-	if (errorGetPaymentCard) return <Error />
+	if (isLoadingSendPaymentCardNewUser) return <Loading />
+	if (errorSendPaymentCardNewUser) return <Error />
 
 	const filterAddress = () => {
 		return address.filter(item => addressStart ? item.rout !== addressStart.rout : true).filter(item => addressEnd ? item.rout !== addressEnd.rout : true)
@@ -133,8 +135,8 @@ export default connect(
 		expiryDate: state.paymentReducer.expiryDate,
 		cvc: state.paymentReducer.cvc,
 
-		isLoadingGetPaymentCard: state.paymentReducer.isLoadingGetPaymentCard,
-		errorGetPaymentCard: state.paymentReducer.errorGetPaymentCard,
+		isLoadingSendPaymentCardNewUser: state.paymentReducer.isLoadingSendPaymentCardNewUser,
+		errorSendPaymentCardNewUser: state.paymentReducer.errorSendPaymentCardNewUser,
 	}),
 	{ getAddressList, getRoutesCoordinates, getPaymentCard } // просто дергаем ACTION
 )(FormForMap)
