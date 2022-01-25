@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux'
-import { getRoutesCoordinates } from '../actions'
+import { getRoutesCoordinates } from '../modules/route'
 import { getPaymentCard } from '../modules/payment'
 import { getAddressList } from '../modules/address'
 import Select from '../components/Select'

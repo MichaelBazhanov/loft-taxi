@@ -84,7 +84,7 @@ class Map extends Component {
 
 export default connect(
 	state => ({
-		coordinates: state.routes.coordinates,
+		coordinates: state.routesReducer.coordinates,
 	}),
 	null
 )(Map)
