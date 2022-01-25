@@ -18,8 +18,8 @@ describe('authorizationSaga', () => {
       }))
 
       const dispatched = await recordSaga(
-        authenticateSaga, // сама сага для теста
-        authenticate('testLogin', 'testPassword'), // отдаем action creator
+        authenticateSaga, // сама сага
+        authenticate('testLogin', 'testPassword'), // action на который тригерим эту сагу
       )
 
       expect(dispatched).toEqual([

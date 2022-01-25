@@ -15,7 +15,7 @@ export const recordSaga = async (saga, initialAction = null) => {
       //вместо настоящего dispatch записываем action в массив
       dispatch: (action) => dispatched.push(action), // сам action это реальный action с payload данными
     },
-    saga, // сага для теста
+    saga, // сага для теста (в этой саге ожидаем диспатчи других action и записываем их)
     initialAction, // Action для саги для теста
   ).done
 
