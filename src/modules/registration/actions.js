@@ -6,9 +6,9 @@ export const getRegistration = (email, password, name, surname) => ({
   type: GET_REGISTRATION,
   payload: { email, password, name, surname },
 })
-export const registrationSuccess = (success, token) => ({
+export const registrationSuccess = (success) => ({
   type: REGISTRATION_SUCCESS,
-  payload: { success, token },
+  payload: { success },
 })
 export const registrationFailure = (error) => ({
   type: REGISTRATION_FAILURE,

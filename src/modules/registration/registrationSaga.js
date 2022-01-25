@@ -4,7 +4,6 @@ import {
   registrationFailure,
 } from './actions'
 import { logIn } from '../authorization'
-import { sendPaymentCard } from '../payment'
 import { serverRegistration } from '../../api'
 import { call, takeEvery, put } from 'redux-saga/effects'
 
@@ -23,9 +22,6 @@ export function* registration(action) {
     if (success) {
       yield put(logIn(token))
       yield put(registrationSuccess(success))
-      // При регистрации нового пользователя устанавливаем ему пустую платежную карту
-      // yield put(sendPaymentCard())
-
     } else {
       yield put(registrationFailure(error))
     }
