@@ -52,7 +52,9 @@ export function* paymentCardSendSaga() {
   yield takeEvery(SEND_PAYMENT_CARD, sendingCard)
 }
 
+
 //==========================================================================================Получение карты
+//===========================================================================На тестирование ==============
 export function* gettingCard() {
 	try {
 		const token = yield call(checkToken)
@@ -67,14 +69,16 @@ export function* gettingCard() {
 			yield put(getPaymentCardFailure(error))
 		}
 	} catch (error) {
-		console.error(error.message)
+		// console.error(error.message)
     yield put(getPaymentCardFailure(error.response))
 	}
 }
-
+//===========================================================================На тестирование ==============
 export function* paymentCardGetSaga() {
   yield takeEvery(GET_PAYMENT_CARD, gettingCard)
 }
+//==========================================================================================Получение карты
+
 
 //===========================================================Установка карты для нового пользователя
 export function* sendingCardNewUser() {

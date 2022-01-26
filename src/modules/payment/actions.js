@@ -3,8 +3,9 @@ export const GET_PAYMENT_CARD = 'GET_PAYMENT_CARD'
 export const GET_PAYMENT_CARD_SUCCESS = 'GET_PAYMENT_CARD_SUCCESS'
 export const GET_PAYMENT_CARD_FAILURE = 'GET_PAYMENT_CARD_FAILURE'
 
-export const getPaymentCard = () => ({
+export const getPaymentCard = (token) => ({
 	type: GET_PAYMENT_CARD,
+	// payload: { token }, // token for test
 })
 export const getPaymentCardSuccess = (cardName, cardNumber, expiryDate, cvc, id) => ({
 	type: GET_PAYMENT_CARD_SUCCESS,
