@@ -9,15 +9,20 @@ import {
 export function* addressList() {
   try {
     let { addresses } = yield call(serverGetAddressList)
-    // перерабатываем данные у удобном для нас виде ======
-    addresses = addresses.map((el, inx) => {
-      return { id: inx + 1, rout: el }
-    })
-    // перерабатываем данные у удобном для нас виде ======
-    yield put(addressListSuccess(addresses))
+
+    if (addresses) {
+      // перерабатываем данные у удобном для нас виде ======
+      addresses = addresses.map((el, inx) => {
+        return { id: inx + 1, rout: el }
+      })
+      // перерабатываем данные у удобном для нас виде ======
+      yield put(addressListSuccess(addresses))
+    } else {
+      yield put(addressListFailure(new Error('error').message))
+    }
+
   } catch (error) {
-    console.error(error.message)
-    yield put(addressListFailure(error.message))
+    yield put(addressListFailure(error.response))
   }
 }
 //======================================================= ТЕСТИРОВАНИЕ
