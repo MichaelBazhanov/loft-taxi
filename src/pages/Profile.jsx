@@ -47,7 +47,7 @@ const Profile = ({
 	}, [cardName, cardNumber, expiryDate, cvc])
 
 	useEffect(() => {
-		getPaymentCard()
+		getPaymentCard(token)
 	}, [])
 
 	if (isLoadingGetPaymentCard) return <Loading />

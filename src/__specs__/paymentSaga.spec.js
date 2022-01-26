@@ -18,38 +18,45 @@ describe('gettingCard', () => {
         expiryDate: 'expiryDate',
         cvc: '000',
         id: '0',
-        error: 'true',
       }))
 
       const dispatched = await recordSaga(
         gettingCard, // сама сага
-        getPaymentCard(), // action на который тригерим эту сагу
+        getPaymentCard('123'), // action на который тригерит эту сагу ('123' это token)
       )
-      console.log(dispatched)
+      // console.log(dispatched)
       expect(dispatched).toEqual([
-        // { type: 'LOG_IN', payload: { token: '123' } },
-        // { type: 'REGISTRATION_SUCCESS', payload: { success: true } },
+        {
+          type: 'GET_PAYMENT_CARD_SUCCESS',
+          payload: {
+            cardName: 'cardName',
+            cardNumber: 'cardNumber',
+            expiryDate: 'expiryDate',
+            cvc: '000',
+            id: '0',
+          },
+        },
       ])
     })
     // ===============================================================================================
-    // it('Регистрация нового пользователя через api с неверными данными', async () => {
+    it('Получение карты отплаты через api с неверными данными', async () => {
 
-    //   serverRegistration.mockImplementation(async () => ({ //serverRegistration используется внутри authenticateSaga
-    //     success: false,
-    //     error: 'error',
-    //   }))
+      //serverGetCard используется внутри gettingCard
+      serverGetCard.mockImplementation(async () => ({
+        error: 'error'
+      }))
 
-    //   const dispatched = await recordSaga(
-    //     registration, // сама сага для теста
-    //     getRegistration('testEmail', 'testPassword', 'testName', 'testSurname'), // action на который тригерим эту сагу
-    //   )
-
-    //   expect(dispatched).toEqual([
-    //     {
-    //       type: 'REGISTRATION_FAILURE',
-    //       payload: { error: 'error' },
-    //     },
-    //   ])
-    // })
+      const dispatched = await recordSaga(
+        gettingCard, // сама сага
+        getPaymentCard(), // action на который тригерит эту сагу
+      )
+      // console.log(dispatched)
+      expect(dispatched).toEqual([
+        {
+          type: 'GET_PAYMENT_CARD_FAILURE',
+          payload: { error: 'error' },
+        },
+      ])
+    })
   })
 })

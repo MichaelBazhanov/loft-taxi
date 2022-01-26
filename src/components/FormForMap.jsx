@@ -22,7 +22,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLoadingSendPaymentCardNewUser, errorSendPaymentCardNewUser, isLoading, error, address, cardName, cardNumber, expiryDate, cvc, }) => {
+const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLoadingSendPaymentCardNewUser, errorSendPaymentCardNewUser, isLoading, error, address, cardName, cardNumber, expiryDate, cvc, token }) => {
 	const [activeIndex, setActiveIndex] = useState(1)
 	const [activeIndexCar, setActiveIndexCar] = useState(1)
 	const [addressStart, setAddressStart] = useState(null)
@@ -42,7 +42,7 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 		getAddressList()
 	}, [])
 	useEffect(() => {
-		if(!isLoadingSendPaymentCardNewUser) getPaymentCard() // Если для нового пользователя карта уже установлена то ...
+		if(!isLoadingSendPaymentCardNewUser) getPaymentCard(token) // Если для нового пользователя карта уже установлена то ...
 	}, [isLoadingSendPaymentCardNewUser])
 	useEffect(() => {
 		if (
@@ -127,6 +127,8 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 }
 export default connect(
 	state => ({
+		token: state.authorizationReducer.token,
+
 		isLoading: state.addressReducer.isLoading,
 		error: state.addressReducer.error,
 		address: state.addressReducer.address,
