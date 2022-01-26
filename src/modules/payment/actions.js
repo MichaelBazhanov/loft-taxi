@@ -27,16 +27,18 @@ export const sendPaymentCard = (cardName, cardNumber, expiryDate, cvc, token) =>
 export const sendPaymentCardSuccess = () => ({
   type: SEND_PAYMENT_CARD_SUCCESS,
 })
-export const sendPaymentCardFailure = () => ({
+export const sendPaymentCardFailure = (error) => ({
   type: SEND_PAYMENT_CARD_FAILURE,
+	payload: { error },
 })
 //================================================================== БЛОК ОТПРАВКИ КАРТЫ НОВОГО ПОЛЬЗОВАТЕЛЯ
 export const SEND_PAYMENT_CARD_NEW_USER = 'SEND_PAYMENT_CARD_NEW_USER'
 export const SEND_PAYMENT_CARD_NEW_USER_SUCCESS = 'SEND_PAYMENT_CARD_NEW_USER_SUCCESS'
 export const SEND_PAYMENT_CARD_NEW_USER_FAILURE = 'SEND_PAYMENT_CARD_NEW_USER_FAILURE'
 
-export const sendPaymentCardNewUser = () => ({
+export const sendPaymentCardNewUser = (token) => ({
 	type: SEND_PAYMENT_CARD_NEW_USER,
+	payload: { token },
 })
 export const sendPaymentCardNewUserSuccess = () => ({
   type: SEND_PAYMENT_CARD_NEW_USER_SUCCESS,

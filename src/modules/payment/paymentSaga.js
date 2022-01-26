@@ -25,9 +25,7 @@ export function* checkToken() {
 //============================================================================================Установка карты
 export function* sendingCard(action) {
   try {
-    const token = yield call(checkToken)
-
-    const { cardName, cardNumber, expiryDate, cvc } = action.payload //вынимаем данные из ACTION
+    const { cardName, cardNumber, expiryDate, cvc, token } = action.payload //вынимаем данные из ACTION
     const { success, error } = yield call(
       serverSendCard,
       cardName,
@@ -81,10 +79,8 @@ export function* paymentCardGetSaga() {
 
 
 //===========================================================Установка карты для нового пользователя
-export function* sendingCardNewUser() {
+export function* sendingCardNewUser(action) {
   try {
-    const token = yield call(checkToken)
-
     // default object
     const paymentCardNewUser = {
       cardName: ' ',
@@ -92,7 +88,7 @@ export function* sendingCardNewUser() {
       expiryDate: ' ',
       cvc: ' ',
     }
-    const { cardName, cardNumber, expiryDate, cvc } = paymentCardNewUser
+    const { cardName, cardNumber, expiryDate, cvc, token = action.payload.token } = paymentCardNewUser
 
     const { success, error } = yield call(
       serverSendCard,
@@ -106,7 +102,6 @@ export function* sendingCardNewUser() {
     if (success) {
       yield put(sendPaymentCardNewUserSuccess())
     } else {
-			console.error(error)
       yield put(sendPaymentCardNewUserFailure(error))
     }
   } catch (error) {

@@ -8,7 +8,7 @@ import { sendPaymentCardNewUser } from '../modules/payment'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 
-const Registration = ({ getRegistration, sendPaymentCardNewUser, isLoggedIn, isLoading, error }) => {
+const Registration = ({ getRegistration, sendPaymentCardNewUser, token, isLoggedIn, isLoading, error }) => {
 	const [state, setState] = useState({ email: 'email@example.com', name: 'Name', password: 'password', surname: 'Surname' })
 
 	const navigate = useNavigate()
@@ -26,7 +26,7 @@ const Registration = ({ getRegistration, sendPaymentCardNewUser, isLoggedIn, isL
 
 	useEffect(() => { // Следим за isLoggedIn в redux
 		if (isLoggedIn) {
-			sendPaymentCardNewUser() // Устанавливаем ему платежную карт пустую по умолчанию
+			sendPaymentCardNewUser(token) // Устанавливаем ему платежную карт пустую по умолчанию
 			navigate("/map", { replace: true })
 		} else {
 			navigate("/registration", { replace: true })
@@ -151,6 +151,8 @@ const Registration = ({ getRegistration, sendPaymentCardNewUser, isLoggedIn, isL
 
 export default connect(
 	(state) => ({
+		token: state.authorizationReducer.token,
+
 		isLoggedIn: state.authorizationReducer.isLoggedIn,
 		isLoading: state.registrationReducer.isLoading,
 		error: state.registrationReducer.error
