@@ -1,19 +1,18 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import { render } from '@testing-library/react'
 import TestRenderer from 'react-test-renderer'
 
 import Layout from '../Layout/Layout'
 
-it('Renders correctly', () => {
-  const layout = TestRenderer.create(<Layout />).toJSON() // превращаем компонент в JSON
+// Мокаем useLocation что бы внутри <Layout /> pathname бы равен "/login" и компонент хедер срендерился
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useLocation: () => ({
+    pathname: "/login"
+  })
+}));
 
-  render(
-    <Routes>
-      <layout />
-    </Routes>,
-  )
+it('Renders correctly', () => {
+  const layout = TestRenderer.create(<Layout />).toJSON();
 
   expect(layout).toMatchSnapshot()
 })
-
