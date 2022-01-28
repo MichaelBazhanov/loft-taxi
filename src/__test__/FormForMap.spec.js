@@ -15,23 +15,26 @@ const mockStore = {
     // входящие пропсы
     authorizationReducer: { token: '123' },
 
-    // address: ['1','2'],
     addressReducer: {
       address: [
         { id: 1, root: 'Адрес 1' },
         { id: 2, root: 'Адрес 2' },
       ],
+      isLoading: false,
+      error: false,
     },
-    addressReducer: { isLoading: false },
-    addressReducer: { error: false },
 
-    paymentReducer: { cardName: 'test' },
-    paymentReducer: { cardNumber: '1' },
-    paymentReducer: { expiryDate: '000' },
-    paymentReducer: { cvc: '1' },
+    paymentReducer: {
+      cardName: 'test',
+      cardNumber: '1',
+      expiryDate: '000',
+      cvc: '1',
+    },
 
-    paymentReducer: { isLoadingSendPaymentCardNewUser: false },
-    paymentReducer: { errorSendPaymentCardNewUser: false },
+    paymentReducer: {
+      isLoadingSendPaymentCardNewUser: false,
+      errorSendPaymentCardNewUser: false,
+    },
   }),
   subscribe: () => {},
   dispatch: () => {
