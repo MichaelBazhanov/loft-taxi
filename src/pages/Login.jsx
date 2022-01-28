@@ -116,8 +116,10 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error }) => {
 }
 
 Login.propTypes = {
-	authenticate: PropTypes.func.isRequired,
-	isLoggedIn: PropTypes.bool.isRequired
+	// authenticate: PropTypes.func.isRequired,
+	// isLoggedIn: PropTypes.bool.isRequired
+	authenticate: PropTypes.func,
+	isLoggedIn: PropTypes.bool
 }
 
 export default connect(
