@@ -15,7 +15,8 @@ import Select from '../components/Select'
 //   // },
 //   Transition: () => {},
 // }))
-jest.mock('@headlessui/react')
+// jest.mock('@headlessui/react',)
+jest.mock('@headlessui/react', () => { Listbox: () => (<div>Listbox component</div>) })
 
 // Формируем замоканый стор
 const mockStore = {
