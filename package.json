@@ -6,7 +6,6 @@
     "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^1.0.5",
     "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/user-event": "^13.5.0",
     "formik": "^2.2.9",
     "mapbox-gl": "^2.6.1",
     "prop-types": "^15.8.0",
@@ -47,7 +46,10 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/dom": "^8.11.3",
     "@testing-library/react": "^12.1.2",
+    "@testing-library/react-hooks": "^7.0.2",
+    "@testing-library/user-event": "14.0.0-beta.8",
     "autoprefixer": "^10.4.0",
     "husky": "4",
     "postcss": "^8.4.5",
