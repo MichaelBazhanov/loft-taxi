@@ -42,28 +42,45 @@ it('Renders correctly', () => {
 
 // ======================================================================================= Тестирование библиотекой тестирования
 describe('Login', () => {
-  test('При вводе данных в input на form происходят изменения в state компонента', () => {
-    // 1 Найти на форме inputs
-    // 2 Вписать туда данные
-    // 3 Проверить что эти данные в state появились
-    // const MockComponentLogin = () => {
-    //   <Provider store={mockStore}>
-    //     <Login />
-    //   </Provider>
-    // }
+  // 1 Найти на форме inputs и проверить ввод туда данных и отображение этих данных
+  // 2 Проверить что бы Кнопка отправки формы была с типом submit
+  // 3 проверить что бы кнопка submit была недоступна при пустых полях inputs а при заполненных, доступна
 
+  test('При вводе данных в input type="email" на form происходят изменения inputs.value', async () => {
     render(
       <Provider store={mockStore}>
         <Login />
       </Provider>,
     )
-    // render(<Login />)
 
-    const mail = screen.getByPlaceholderText('mail@mail.ru')
-    // const password = screen.getByPlaceholderText('*************')
+    const inputMail = screen.getByPlaceholderText('mail@mail.ru')
+    await userEvent.clear(inputMail)
+    await userEvent.type(inputMail, '123@123.ru')
+    expect(inputMail).toHaveValue('123@123.ru')
+  })
 
-    userEvent.type(mail, 'Текст для mail')
-    expect(mail).toHaveValue('Текст для mail')
+  test('При вводе данных в input type="password" на form происходят изменения inputs.value', async () => {
+    render(
+      <Provider store={mockStore}>
+        <Login />
+      </Provider>,
+    )
+
+    const inputPassword = screen.getByPlaceholderText('*************')
+    await userEvent.clear(inputPassword)
+    await userEvent.type(inputPassword, 'password')
+    expect(inputPassword).toHaveValue('password')
+  })
+
+  test('Проверка типа кнопки отправки формы type="submit"', async () => {
+    render(
+      <Provider store={mockStore}>
+        <Login />
+      </Provider>,
+    )
+
+    const inputButtonSubmit = screen.getByRole('button', {type: /submit/i}) // ПРЕДПОЧТИТЕЛЬНО
+    expect(inputButtonSubmit).toHaveAttribute('type', 'submit')
   })
 
   // test('При клики на кнопку submit на форме сама форма успешно отправляется', () => {
