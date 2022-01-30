@@ -2,7 +2,7 @@ import React from 'react'
 import TestRenderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import Login from '../pages/Login'
@@ -53,10 +53,12 @@ describe('Login', () => {
       </Provider>,
     )
 
-    const inputMail = screen.getByPlaceholderText('mail@mail.ru')
-    await userEvent.clear(inputMail)
-    await userEvent.type(inputMail, '123@123.ru')
-    expect(inputMail).toHaveValue('123@123.ru')
+    await waitFor(async () => {
+      const inputMail = screen.getByPlaceholderText('mail@mail.ru')
+      await userEvent.clear(inputMail)
+      await userEvent.type(inputMail, '123@123.ru')
+      expect(inputMail).toHaveValue('123@123.ru')
+    })
   })
 
   test('При вводе данных в input type="password" на form происходят изменения inputs.value', async () => {
@@ -66,10 +68,12 @@ describe('Login', () => {
       </Provider>,
     )
 
-    const inputPassword = screen.getByPlaceholderText('*************')
-    await userEvent.clear(inputPassword)
-    await userEvent.type(inputPassword, 'password')
-    expect(inputPassword).toHaveValue('password')
+    await waitFor(async () => {
+      const inputPassword = screen.getByPlaceholderText('*************')
+      await userEvent.clear(inputPassword)
+      await userEvent.type(inputPassword, 'password')
+      expect(inputPassword).toHaveValue('password')
+    })
   })
 
   test('Проверка типа кнопки отправки формы type="submit"', async () => {
@@ -79,8 +83,10 @@ describe('Login', () => {
       </Provider>,
     )
 
-    const inputButtonSubmit = screen.getByRole('button', {type: /submit/i}) // ПРЕДПОЧТИТЕЛЬНО
-    expect(inputButtonSubmit).toHaveAttribute('type', 'submit')
+    await waitFor(() => {
+      const inputButtonSubmit = screen.getByRole('button', { type: /submit/i }) // ПРЕДПОЧТИТЕЛЬНО
+      expect(inputButtonSubmit).toHaveAttribute('type', 'submit')
+    })
   })
 
   // test('При клики на кнопку submit на форме сама форма успешно отправляется', () => {

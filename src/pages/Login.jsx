@@ -57,7 +57,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error }) => {
 					}}
 					initialValues={{ email: "test@test.com", password: "123123" }}
 					validate={(value) => {
-						console.log('Formik - validate - value', value)
+						// console.log('Formik - validate - value', value)
 						let errors = {}
 						if (!value.email) {
 							errors.email = 'Required';
