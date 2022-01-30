@@ -3,6 +3,7 @@ import TestRenderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 
 import { render, screen, waitFor } from '@testing-library/react'
+import { logRoles } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
 
 import Login from '../pages/Login'
@@ -76,7 +77,7 @@ describe('Login', () => {
     })
   })
 
-  test('Проверка типа кнопки отправки формы type="submit"', async () => {
+  test('Проверка типа кнопки отправки формы type="submit" что она есть', async () => {
     render(
       <Provider store={mockStore}>
         <Login />
@@ -89,12 +90,44 @@ describe('Login', () => {
     })
   })
 
-  // test('При клики на кнопку submit на форме сама форма успешно отправляется', () => {
-  //   const MockComponentLogin = () => {
-  //     <Login />
-  //   }
-  // const onChange = jest.fn()
-  // expect(onChange).toHaveBeenCalled(2)
-  // })
+  test('При клики на кнопку submit на форме сама форма успешно отправляется c нужными данными', async () => {
+    const handleSubmit = jest.fn()
+    render(
+      <Provider store={mockStore}>
+        <Login onSubmit={handleSubmit} />
+      </Provider>
+    )
+
+    // const email = screen.getByPlaceholderText('mail@mail.ru')
+    // const password = screen.getByPlaceholderText('*************')
+
+    // userEvent.clear(screen.getByPlaceholderText('mail@mail.ru'))
+    // userEvent.clear(screen.getByPlaceholderText('*************'))
+
+    // userEvent.type(screen.getByPlaceholderText('mail@mail.ru'), 'mail@mail.ru')
+    // userEvent.type(screen.getByPlaceholderText('*************'), 'password')
+
+
+    // await userEvent.click(screen.getByRole('button', { type: /submit/i }))
+
+    await waitFor( async () => {
+      const inputMail = screen.getByPlaceholderText('mail@mail.ru')
+      await userEvent.clear(inputMail)
+      await userEvent.type(inputMail, '123@123.ru')
+
+      const inputPassword = screen.getByPlaceholderText('*************')
+      await userEvent.clear(inputPassword)
+      await userEvent.type(inputPassword, 'password')
+
+      await userEvent.click(screen.getByRole('button', { type: /submit/i }))
+
+      expect(handleSubmit).toHaveBeenCalled()
+      // expect(handleSubmit).toHaveBeenCalledWith({
+      //   email: '123@123.ru',
+      //   password: 'password',
+      // })
+    })
+
+  })
 })
 // ======================================================================================= Тестирование библиотекой тестирования

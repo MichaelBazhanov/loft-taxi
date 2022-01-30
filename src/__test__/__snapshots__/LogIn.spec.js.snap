@@ -18,6 +18,7 @@ exports[`Renders correctly 1`] = `
   >
     <form
       className="max-w-xl w-full bg-white px-28 py-14 shadow-lg rounded-2xl"
+      data-testid="custom-element"
       onSubmit={[Function]}
     >
       <h4

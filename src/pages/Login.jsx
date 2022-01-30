@@ -9,7 +9,14 @@ import { Formik, Field } from 'formik'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 
-const Login = ({ authenticate, isLoggedIn, isLoading, error }) => {
+const onSubmitFunction = (values, FormikBag, authenticate) => {
+	// console.log('===onSubmitFunction', values, FormikBag)
+	const { email, password } = values
+	authenticate(email, password)
+	FormikBag.setSubmitting(true) // защита от повторной отправки
+}
+
+const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmitFunction }) => {
 	// const [state, setState] = useState({ email: 'test@test.com', password: '123123' }) // hard code
 	// const [state, setState] = useState({ email: '', password: '' })
 
@@ -34,6 +41,10 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error }) => {
 	if (isLoading) return <Loading />
 	if (error) return <Error error={error} />
 
+	const handleSubmitFunction = (values, FormikBag) => {
+		// console.log('handleSubmitFunction', values, FormikBag)
+		onSubmit(values, FormikBag, authenticate)
+	}
 	return (
 		<div
 			className="container mx-auto flex h-screen bg-map bg-center">
@@ -48,13 +59,12 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error }) => {
 				className="w-2/3 flex justify-center items-center"
 			>
 				<Formik
-					onSubmit={(values, FormikBag) => {
-						// console.log('Formik сработал  onSubmit', values, FormikBag)
-						const { email, password } = values
-						authenticate(email, password)
-
-						FormikBag.setSubmitting(true) // защита от повторной отправки
-					}}
+					onSubmit={handleSubmitFunction}
+					// onSubmit={(values, FormikBag) => {
+					// 	const { email, password } = values
+					// 	authenticate(email, password)
+					// 	FormikBag.setSubmitting(true) // защита от повторной отправки
+					// }}
 					initialValues={{ email: "test@test.com", password: "123123" }}
 					validate={(value) => {
 						// console.log('Formik - validate - value', value)
@@ -83,6 +93,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error }) => {
 						isSubmitting,
 					}) => (
 						<form
+							data-testid="custom-element"
 							onSubmit={handleSubmit} className="max-w-xl w-full bg-white px-28 py-14 shadow-lg rounded-2xl">
 							<h4
 								className="font-bold text-3xl text-black text-center mb-14">
