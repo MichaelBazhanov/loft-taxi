@@ -58,9 +58,9 @@ const Profile = ({
 	if (errorSendPaymentCardNewUser) return <Error error={errorSendPaymentCardNewUser} />
 
 	return (
-		<div className="bg-map bg-center relative">
-			<div className="absolute inset-0 bg-black-me opacity-30"></div>
-			<div className="container mx-auto h-screen ">
+		<div className="bg-map bg-center h-full relative">
+			<div className="absolute inset-0 bg-black-me opacity-30"/>
+			<div className="container mx-auto h-full">
 				<div className="flex justify-center items-center relative w-full h-full">
 					{switchView &&
 						< div

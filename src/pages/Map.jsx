@@ -69,13 +69,12 @@ class Map extends Component {
 	render() {
 
 		return (
-			<div className="relative">
+			<div className="relative h-full">
 				<div
 					data-testid='map'
 					className="absolute inset-0"
 					ref={this.mapContainer}
-				>
-				</div>
+				/>
 				<FormForMap />
 			</div>
 		)

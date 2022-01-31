@@ -75,7 +75,7 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 	}
 
 	return (
-		<div className="container mx-auto h-screen relative pointer-events-none">
+		<div className="container mx-auto relative pointer-events-none">
 
 			<div className="flex flex-col">
 
@@ -85,12 +85,10 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 						{address.length > 0 && <Select
 							placeholder='Откуда'
 							addressList={filterAddress()}
-							// currentAddress={address[0]}
 							onChange={changeAddress1} />}
 						{address.length > 0 && <Select
 							placeholder='Куда'
 							addressList={filterAddress()}
-							// currentAddress={address[address.length - 1]}
 							onChange={changeAddress2} />}
 					</div>
 

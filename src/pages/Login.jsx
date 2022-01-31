@@ -47,7 +47,8 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 	}
 	return (
 		<div
-			className="container mx-auto flex h-screen bg-map bg-center">
+			className="container mx-auto  flex   h-screen bg-map bg-center">
+
 			<div
 				className="w-1/3 bg-black-me flex justify-center items-center">
 				<img
@@ -55,6 +56,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 					className="logo-taxi-vertical"
 					alt="logo" />
 			</div>
+
 			<div
 				className="w-2/3 flex justify-center items-center"
 			>
