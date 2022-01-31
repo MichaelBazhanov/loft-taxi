@@ -47,19 +47,16 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 	}
 	return (
 		<div
-			className="container mx-auto  flex   h-screen bg-map bg-center">
+			className="container mx-auto flex flex-col md:flex-row  h-screen bg-map bg-center">
 
-			<div
-				className="w-1/3 bg-black-me flex justify-center items-center">
+			<div className="w-full md:w-1/3 flex-grow-0 bg-black-me flex justify-center items-center pt-7">
 				<img
 					src={logoTaxiVertical}
 					className="logo-taxi-vertical"
 					alt="logo" />
 			</div>
 
-			<div
-				className="w-2/3 flex justify-center items-center"
-			>
+			<div className="w-full md:w-2/3 flex-grow flex justify-center items-center">
 				<Formik
 					onSubmit={handleSubmitFunction}
 					// onSubmit={(values, FormikBag) => {
@@ -96,14 +93,14 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 					}) => (
 						<form
 							data-testid="custom-element"
-							onSubmit={handleSubmit} className="max-w-xl w-full bg-white px-28 py-14 shadow-lg rounded-2xl">
+							onSubmit={handleSubmit} className="max-w-xl flex flex-col justify-center w-full h-full bg-white _py-16 px-3  md:px-28 md:py-14 shadow-lg rounded-2xl">
+
 							<h4
-								className="font-bold text-3xl text-black text-center mb-14">
+								className="font-bold text-3xl text-black text-center">
 								Войти
 							</h4>
 
-							<label
-								className="flex flex-col justify-between font-bold cursor-pointer">
+							<label className="flex flex-col pt-14 justify-between font-bold cursor-pointer">
 								<span>Email*</span>
 								<input
 									type="email"
@@ -114,7 +111,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 									required
 									autoComplete="off"
 									placeholder="mail@mail.ru"
-									className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
+									className="mt-2 md:mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 		focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 		placeholder:text-gray-me"/>
 								{touched.email && errors.email && <div className="text-red-600">{errors.email}</div>}
@@ -131,7 +128,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 									required
 									autoComplete="off"
 									placeholder="*************"
-									className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
+									className="mt-2 md:mt-1 block w-full border-b-2 border-gray-300 shadow-sm
 		focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 		placeholder:text-gray-me"/>
 								{touched.password && errors.password && <div className="text-red-600">{errors.password}</div>}
