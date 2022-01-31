@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom'
 
 const setActive = ({ isActive }) => isActive ? 'text-yellow-me' : ''
 
-const Header = (props) => {
+const Header = ({ logOut }) => {
 	return (
 		<header className="bg-black-me">
 			<div className="container mx-auto py-5 px-8">
@@ -25,9 +25,7 @@ const Header = (props) => {
 							<NavLink to={'profile'} className={setActive}>Профиль</NavLink>
 						</button>
 
-						<button onClick={() => {
-							props.logOut()
-						}} type="button" className="hover:text-yellow-me text-xl">
+						<button onClick={() => { logOut() }} type="button" className="hover:text-yellow-me text-xl">
 							<NavLink to={'login'} className={setActive}>Выйти</NavLink>
 						</button>
 

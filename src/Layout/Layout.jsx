@@ -7,10 +7,10 @@ import { useLocation } from 'react-router-dom'
 
 const Layout = () => {
 	let location = useLocation();
-
+	// 1grid-rows-[auto_1fr]1
 	return (
-		<div className='App sans antialiased'>
-			{(location.pathname !== '/login' && location.pathname !== '/registration' && location.pathname !== '/') && <Header />}
+		<div className='App sans antialiased grid auto-cols-fr grid-rows-[auto_1fr] h-screen overflow-hidden'>
+			{(location.pathname !== '/login' && location.pathname !== '/registration' && location.pathname !== '/') && <Header/>}
 			<main>
 				<section className="bg-black-me">
 					<Outlet />
