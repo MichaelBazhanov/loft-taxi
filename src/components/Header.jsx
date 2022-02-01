@@ -21,20 +21,17 @@ const Header = ({ logOut }) => {
 		const parent = e.target.closest('#toggle-menu')
 		if(parent) {
 			parent.classList.toggle('active-toggle-menu');
-		} else {
-			console.log('NULL')
+
+			const menuContent = document.querySelector('#toggle-menu-content')
+
+			if (menuContent.classList.contains('animate-menu-in')) {
+				menuContent.classList.remove('animate-menu-in'); //убираем класс
+				menuContent.classList.add('animate-menu-out'); //добавляем класс
+			} else {
+				menuContent.classList.add('animate-menu-in'); //добавляем класс
+				menuContent.classList.remove('animate-menu-out'); //убираем класс
+			}
 		}
-
-		const menuContent = document.querySelector('#toggle-menu-content')
-
-		if (menuContent.classList.contains('animate-menu-in')) {
-			menuContent.classList.remove('animate-menu-in'); //убираем класс
-			menuContent.classList.add('animate-menu-out'); //добавляем класс
-		} else {
-			menuContent.classList.add('animate-menu-in'); //добавляем класс
-			menuContent.classList.remove('animate-menu-out'); //убираем класс
-		}
-
 	}
 
 	const toggleMenuDefault = () => {

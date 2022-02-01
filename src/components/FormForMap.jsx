@@ -77,9 +77,9 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 	return (
 		<div className="container mx-auto relative pointer-events-none">
 
-			<div className="flex flex-col">
-
-				<form onSubmit={handleSubmit} className={classNames(activeIndex === 1 ? '' : 'hidden', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg pointer-events-auto')}>
+			<div className="flex flex-col items-center lg:items-stretch">
+				{/* Форма */}
+				<form onSubmit={handleSubmit} className={classNames(activeIndex === 1 ? '' : 'hidden', 'max-w-[486px] w-full bg-white mt-16 lg:ml-24 rounded-xl shadow-lg pointer-events-auto')}>
 
 					<div className="p-6 pb-0">
 						{address.length > 0 && <Select
@@ -94,7 +94,8 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 
 					<hr className="border w-full" />
 
-					<div className="py-8 px-10 mt-6 rounded-xl border">
+					{/* Машинки и заказать */}
+					<div className="py-4 px-3 sm:py-8 sm:px-10 mt-6 rounded-xl border">
 						<div className="flex -mx-3">
 							<CarForForm price={'150 ₽'} imgSRC={imgStandart} index={1} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
 							<CarForForm price={'200 ₽'} imgSRC={imgPremium} index={2} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
@@ -107,12 +108,14 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 					</div>
 				</form>
 
+				{/* Заказ размещен */}
 				<div className={classNames(activeIndex === 2 ? '' : 'hidden', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg py-10 px-11 pointer-events-auto')}>
 					<p className="font-bold text-4xl">Заказ размещен</p>
 					<p className="mt-4 text-lg text-gray-me">Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.</p>
 					<button onClick={() => { setActiveIndex(1) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7" >Сделать новый заказ</button>
 				</div>
 
+				{/* Заполните платежные данные */}
 				<div className={classNames(activeIndex === 3 ? '' : 'hidden', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg py-10 px-11 pointer-events-auto')}>
 					<p className="font-bold text-4xl">Заполните платежные данные</p>
 					<p className="mt-4 text-lg text-gray-me">Укажите информацию о платежной карте что бы сделать заказ.</p>
