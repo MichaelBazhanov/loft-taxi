@@ -9,7 +9,7 @@ const Layout = () => {
 	let location = useLocation();
 
 	return (
-		<div className='App sans antialiased grid auto-cols-fr grid-rows-[auto_1fr] h-screen'>
+		<div className='App sans antialiased grid auto-cols-fr grid-rows-[auto_1fr] h-screen relative'>
 			{(location.pathname !== '/login' && location.pathname !== '/registration' && location.pathname !== '/') && <Header/>}
 			<main>
 				<section className="h-full bg-black-me">

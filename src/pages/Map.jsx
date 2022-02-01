@@ -69,7 +69,7 @@ class Map extends Component {
 	render() {
 
 		return (
-			<div className="relative h-full">
+			<div className="relative h-full overflow-hidden">
 				<div
 					data-testid='map'
 					className="absolute inset-0"
