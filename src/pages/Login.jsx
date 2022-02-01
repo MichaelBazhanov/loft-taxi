@@ -47,9 +47,9 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 	}
 	return (
 		<div
-			className="container mx-auto flex flex-col md:flex-row  h-screen bg-map bg-center">
+			className="container mx-auto flex flex-col md:flex-row h-screen bg-map bg-center">
 
-			<div className="w-full md:w-1/3 flex-grow-0 bg-black-me flex justify-center items-center pt-7">
+			<div className="w-full md:w-1/3 flex-grow-0 bg-black-me flex justify-center items-center pt-7 md:pt-0">
 				<img
 					src={logoTaxiVertical}
 					className="logo-taxi-vertical"
@@ -93,7 +93,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 					}) => (
 						<form
 							data-testid="custom-element"
-							onSubmit={handleSubmit} className="max-w-xl flex flex-col justify-center w-full h-full bg-white _py-16 px-3  md:px-28 md:py-14 shadow-lg rounded-2xl">
+							onSubmit={handleSubmit} className="max-w-xl flex flex-col justify-center w-full h-full lg:h-auto bg-white px-3  md:px-28 md:py-14 shadow rounded-2xl">
 
 							<h4
 								className="font-bold text-3xl text-black text-center">
@@ -145,7 +145,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 							<button
 								disabled={isSubmitting || !isValid}
 								type="submit"
-								className="block text-center cursor-pointer mt-11 bg-yellow-me w-full py-4 text-2xl rounded-full disabled:opacity-75 disabled:cursor-default">
+								className="block text-center cursor-pointer mt-11 bg-yellow-me w-full py-4 text-2xl rounded-full disabled:opacity-75 disabled:cursor-default disabled:bg-gray-300 disabled:text-zinc-400">
 								Войти
 							</button>
 

@@ -2,13 +2,13 @@
 
 exports[`Renders correctly 1`] = `
 <div
-  className="bg-map bg-center relative"
+  className="bg-map bg-center h-full relative"
 >
   <div
     className="absolute inset-0 bg-black-me opacity-30"
   />
   <div
-    className="container mx-auto h-screen "
+    className="container mx-auto h-full"
   >
     <div
       className="flex justify-center items-center relative w-full h-full"

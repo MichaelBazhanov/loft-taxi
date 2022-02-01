@@ -40,27 +40,27 @@ const Registration = ({ getRegistration, sendPaymentCardNewUser, token, isLogged
 	if (error) return <Error error={error} />
 
 	return (
-		<div
-			className="container mx-auto flex h-screen bg-map bg-center">
-			<div
-				className="w-1/3 bg-black-me flex justify-center items-center">
+		<div className="container mx-auto flex flex-col md:flex-row h-screen bg-map bg-center">
+
+			<div className="w-full md:w-1/3 flex-grow-0 bg-black-me flex justify-center items-center pt-7 md:pt-0">
 				<img
 					src={logoTaxiVertical}
 					className="logo-taxi-vertical"
 					alt="logo" />
 			</div>
-			<div
-				className="w-2/3 flex justify-center items-center"
-			>
+
+			<div className="w-full md:w-2/3 flex-grow flex justify-center items-center">
+
 				<form
-					onSubmit={handleSubmit} className="max-w-xl w-full bg-white px-28 py-14 shadow-lg rounded-2xl" autoComplete="off">
+					onSubmit={handleSubmit} className="max-w-xl flex flex-col justify-center w-full h-full lg:h-auto bg-white px-3 py-16 md:px-28 md:py-14 shadow-lg rounded-2xl">
+
 					<h4
-						className="font-bold text-3xl text-black text-center mb-14">
+						className="font-bold text-3xl text-black text-center">
 						Регистрация
 					</h4>
 
 					<label
-						className="flex flex-col justify-between font-bold cursor-pointer">
+						className="flex flex-col pt-14 justify-between font-bold cursor-pointer">
 						<span>Email*</span>
 						<input
 							onChange={handleChange}
@@ -70,7 +70,7 @@ const Registration = ({ getRegistration, sendPaymentCardNewUser, token, isLogged
 							placeholder="mail@mail.ru"
 							required
 							autoComplete="off"
-							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
+							className="mt-2 block w-full border-b-2 border-gray-300 shadow-sm
 						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 						placeholder:text-gray-me"/>
 					</label>
@@ -85,7 +85,7 @@ const Registration = ({ getRegistration, sendPaymentCardNewUser, token, isLogged
 							placeholder="Michael"
 							required
 							autoComplete="off"
-							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
+							className="mt-2 block w-full border-b-2 border-gray-300 shadow-sm
 						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 						placeholder:text-gray-me"/>
 					</label>
@@ -100,7 +100,7 @@ const Registration = ({ getRegistration, sendPaymentCardNewUser, token, isLogged
 							placeholder="Bashanov"
 							required
 							autoComplete="off"
-							className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
+							className="mt-2 block w-full border-b-2 border-gray-300 shadow-sm
 						focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 						placeholder:text-gray-me"/>
 					</label>
@@ -130,7 +130,7 @@ const Registration = ({ getRegistration, sendPaymentCardNewUser, token, isLogged
 
 					<button
 						type="submit"
-						className="block text-center cursor-pointer mt-11 bg-yellow-me w-full py-4 text-2xl rounded-full">
+						className="block text-center cursor-pointer mt-11 bg-yellow-me w-full py-4 text-2xl rounded-full disabled:opacity-75 disabled:cursor-default disabled:bg-gray-300 disabled:text-zinc-400">
 						Зарегистрироваться
 					</button>
 
@@ -144,7 +144,9 @@ const Registration = ({ getRegistration, sendPaymentCardNewUser, token, isLogged
 						</span>
 					</p>
 				</form>
+
 			</div>
+
 		</div>
 	)
 }

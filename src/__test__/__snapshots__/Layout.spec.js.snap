@@ -2,11 +2,11 @@
 
 exports[`Renders correctly 1`] = `
 <div
-  className="App sans antialiased"
+  className="App sans antialiased grid auto-cols-fr grid-rows-[auto_1fr] h-screen overflow-hidden"
 >
   <main>
     <section
-      className="bg-black-me"
+      className="h-full bg-black-me"
     />
   </main>
 </div>

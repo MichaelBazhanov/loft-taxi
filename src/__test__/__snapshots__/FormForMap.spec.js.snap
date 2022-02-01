@@ -2,7 +2,7 @@
 
 exports[`Renders correctly 1`] = `
 <div
-  className="container mx-auto h-screen relative pointer-events-none"
+  className="container mx-auto relative pointer-events-none"
 >
   <div
     className="flex flex-col"
