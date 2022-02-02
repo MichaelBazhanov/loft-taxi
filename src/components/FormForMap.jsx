@@ -148,10 +148,10 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 				</div>
 
 				{/* Заполните платежные данные */}
-				<div className={classNames(activeIndex === 3 ? '' : 'hidden', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg py-10 px-11 pointer-events-auto')}>
-					<p className="font-bold text-4xl">Заполните платежные данные</p>
-					<p className="mt-4 text-lg text-gray-me">Укажите информацию о платежной карте что бы сделать заказ.</p>
-					<button onClick={() => { navigate('/profile') }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7" >Перейти в профиль</button>
+				<div className={classNames(activeIndex === 3 ? '' : 'hidden', 'max-w-[486px] w-full bg-white sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left')}>
+					<p className="font-bold text-xl sm:text-4xl">Заполните платежные данные</p>
+					<p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">Укажите информацию о платежной карте что бы сделать заказ.</p>
+					<button onClick={() => { navigate('/profile') }} type="submit" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Перейти в профиль</button>
 				</div>
 
 			</div>
