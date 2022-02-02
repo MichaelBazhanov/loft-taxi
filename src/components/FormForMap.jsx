@@ -23,6 +23,7 @@ function classNames(...classes) {
 }
 
 const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLoadingSendPaymentCardNewUser, errorSendPaymentCardNewUser, isLoading, error, address, cardName, cardNumber, expiryDate, cvc, token }) => {
+	const [width, setWidth] = useState(window.innerWidth); //----------------
 	const [activeIndex, setActiveIndex] = useState(1)
 	const [activeIndexCar, setActiveIndexCar] = useState(1)
 	const [addressStart, setAddressStart] = useState(null)
@@ -30,19 +31,26 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 
 	const navigate = useNavigate()
 
+	const updateDimensions = () => {//----------------
+		setWidth(window.innerWidth);
+	}
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		if (addressStart && addressEnd && addressStart.rout && addressEnd.rout) {
 			getRoutesCoordinates(addressStart, addressEnd)
 		}
 	}
+	useEffect(() => {//----------------
+		window.addEventListener("resize", updateDimensions);
+		return () => window.removeEventListener("resize", updateDimensions);
+	}, []);
 
 	//Все useEffect при первом рендере выполняются !!!
 	useEffect(() => {
 		getAddressList()
 	}, [])
 	useEffect(() => {
-		if(!isLoadingSendPaymentCardNewUser) getPaymentCard(token) // Если для нового пользователя карта уже установлена то ...
+		if (!isLoadingSendPaymentCardNewUser) getPaymentCard(token) // Если для нового пользователя карта уже установлена то ...
 	}, [isLoadingSendPaymentCardNewUser])
 	useEffect(() => {
 		if (
@@ -75,38 +83,62 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 	}
 
 	return (
-		<div className="container mx-auto relative pointer-events-none">
+		<div className="container mx-auto relative pointer-events-none h-full">
 
-			<div className="flex flex-col items-center lg:items-stretch">
+			<div className="flex flex-col items-center lg:items-stretch h-full">
 				{/* Форма */}
-				<form onSubmit={handleSubmit} className={classNames(activeIndex === 1 ? '' : 'hidden', 'max-w-[486px] w-full bg-white mt-16 lg:ml-24 rounded-xl shadow-lg pointer-events-auto')}>
+				<div className="flex flex-col h-full">
 
-					<div className="p-6 pb-0">
-						{address.length > 0 && <Select
-							placeholder='Откуда'
-							addressList={filterAddress()}
-							onChange={changeAddress1} />}
-						{address.length > 0 && <Select
-							placeholder='Куда'
-							addressList={filterAddress()}
-							onChange={changeAddress2} />}
-					</div>
-
-					<hr className="border w-full" />
-
-					{/* Машинки и заказать */}
-					<div className="py-4 px-3 sm:py-8 sm:px-10 mt-6 rounded-xl border">
-						<div className="flex -mx-3">
-							<CarForForm price={'150 ₽'} imgSRC={imgStandart} index={1} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
-							<CarForForm price={'200 ₽'} imgSRC={imgPremium} index={2} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
-							<CarForForm price={'300 ₽'} imgSRC={imgBusiness} index={3} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
+					{/* //selectors их недолжное быть когда заказ размещен или платежные данные не указаны*/}
+					{activeIndex === 1 &&
+						< div className="p-3 pb-0 sm:hidden pointer-events-auto mt-10 rounded-xl">
+							{address.length > 0 && <Select
+								margin='mt-0'
+								roundedTop='rounded-t-xl'
+								className=''
+								placeholder='Откуда'
+								addressList={filterAddress()}
+								onChange={changeAddress1} />}
+							{address.length > 0 && <Select
+								margin='mt-0'
+								roundedBottom='rounded-b-xl'
+								placeholder='Куда'
+								addressList={filterAddress()}
+								onChange={changeAddress2} />}
 						</div>
-						{/* верхний блок что то должен вернуть и я запишу это в инпуты */}
-						<input type="hidden" name="car" />
-						<button onClick={() => { setActiveIndex(2) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7 disabled:opacity-75"
-							disabled={(!(addressStart && addressStart.rout && addressEnd && addressEnd.rout))}>Заказать</button>
-					</div>
-				</form>
+					}
+
+					<form onSubmit={handleSubmit} className={classNames(activeIndex === 1 ? '' : 'hidden', 'max-w-[486px] w-full bg-white sm:mt-16 lg:ml-24 rounded-xl shadow-lg pointer-events-auto mt-auto')}>
+
+						<div className="p-6 pb-0 hidden sm:block">
+							{address.length > 0 && <Select
+								margin='mt-1'
+								placeholder='Откуда'
+								addressList={filterAddress()}
+								onChange={changeAddress1} />}
+							{address.length > 0 && <Select
+								margin='mt-1'
+								placeholder='Куда'
+								addressList={filterAddress()}
+								onChange={changeAddress2} />}
+						</div>
+
+						<hr className="border w-full hidden sm:block" />
+
+						{/* Машинки и заказать */}
+						<div className="py-4 px-3 sm:py-8 sm:px-10 sm:mt-6 rounded-xl border">
+							<div className="flex -mx-3">
+								<CarForForm price={'150 ₽'} imgSRC={imgStandart} index={1} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
+								<CarForForm price={'200 ₽'} imgSRC={imgPremium} index={2} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
+								<CarForForm price={'300 ₽'} imgSRC={imgBusiness} index={3} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
+							</div>
+							{/* верхний блок что то должен вернуть и я запишу это в инпуты */}
+							<input type="hidden" name="car" />
+							<button onClick={() => { setActiveIndex(2) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7 disabled:opacity-75"
+								disabled={(!(addressStart && addressStart.rout && addressEnd && addressEnd.rout))}>Заказать</button>
+						</div>
+					</form>
+				</div>
 
 				{/* Заказ размещен */}
 				<div className={classNames(activeIndex === 2 ? '' : 'hidden', 'max-w-[486px] w-full bg-white  mt-16 ml-24 rounded-xl shadow-lg py-10 px-11 pointer-events-auto')}>
@@ -123,7 +155,7 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 				</div>
 
 			</div>
-		</div>
+		</div >
 	)
 }
 export default connect(

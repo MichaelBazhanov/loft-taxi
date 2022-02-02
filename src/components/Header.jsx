@@ -74,7 +74,8 @@ const Header = ({ logOut }) => {
 			}
 			{width < 640 &&
 				<header>
-					<div className="bg-transparent py-5 px-8 fixed z-20 cursor-pointer" id="toggle-menu" onClick={toggleMenu}>
+
+					<div className="bg-transparent py-5 px-8 pl-3 fixed z-20 cursor-pointer" id="toggle-menu" onClick={toggleMenu}>
 
 						<div className="text-black-me">
 							<svg
@@ -91,6 +92,7 @@ const Header = ({ logOut }) => {
 						</div>
 
 					</div>
+
 					<div className="bg-black absolute inset-0 z-10 transform -translate-x-full"
 						id="toggle-menu-content">
 
