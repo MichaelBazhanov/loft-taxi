@@ -1,6 +1,5 @@
 import React from 'react'
 import './App.css'
-import { connect } from 'react-redux'
 import { Route, Routes } from "react-router-dom";
 
 import Login from './pages/Login'
@@ -37,9 +36,4 @@ const App = () => {
   )
 }
 
-export default connect(
-  state => ({
-    isLoggedIn: state.authorizationReducer.isLoggedIn,
-    token: state.authorizationReducer.token
-  })
-)(App)
+export default App
