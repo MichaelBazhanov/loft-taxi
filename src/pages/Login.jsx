@@ -47,7 +47,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 	}
 	return (
 		<div
-			className="container mx-auto flex flex-col md:flex-row h-screen bg-map bg-center">
+			className="container mx-auto flex flex-col md:flex-row h-screen md:bg-map bg-center">
 
 			<div className="w-full md:w-1/3 flex-grow-0 bg-black-me flex justify-center items-center pt-7 md:pt-0">
 				<img
