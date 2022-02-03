@@ -5,16 +5,16 @@ const token = localStorage.getItem('token') //пытаемся получить 
 let initialState
 if (login !== null) {
   initialState = {
-    isLoggedIn: Boolean(login),
+    isLoggedIn: login,
     token: token,
-    isLoading: Boolean(false),
+    isLoading: false,
     error: null,
   }
 } else {
   initialState = {
-    isLoggedIn: Boolean(false),
+    isLoggedIn: false,
     token: null,
-    isLoading: Boolean(false),
+    isLoading: false,
     error: null,
   }
 }
