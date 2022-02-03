@@ -23,15 +23,11 @@ const mockStore = {
       isLoading: false,
       error: false,
     },
-
     paymentReducer: {
       cardName: 'test',
       cardNumber: '1',
       expiryDate: '000',
       cvc: '1',
-    },
-
-    paymentReducer: {
       isLoadingSendPaymentCardNewUser: false,
       errorSendPaymentCardNewUser: false,
     },

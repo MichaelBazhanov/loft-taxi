@@ -13,11 +13,15 @@ jest.mock('react-router-dom', () => ({
 const mockStore = {
   getState: () => ({
     // входящие пропсы
-    authorizationReducer: { token: '' },
+    authorizationReducer: {
+      token: '',
+      isLoggedIn: false,
+    },
 
-    authorizationReducer: { isLoggedIn: false },
-    registrationReducer: { isLoading: false },
-    registrationReducer: { error: false },
+    registrationReducer: {
+      isLoading: false,
+      error: false,
+    },
   }),
   subscribe: () => {},
   dispatch: () => {
