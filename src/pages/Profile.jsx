@@ -64,19 +64,20 @@ const Profile = ({
 				<div className="flex justify-center items-center relative w-full h-full">
 					{switchView &&
 						< div
-							className={'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2'}>
+							className={'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 sm:rounded-xl shadow-me-2'}>
 							<h4
-								className="font-bold text-4xl text-center">
+								className="font-bold text-4xl text-center hidden sm:block">
 								Профиль
 							</h4>
 							<p
-								className="mt-3 text-lg text-gray-me text-center">
+								className="text-sm sm:mt-3 sm:text-lg text-gray-me text-center">
 								Введите платежные данные
 							</p>
 
-							<div className="mt-12 flex justify-between -mx-12">
+							<div className="sm:mt-12 flex flex-col sm:flex-row justify-between sm:-mx-12">
 
-								<form onSubmit={handleForm} id="formProfile" className="flex flex-col w-1/2 px-12">
+								{/* // Данные */}
+								<form onSubmit={handleForm} id="formProfile" className="flex flex-col sm:w-1/2 sm:px-12 order-2 mt-10 sm:mt-auto">
 									<label
 										className="flex flex-col justify-between font-bold cursor-pointer">
 										<span>Имя владельца*</span>
@@ -142,8 +143,8 @@ const Profile = ({
 									</div>
 								</form>
 
-
-								<div className="flex flex-col w-1/2 px-12 justify-center">
+								{/* // Платежная карта */}
+								<div className="flex flex-col sm:w-1/2 sm:px-12 justify-center order-1 sm:order-3 mt-7 sm:mt-auto">
 									<div className="bg-white px-7 py-5 rounded-xl shadow-me-3  h-48">
 										<div className="flex justify-between items-center">
 											<img src={miniLogo} alt="mini-logo" />
@@ -165,7 +166,7 @@ const Profile = ({
 							<button
 								form="formProfile"
 								type="submit"
-								className="w-1/3 bg-yellow-me text-xl py-5 mt-10 rounded-full self-center">
+								className="w-full sm:w-1/3 bg-yellow-me text-xl py-5 mt-10 rounded-full self-center">
 								Сохранить
 							</button>
 						</div>
