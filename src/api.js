@@ -58,6 +58,7 @@ export const serverGetCard = async (token) => {
     },
   })
     .then((res) => res.json())
+    .then((data) => data)
 }
 
 // Получение доступных адресов на клиенте
@@ -69,6 +70,7 @@ export const serverGetAddressList = async () => {
     },
   })
     .then((res) => res.json())
+    .then((data) => data)
 }
 
 // Получение доступных маршрутов на клиенте
@@ -83,4 +85,5 @@ export const serverGetRoutes = async (address1, address2) => {
     },
   )
     .then((res) => res.json())
+    .then((data) => data)
 }

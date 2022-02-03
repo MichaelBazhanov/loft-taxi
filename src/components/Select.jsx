@@ -7,7 +7,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-function Example({ addressList, placeholder, onChange, margin, roundedTop, roundedBottom }) {
+function CustomSelect({ addressList, placeholder, onChange, margin, roundedTop, roundedBottom }) {
 	const [selected, setSelected] = useState(addressList)
 
 	const changeSelected = (event) => {
@@ -87,4 +87,4 @@ function Example({ addressList, placeholder, onChange, margin, roundedTop, round
 	)
 }
 
-export default Example
+export default CustomSelect

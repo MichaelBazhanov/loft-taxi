@@ -23,15 +23,15 @@ function classNames(...classes) {
 }
 
 const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLoadingSendPaymentCardNewUser, errorSendPaymentCardNewUser, isLoading, error, address, cardName, cardNumber, expiryDate, cvc, token }) => {
-	const [width, setWidth] = useState(window.innerWidth); //----------------
-	const [activeIndex, setActiveIndex] = useState(1)
+	const [width, setWidth] = useState(window.innerWidth);
+	const [activeIndex, setActiveIndex] = useState('without-card') //1 = 'without-card', 2 = 'next-order', 3 = 'default'
 	const [activeIndexCar, setActiveIndexCar] = useState(1)
 	const [addressStart, setAddressStart] = useState(null)
 	const [addressEnd, setAddressEnd] = useState(null)
 
 	const navigate = useNavigate()
 
-	const updateDimensions = () => {//----------------
+	const updateDimensions = () => {
 		setWidth(window.innerWidth);
 	}
 	const handleSubmit = (event) => {
@@ -40,7 +40,7 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 			getRoutesCoordinates(addressStart, addressEnd)
 		}
 	}
-	useEffect(() => {//----------------
+	useEffect(() => {
 		window.addEventListener("resize", updateDimensions);
 		return () => window.removeEventListener("resize", updateDimensions);
 	}, []);
@@ -59,9 +59,9 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 			(expiryDate === '' || expiryDate === ' ') ||
 			(cvc === '' || cvc === ' ')
 		) {
-			setActiveIndex(3) // Данные карты пустые!
+			setActiveIndex('default') // Данные карты пустые!
 		} else {
-			setActiveIndex(1) // Данные карты НЕ пустые!
+			setActiveIndex('without-card') // Данные карты НЕ пустые!
 		}
 	}, [cardName, cardNumber, expiryDate, cvc,])
 
@@ -90,7 +90,7 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 				<div className="flex flex-col h-full">
 
 					{/* //selectors их недолжное быть когда заказ размещен или платежные данные не указаны*/}
-					{activeIndex === 1 &&
+					{activeIndex === 'without-card' &&
 						< div className="p-3 pb-0 sm:hidden pointer-events-auto mt-10 rounded-xl">
 							{address.length > 0 && <Select
 								margin='mt-0'
@@ -108,7 +108,7 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 						</div>
 					}
 
-					<form onSubmit={handleSubmit} className={classNames(activeIndex === 1 ? '' : 'hidden', 'max-w-[486px] w-full bg-white sm:mt-16 lg:ml-24 rounded-xl shadow-lg pointer-events-auto mt-auto')}>
+					<form onSubmit={handleSubmit} className={classNames(activeIndex === 'without-card' ? '' : 'hidden', 'max-w-[486px] w-full bg-white sm:mt-16 lg:ml-24 rounded-xl shadow-lg pointer-events-auto mt-auto')}>
 
 						<div className="p-6 pb-0 hidden sm:block">
 							{address.length > 0 && <Select
@@ -134,21 +134,21 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 							</div>
 							{/* верхний блок что то должен вернуть и я запишу это в инпуты */}
 							<input type="hidden" name="car" />
-							<button onClick={() => { setActiveIndex(2) }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7 disabled:opacity-75"
+							<button onClick={() => { setActiveIndex('next-order') }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7 disabled:opacity-75"
 								disabled={(!(addressStart && addressStart.rout && addressEnd && addressEnd.rout))}>Заказать</button>
 						</div>
 					</form>
 				</div>
 
 				{/* Заказ размещен */}
-				<div className={classNames(activeIndex === 2 ? '' : 'hidden', 'max-w-[486px] w-full bg-white  sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left')}>
+				<div className={classNames(activeIndex === 'next-order' ? '' : 'hidden', 'max-w-[486px] w-full bg-white  sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left')}>
 					<p className="font-bold text-xl sm:text-4xl">Заказ размещен</p>
 					<p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.</p>
-					<button onClick={() => { setActiveIndex(1) }} type="submit" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Сделать новый заказ</button>
+					<button onClick={() => { setActiveIndex('without-card') }} type="submit" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Сделать новый заказ</button>
 				</div>
 
 				{/* Заполните платежные данные */}
-				<div className={classNames(activeIndex === 3 ? '' : 'hidden', 'max-w-[486px] w-full bg-white sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left')}>
+				<div className={classNames(activeIndex === 'default' ? '' : 'hidden', 'max-w-[486px] w-full bg-white sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left')}>
 					<p className="font-bold text-xl sm:text-4xl">Заполните платежные данные</p>
 					<p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">Укажите информацию о платежной карте что бы сделать заказ.</p>
 					<button onClick={() => { navigate('/profile') }} type="submit" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Перейти в профиль</button>
