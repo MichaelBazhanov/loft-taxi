@@ -86,75 +86,89 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 		<div className="container mx-auto relative pointer-events-none h-full">
 
 			<div className="flex flex-col items-center lg:items-stretch h-full">
+
+				{/* //selectors их недолжное быть когда заказ размещен или платежные данные не указаны*/}
+				{width < 640 && activeIndex === 'without-card' &&
+					< div className="p-3 pb-0 sm:hidden pointer-events-auto mt-10 rounded-xl w-full">
+						{address.length > 0 && <Select
+							margin='mt-0'
+							roundedTop='rounded-t-xl'
+							className=''
+							placeholder='Откуда'
+							addressList={filterAddress()}
+							onChange={changeAddress1} />}
+						{address.length > 0 && <Select
+							margin='mt-0'
+							roundedBottom='rounded-b-xl'
+							placeholder='Куда'
+							addressList={filterAddress()}
+							onChange={changeAddress2} />}
+					</div>
+				}
+
 				{/* Форма */}
-				<div className="flex flex-col h-full">
+				{activeIndex === 'without-card' &&
+					<div className="flex flex-col h-full">
+						<form onSubmit={handleSubmit} className='max-w-[486px] w-full bg-white sm:mt-16 lg:ml-24 rounded-xl shadow-lg pointer-events-auto mt-auto'>
 
-					{/* //selectors их недолжное быть когда заказ размещен или платежные данные не указаны*/}
-					{activeIndex === 'without-card' &&
-						< div className="p-3 pb-0 sm:hidden pointer-events-auto mt-10 rounded-xl">
-							{address.length > 0 && <Select
-								margin='mt-0'
-								roundedTop='rounded-t-xl'
-								className=''
-								placeholder='Откуда'
-								addressList={filterAddress()}
-								onChange={changeAddress1} />}
-							{address.length > 0 && <Select
-								margin='mt-0'
-								roundedBottom='rounded-b-xl'
-								placeholder='Куда'
-								addressList={filterAddress()}
-								onChange={changeAddress2} />}
-						</div>
-					}
+							{width > 640 &&
+								<>
+									<div className="p-6 pb-0">
+										{address.length > 0 && <Select
+											margin='mt-1'
+											placeholder='Откуда'
+											addressList={filterAddress()}
+											onChange={changeAddress1} />}
+										{address.length > 0 && <Select
+											margin='mt-1'
+											placeholder='Куда'
+											addressList={filterAddress()}
+											onChange={changeAddress2} />}
+									</div>
 
-					<form onSubmit={handleSubmit} className={classNames(activeIndex === 'without-card' ? '' : 'hidden', 'max-w-[486px] w-full bg-white sm:mt-16 lg:ml-24 rounded-xl shadow-lg pointer-events-auto mt-auto')}>
+									<hr className="border w-full" />
+								</>
+							}
 
-						<div className="p-6 pb-0 hidden sm:block">
-							{address.length > 0 && <Select
-								margin='mt-1'
-								placeholder='Откуда'
-								addressList={filterAddress()}
-								onChange={changeAddress1} />}
-							{address.length > 0 && <Select
-								margin='mt-1'
-								placeholder='Куда'
-								addressList={filterAddress()}
-								onChange={changeAddress2} />}
-						</div>
-
-						<hr className="border w-full hidden sm:block" />
-
-						{/* Машинки и заказать */}
-						<div className="py-4 px-3 sm:py-8 sm:px-10 sm:mt-6 rounded-xl border">
-							<div className="flex -mx-3">
-								<CarForForm price={'150 ₽'} imgSRC={imgStandart} index={1} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
-								<CarForForm price={'200 ₽'} imgSRC={imgPremium} index={2} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
-								<CarForForm price={'300 ₽'} imgSRC={imgBusiness} index={3} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
+							{/* Машинки и заказать */}
+							<div className="py-4 px-3 sm:py-8 sm:px-10 sm:mt-6 rounded-xl border">
+								<div className="flex -mx-3">
+									<CarForForm price={'150 ₽'} imgSRC={imgStandart} index={1} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
+									<CarForForm price={'200 ₽'} imgSRC={imgPremium} index={2} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
+									<CarForForm price={'300 ₽'} imgSRC={imgBusiness} index={3} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
+								</div>
+								{/* верхний блок что то должен вернуть и я запишу это в инпуты */}
+								<input type="hidden" name="car" />
+								<button onClick={() => { setActiveIndex('next-order') }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7 disabled:opacity-75"
+									disabled={(!(addressStart && addressStart.rout && addressEnd && addressEnd.rout))}>Заказать</button>
 							</div>
-							{/* верхний блок что то должен вернуть и я запишу это в инпуты */}
-							<input type="hidden" name="car" />
-							<button onClick={() => { setActiveIndex('next-order') }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7 disabled:opacity-75"
-								disabled={(!(addressStart && addressStart.rout && addressEnd && addressEnd.rout))}>Заказать</button>
-						</div>
-					</form>
-				</div>
+						</form>
+					</div>
+				}
 
 				{/* Заказ размещен */}
-				<div className={classNames(activeIndex === 'next-order' ? '' : 'hidden', 'max-w-[486px] w-full bg-white  sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left')}>
-					<p className="font-bold text-xl sm:text-4xl">Заказ размещен</p>
-					<p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.</p>
-					<button onClick={() => { setActiveIndex('without-card') }} type="submit" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Сделать новый заказ</button>
-				</div>
+				{activeIndex === 'next-order' &&
+					<div className={classNames(
+						width < 640 ? 'mt-auto' : '',
+						'max-w-[486px] w-full bg-white sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left')}>
+						<p className="font-bold text-xl sm:text-4xl">Заказ размещен</p>
+						<p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.</p>
+						<button onClick={() => { setActiveIndex('without-card') }} type="submit" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Сделать новый заказ</button>
+					</div>
+				}
 
 				{/* Заполните платежные данные */}
-				<div className={classNames(activeIndex === 'default' ? '' : 'hidden', 'max-w-[486px] w-full bg-white sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left')}>
-					<p className="font-bold text-xl sm:text-4xl">Заполните платежные данные</p>
-					<p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">Укажите информацию о платежной карте что бы сделать заказ.</p>
-					<button onClick={() => { navigate('/profile') }} type="submit" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Перейти в профиль</button>
-				</div>
-
+				{activeIndex === 'default' &&
+					<div className={classNames(
+						width < 640 ? 'mt-auto' : '',
+						'max-w-[486px] w-full bg-white sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left')}>
+				<p className="font-bold text-xl sm:text-4xl">Заполните платежные данные</p>
+				<p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">Укажите информацию о платежной карте что бы сделать заказ.</p>
+				<button onClick={() => { navigate('/profile') }} type="submit" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Перейти в профиль</button>
 			</div>
+				}
+
+		</div>
 		</div >
 	)
 }
