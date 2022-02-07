@@ -36,6 +36,8 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 	}
 	const handleSubmit = (event) => {
 		event.preventDefault();
+		setActiveIndex('next-order'); // Следующий заказ
+
 		if (addressStart && addressEnd && addressStart.rout && addressEnd.rout) {
 			getRoutesCoordinates(addressStart, addressEnd)
 		}
@@ -80,6 +82,10 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 	}
 	const changeAddress2 = value => {
 		setAddressEnd(value)
+	}
+	const test = e => {
+		console.log(e)
+		console.log(e.target)
 	}
 
 	return (
@@ -137,9 +143,8 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 									<CarForForm price={'200 ₽'} imgSRC={imgPremium} index={2} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
 									<CarForForm price={'300 ₽'} imgSRC={imgBusiness} index={3} setActiveIndexCar={setActiveIndexCar} activeIndexCar={activeIndexCar} />
 								</div>
-								{/* верхний блок что то должен вернуть и я запишу это в инпуты */}
-								<input type="hidden" name="car" />
-								<button onClick={() => { setActiveIndex('next-order') }} type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7 disabled:opacity-75"
+
+								<button type="submit" className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7 disabled:opacity-75"
 									disabled={(!(addressStart && addressStart.rout && addressEnd && addressEnd.rout))}>Заказать</button>
 							</div>
 						</form>
@@ -153,7 +158,7 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 						'max-w-[486px] w-full bg-white sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left')}>
 						<p className="font-bold text-xl sm:text-4xl">Заказ размещен</p>
 						<p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.</p>
-						<button onClick={() => { setActiveIndex('without-card') }} type="submit" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Сделать новый заказ</button>
+						<button onClick={() => { setActiveIndex('without-card') }} type="button" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Сделать новый заказ</button>
 					</div>
 				}
 
@@ -162,13 +167,13 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 					<div className={classNames(
 						width < 640 ? 'mt-auto' : '',
 						'max-w-[486px] w-full bg-white sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left')}>
-				<p className="font-bold text-xl sm:text-4xl">Заполните платежные данные</p>
-				<p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">Укажите информацию о платежной карте что бы сделать заказ.</p>
-				<button onClick={() => { navigate('/profile') }} type="submit" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Перейти в профиль</button>
-			</div>
+						<p className="font-bold text-xl sm:text-4xl">Заполните платежные данные</p>
+						<p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">Укажите информацию о платежной карте что бы сделать заказ.</p>
+						<button onClick={() => { navigate('/profile') }} type="button" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Перейти в профиль</button>
+					</div>
 				}
 
-		</div>
+			</div>
 		</div >
 	)
 }
