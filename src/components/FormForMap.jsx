@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux'
-import { getRoutesCoordinates } from '../modules/route'
+import { getRoutesCoordinates, resetRoutesAndAddress } from '../modules/route'
 import { getPaymentCard } from '../modules/payment'
 import { getAddressList } from '../modules/address'
 import Select from '../components/Select'
@@ -22,7 +22,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLoadingSendPaymentCardNewUser, errorSendPaymentCardNewUser, isLoading, error, address, cardName, cardNumber, expiryDate, cvc, token }) => {
+const FormForMap = ({ getAddressList, getRoutesCoordinates, resetRoutesAndAddress, getPaymentCard, isLoadingSendPaymentCardNewUser, errorSendPaymentCardNewUser, isLoading, error, address, cardName, cardNumber, expiryDate, cvc, token }) => {
 	const [width, setWidth] = useState(window.innerWidth);
 	const [activeIndex, setActiveIndex] = useState('without-card') //1 = 'without-card', 2 = 'next-order', 3 = 'default'
 	const [activeIndexCar, setActiveIndexCar] = useState(1)
@@ -82,10 +82,6 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 	}
 	const changeAddress2 = value => {
 		setAddressEnd(value)
-	}
-	const test = e => {
-		console.log(e)
-		console.log(e.target)
 	}
 
 	return (
@@ -158,7 +154,15 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, getPaymentCard, isLo
 						'max-w-[486px] w-full bg-white sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left')}>
 						<p className="font-bold text-xl sm:text-4xl">Заказ размещен</p>
 						<p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.</p>
-						<button onClick={() => { setActiveIndex('without-card') }} type="button" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Сделать новый заказ</button>
+						<button onClick={
+							() => {
+								resetRoutesAndAddress(); //обнуляем в redux
+								setActiveIndex('without-card'); // активный индекс "блока"
+								setAddressStart(null); //обнуляем state
+								setAddressEnd(null); //обнуляем state
+								setActiveIndexCar(1) // устанавливаем первый индекс
+							}
+						} type="button" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Сделать новый заказ</button>
 					</div>
 				}
 
@@ -193,5 +197,5 @@ export default connect(
 		isLoadingSendPaymentCardNewUser: state.paymentReducer.isLoadingSendPaymentCardNewUser,
 		errorSendPaymentCardNewUser: state.paymentReducer.errorSendPaymentCardNewUser,
 	}),
-	{ getAddressList, getRoutesCoordinates, getPaymentCard } // просто дергаем ACTION
+	{ getAddressList, getRoutesCoordinates, getPaymentCard, resetRoutesAndAddress } // просто дергаем ACTION
 )(FormForMap)

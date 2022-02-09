@@ -2,7 +2,7 @@
 
 exports[`Renders correctly 1`] = `
 <div
-  className="App sans antialiased grid auto-cols-fr grid-rows-[auto_1fr] h-screen relative"
+  className="App sans antialiased grid auto-cols-fr grid-rows-[auto_1fr] relative h-screen"
 >
   <main>
     <section

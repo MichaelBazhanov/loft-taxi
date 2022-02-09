@@ -1,4 +1,5 @@
 import {
+  RESET_ROUTES_AND_ADDRESS,
   GET_ROUTES_COORDINATES,
   ROUTES_COORDINATES_SUCCESS,
   ROUTES_COORDINATES_FAILURE,
@@ -14,6 +15,14 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case RESET_ROUTES_AND_ADDRESS: {
+      return {
+        ...state,
+        coordinates: [],
+        address1: null,
+        address2: null,
+      }
+    }
     case GET_ROUTES_COORDINATES: {
       return {
         ...state,
@@ -27,12 +36,14 @@ export default function (state = initialState, action) {
       return {
         ...state,
         coordinates: action.payload.coordinates,
+        isLoading: false,
       }
     }
     case ROUTES_COORDINATES_FAILURE: {
       return {
         ...state,
         error: action.payload.error,
+        isLoading: false,
         coordinates: null,
       }
     }
