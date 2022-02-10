@@ -13,10 +13,6 @@ import circle from '../assets/images/circle.svg'
 import Loading from '../components/Loading'
 import Error from '../components/Error'
 
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ')
-}
-
 const Profile = ({
 	logOut, sendPaymentCard, getPaymentCard, isLoadingGetPaymentCard, errorGetPaymentCard, isLoadingSendPaymentCard, errorSendPaymentCard, isLoadingSendPaymentCardNewUser, errorSendPaymentCardNewUser, cardName, cardNumber, expiryDate, cvc, token
 }) => {

@@ -21,6 +21,10 @@ const onSubmitFunction = (values, FormikBag, authenticate) => {
 	FormikBag.setSubmitting(true) // защита от повторной отправки
 }
 
+function classNames(...classes) {
+	return classes.filter(Boolean).join(' ')
+}
+
 const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmitFunction }) => {
 	// const [state, setState] = useState({ email: 'test@test.com', password: '123123' }) // hard code
 	// const [state, setState] = useState({ email: '', password: '' })
@@ -57,7 +61,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 	if (error) return <Error error={error} />
 
 	const StartWindow = ({ setOpen }) => {
-		const [index, setIndex] = useState(1)
+		const [index, setIndex] = useState(0)
 		const windows = [
 			{
 				image: one,
@@ -82,16 +86,36 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 		return (
 			<>
 				{index >= 0 && (
-					<div className="absolute inset-0 bg-white flex flex-col justify-center text-center">
-						<img src={windows[index].image} alt="Logo" />
+					<div className="absolute inset-0 bg-white flex flex-col flex-nowrap justify-center items-center text-center">
+						<img src={windows[index].image} alt="Logo" className="h-80" />
 						<h2 className="text-3xl font-bold mt-12">{windows[index].title}</h2>
 						<p className="mt-5 text-xl text-gray-me">{windows[index].description}</p>
 
-						<div>{index}</div>
+						<ul className="absolute bottom-12 flex space-x-2.5">
+							<li className={classNames(index === 0 ? 'bg-yellow-me' : 'bg-gray-me', 'w-3 h-3 rounded-full')}></li>
+							<li className={classNames(index === 1 ? 'bg-yellow-me' : 'bg-gray-me', 'w-3 h-3 rounded-full')}></li>
+							<li className={classNames(index === 2 ? 'bg-yellow-me' : 'bg-gray-me', 'w-3 h-3 rounded-full')}></li>
+						</ul>
 
-						<div>
-							{index !== 0 && <div onClick={() => setIndex(index - 1)}>Left</div>}
-							{index >= 0 && <div onClick={() => index !== windows.length - 1 ? setIndex(index + 1) : setOpen(false)}>Right</div>}
+						<div className="absolute bottom-0 left-0 right-0">
+							{index !== 0 && <div onClick={() => setIndex(index - 1)}
+								className='cursor-pointer absolute left-0 bottom-0 flex justify-center items-center h-14 w-14 bg-black rounded-tr-3xl'
+							>
+								<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"
+									className="fill-white"
+								>
+									<path d="M2.62268e-07 6L12 11.1962L12 0.803847L2.62268e-07 6Z" />
+								</svg>
+							</div>}
+							{index >= 0 && <div onClick={() => index !== windows.length - 1 ? setIndex(index + 1) : setOpen(false)}
+								className='cursor-pointer absolute right-0 bottom-0 flex justify-center items-center h-14 w-14 bg-yellow-me rounded-tl-3xl'
+							>
+								<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"
+									className="fill-black"
+								>
+									<path d="M12 6L4.64275e-07 11.1962L9.18537e-07 0.803847L12 6Z" />
+								</svg>
+							</div>}
 						</div>
 					</div>)}
 			</>
@@ -224,7 +248,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 			</div>
 
 			{/* Дополнительные 4ре слайда перед логином */}
-			{width < 600 && open && <StartWindow setOpen={setOpen} />}
+			{width < 640 && open && <StartWindow setOpen={setOpen} />}
 		</>
 
 	)
