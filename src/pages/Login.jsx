@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { authenticate } from '../modules/authorization'
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { Formik } from 'formik'
+import { Formik } from 'formik';
+import { show } from '../modules/tooltips';
 
 //pic
 import one from '../assets/images/pre-login-image/pre-login-1.svg'
@@ -25,9 +26,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmitFunction }) => {
-	// const [state, setState] = useState({ email: 'test@test.com', password: '123123' }) // hard code
-	// const [state, setState] = useState({ email: '', password: '' })
+const Login = ({ authenticate, show, isLoggedIn, isLoading, error, onSubmit = onSubmitFunction }) => {
 	const [width, setWidth] = useState(window.innerWidth)
 	const [open, setOpen] = useState(true)
 	const navigate = useNavigate()
@@ -126,8 +125,25 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 		// console.log('handleSubmitFunction', values, FormikBag)
 		onSubmit(values, FormikBag, authenticate)
 	}
+	const test = () => {
+		console.log('test')
+
+		show({
+			type: "error",
+			text: 'показать нотификацию !',
+		})
+	}
 	return (
 		<>
+			{/*  */}
+			<button
+				onClick={test}
+				className='bg-red-300'
+			>
+				показать
+			</button>
+			{/*  */}
+
 			<div
 				className="container mx-auto flex flex-col md:flex-row h-screen md:bg-map bg-center">
 
@@ -256,8 +272,6 @@ const Login = ({ authenticate, isLoggedIn, isLoading, error, onSubmit = onSubmit
 }
 
 Login.propTypes = {
-	// authenticate: PropTypes.func.isRequired,
-	// isLoggedIn: PropTypes.bool.isRequired
 	authenticate: PropTypes.func,
 	isLoggedIn: PropTypes.bool
 }
@@ -268,7 +282,7 @@ export default connect(
 		isLoading: state.authorizationReducer.isLoading,
 		error: state.authorizationReducer.error
 	}), // (isLoggedIn - поле для роутинга что бы ходить по роутам)
-	{ authenticate } //диспатчим новый экшен
+	{ authenticate, show } //диспатчим новый экшен
 )(Login)
 
 // connect принимает 2 аргумента
