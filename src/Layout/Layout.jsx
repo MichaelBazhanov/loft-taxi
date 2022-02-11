@@ -19,8 +19,12 @@ const Layout = ({ isTooltipShown, tooltipText, tooltipType, hide }) => {
 				</section>
 			</main>
 
-			<div className={isTooltipShown ? 'notify-container active' : 'notify-container'}>
-				<div className="notification">
+			<div className='fixed top-full left-1/2 -translate-x-1/2'>
+				<div className={isTooltipShown ?
+					'transition-transform duration-300 -translate-y-full'
+					:
+					'transition-transform duration-300'
+					}>
 					<Notification
 						text={tooltipText}
 						type={tooltipType}
@@ -28,6 +32,15 @@ const Layout = ({ isTooltipShown, tooltipText, tooltipType, hide }) => {
 					/>
 				</div>
 			</div>
+			{/* <div className={isTooltipShown ? 'notify-container active' : 'notify-container'}>
+				<div className="notification">
+					<Notification
+						text={tooltipText}
+						type={tooltipType}
+						onClick={() => hide()}
+					/>
+				</div>
+			</div> */}
 		</div >
 	)
 }

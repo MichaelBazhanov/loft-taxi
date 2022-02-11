@@ -129,7 +129,7 @@ const Login = ({ authenticate, show, isLoggedIn, isLoading, error, onSubmit = on
 		console.log('test')
 
 		show({
-			type: "error",
+			type: "success",
 			text: 'показать нотификацию !',
 		})
 	}

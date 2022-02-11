@@ -8,44 +8,13 @@
   .active-toggle-menu > div {
     @apply text-yellow-me;
   }
-
-  .notification {
-    transition: transform 0.3s;
+  .success {
+    @apply bg-green-500;
   }
-  .notify-container {
-    position: fixed;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
+  .warning {
+    @apply bg-yellow-me;
   }
-
-  .notify-container.active .notification {
-    transform: translateY(-100%);
-  }
-
-  .inner-tooltip-container {
-    padding: 22px;
-    background: #4bb133;
-    min-width: 400px;
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    color: #fff;
-  }
-
-  .inner-tooltip-container.warning {
-    background: #b18333;
-  }
-
-  .inner-tooltip-container.error {
-    background: #b13333;
-  }
-
-  .tooltip__close {
-    width: 20px;
-    height: 20px;
-    background: red;
-    cursor: pointer;
-    margin-left: 20px;
+  .error {
+    @apply bg-red-600;
   }
 }
