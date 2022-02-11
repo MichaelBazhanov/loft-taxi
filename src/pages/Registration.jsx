@@ -6,9 +6,8 @@ import { getRegistration } from '../modules/registration'
 import { sendPaymentCardNewUser } from '../modules/payment'
 
 import Loading from '../components/Loading'
-import Error from '../components/Error'
 
-const Registration = ({ getRegistration, sendPaymentCardNewUser, token, isLoggedIn, isLoading, error }) => {
+const Registration = ({ getRegistration, sendPaymentCardNewUser, token, isLoggedIn, isLoading }) => {
 	const [state, setState] = useState({ email: 'email@example.com', name: 'Name', password: 'password', surname: 'Surname' })
 
 	const navigate = useNavigate()
@@ -37,7 +36,6 @@ const Registration = ({ getRegistration, sendPaymentCardNewUser, token, isLogged
 	const { email, name, password, surname } = state
 
 	if (isLoading) return <Loading />
-	if (error) return <Error error={error} />
 
 	return (
 		<div className="container mx-auto flex flex-col md:flex-row h-screen md:bg-map bg-center">
@@ -157,7 +155,6 @@ export default connect(
 
 		isLoggedIn: state.authorizationReducer.isLoggedIn,
 		isLoading: state.registrationReducer.isLoading,
-		error: state.registrationReducer.error
 	}),
 	{ getRegistration, sendPaymentCardNewUser } //диспатчим новый экшен
 )(Registration)

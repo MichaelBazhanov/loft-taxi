@@ -14,13 +14,7 @@ import {
 import { serverSendCard, serverGetCard } from '../../api'
 
 import { call, put, select, takeEvery } from 'redux-saga/effects'
-//===========================================================================================================
-const getToken = (state) => state.authorizationReducer.token
-
-// возвращает token redux
-export function* checkToken() {
-  return yield select(getToken)
-}
+import { showNotification } from '../tooltips'
 
 //============================================================================================Установка карты
 export function* sendingCard(action) {
@@ -37,8 +31,14 @@ export function* sendingCard(action) {
 
     if (success) {
       yield put(sendPaymentCardSuccess())
+      yield put(
+        showNotification({ type: 'success', text: 'Payment card success !' }),
+      ) // notification
     } else {
       yield put(sendPaymentCardFailure(error))
+      yield put(
+        showNotification({ type: 'error', text: error }),
+      ) // notification
     }
   } catch (error) {
     console.error(error.message)
@@ -65,6 +65,9 @@ export function* gettingCard(action) {
 			yield put(getPaymentCardSuccess(cardName, cardNumber, expiryDate, cvc, id))
 		} else {
 			yield put(getPaymentCardFailure(error))
+      yield put(
+        showNotification({ type: 'error', text: error }),
+      ) // notification
 		}
 	} catch (error) {
 		console.error(error.message)
@@ -103,6 +106,9 @@ export function* sendingCardNewUser(action) {
       yield put(sendPaymentCardNewUserSuccess())
     } else {
       yield put(sendPaymentCardNewUserFailure(error))
+      yield put(
+        showNotification({ type: 'error', text: error }),
+      ) // notification
     }
   } catch (error) {
     console.error(error.message)

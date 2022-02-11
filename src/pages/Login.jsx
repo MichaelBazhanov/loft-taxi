@@ -5,7 +5,6 @@ import { authenticate } from '../modules/authorization'
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { Formik } from 'formik';
-import { showNotification } from '../modules/tooltips';
 
 //pic
 import one from '../assets/images/pre-login-image/pre-login-1.svg'
@@ -13,7 +12,6 @@ import two from '../assets/images/pre-login-image/pre-login-2.svg'
 import three from '../assets/images/pre-login-image/pre-login-3.svg'
 
 import LoadingLogin from '../components/LoadingLogin'
-import Error from '../components/Error'
 
 const onSubmitFunction = (values, FormikBag, authenticate) => {
 	// console.log('===onSubmitFunction', values, FormikBag)
@@ -26,7 +24,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const Login = ({ authenticate, showNotification, isLoggedIn, isLoading, error, onSubmit = onSubmitFunction }) => {
+const Login = ({ authenticate, isLoggedIn, isLoading, onSubmit = onSubmitFunction }) => {
 	const [width, setWidth] = useState(window.innerWidth)
 	const [open, setOpen] = useState(true)
 	const navigate = useNavigate()
@@ -57,7 +55,6 @@ const Login = ({ authenticate, showNotification, isLoggedIn, isLoading, error, o
 
 
 	if (isLoading) return <LoadingLogin />
-	if (error) return <Error error={error} />
 
 	const StartWindow = ({ setOpen }) => {
 		const [index, setIndex] = useState(0)
@@ -125,25 +122,9 @@ const Login = ({ authenticate, showNotification, isLoggedIn, isLoading, error, o
 		// console.log('handleSubmitFunction', values, FormikBag)
 		onSubmit(values, FormikBag, authenticate)
 	}
-	const test = () => {
-		console.log('test')
 
-		showNotification({
-			type: "success",
-			text: 'показать нотификацию !',
-		})
-	}
 	return (
 		<>
-			{/*  */}
-			<button
-				onClick={test}
-				className='bg-red-300'
-			>
-				показать
-			</button>
-			{/*  */}
-
 			<div
 				className="container mx-auto flex flex-col md:flex-row h-screen md:bg-map bg-center">
 
@@ -266,23 +247,22 @@ const Login = ({ authenticate, showNotification, isLoggedIn, isLoading, error, o
 			{/* Дополнительные 4ре слайда перед логином */}
 			{width < 640 && open && <StartWindow setOpen={setOpen} />}
 		</>
-
 	)
 
 }
 
 Login.propTypes = {
 	authenticate: PropTypes.func,
-	isLoggedIn: PropTypes.bool
+	isLoggedIn: PropTypes.bool,
+	isLoading: PropTypes.bool
 }
 
 export default connect(
 	(state) => ({
 		isLoggedIn: state.authorizationReducer.isLoggedIn,
 		isLoading: state.authorizationReducer.isLoading,
-		error: state.authorizationReducer.error
 	}), // (isLoggedIn - поле для роутинга что бы ходить по роутам)
-	{ authenticate, showNotification } //диспатчим новый экшен
+	{ authenticate } //диспатчим новый экшен
 )(Login)
 
 // connect принимает 2 аргумента

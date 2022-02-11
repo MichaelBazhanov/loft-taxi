@@ -5,7 +5,7 @@ const Notification = ({ type = 'success', text = '', onClick }) => {
 	return (
 		<div className={`min-w-[400px] relative flex justify-between items-center text-white rounded-t-lg ${type}`}>
 			<div className="pl-5 select-none">{text}</div>
-			<button onClick={onClick} className="p-5 text-black ml-5 cursor-pointer
+			<button onClick={onClick} className="p-5 text-white ml-5 cursor-pointer
 			hover:text-white
 			transition-colors duration-500 ease-in-out">
 				<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 stroke-current stroke-[3px]" viewBox="0 0 20 20" fill="currentColor">

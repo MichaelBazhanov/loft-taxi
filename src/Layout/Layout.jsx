@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from '../components/Header'
+import PropTypes from "prop-types";
 import { useLocation } from 'react-router-dom'
 import Notification from '../components/Notification'
 import { connect } from 'react-redux'
@@ -34,6 +35,13 @@ const Layout = ({ isTooltipShown, tooltipText, tooltipType, hideNotification }) 
 			</div>
 		</div >
 	)
+}
+
+Layout.propTypes = {
+	hideNotification: PropTypes.func,
+	isTooltipShown: PropTypes.bool,
+	tooltipText: PropTypes.string,
+	tooltipType: PropTypes.string,
 }
 
 export default connect(
