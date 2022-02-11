@@ -4,9 +4,9 @@ import Header from '../components/Header'
 import { useLocation } from 'react-router-dom'
 import Notification from '../components/Notification'
 import { connect } from 'react-redux'
-import { hide } from '../modules/tooltips'
+import { hideNotification } from '../modules/tooltips'
 
-const Layout = ({ isTooltipShown, tooltipText, tooltipType, hide }) => {
+const Layout = ({ isTooltipShown, tooltipText, tooltipType, hideNotification }) => {
 	let location = useLocation();
 
 	return (
@@ -28,19 +28,10 @@ const Layout = ({ isTooltipShown, tooltipText, tooltipType, hide }) => {
 					<Notification
 						text={tooltipText}
 						type={tooltipType}
-						onClick={() => hide()}
+						onClick={() => hideNotification()}
 					/>
 				</div>
 			</div>
-			{/* <div className={isTooltipShown ? 'notify-container active' : 'notify-container'}>
-				<div className="notification">
-					<Notification
-						text={tooltipText}
-						type={tooltipType}
-						onClick={() => hide()}
-					/>
-				</div>
-			</div> */}
 		</div >
 	)
 }
@@ -51,6 +42,6 @@ export default connect(
 		tooltipText: state.tooltipsReducer.text,
 		tooltipType: state.tooltipsReducer.type,
 	}),
-	{ hide }
+	{ hideNotification }
 )(Layout)
 
