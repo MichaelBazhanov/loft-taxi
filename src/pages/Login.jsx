@@ -5,7 +5,7 @@ import { authenticate } from '../modules/authorization'
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { Formik } from 'formik';
-import { show } from '../modules/tooltips';
+import { showNotification } from '../modules/tooltips';
 
 //pic
 import one from '../assets/images/pre-login-image/pre-login-1.svg'
@@ -26,7 +26,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const Login = ({ authenticate, show, isLoggedIn, isLoading, error, onSubmit = onSubmitFunction }) => {
+const Login = ({ authenticate, showNotification, isLoggedIn, isLoading, error, onSubmit = onSubmitFunction }) => {
 	const [width, setWidth] = useState(window.innerWidth)
 	const [open, setOpen] = useState(true)
 	const navigate = useNavigate()
@@ -128,7 +128,7 @@ const Login = ({ authenticate, show, isLoggedIn, isLoading, error, onSubmit = on
 	const test = () => {
 		console.log('test')
 
-		show({
+		showNotification({
 			type: "success",
 			text: 'показать нотификацию !',
 		})
@@ -282,7 +282,7 @@ export default connect(
 		isLoading: state.authorizationReducer.isLoading,
 		error: state.authorizationReducer.error
 	}), // (isLoggedIn - поле для роутинга что бы ходить по роутам)
-	{ authenticate, show } //диспатчим новый экшен
+	{ authenticate, showNotification } //диспатчим новый экшен
 )(Login)
 
 // connect принимает 2 аргумента

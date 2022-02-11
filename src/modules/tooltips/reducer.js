@@ -1,4 +1,4 @@
-import { SHOW, HIDE } from './actions'
+import { SHOW_NOTIFICATION, HIDE_NOTIFICATION } from './actions'
 
 const initialState = {
   isShown: false, //отобразить или нет
@@ -8,7 +8,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case SHOW: {
+    case SHOW_NOTIFICATION: {
       return {
         ...state,
         isShown: true, //отобразить или нет
@@ -16,7 +16,7 @@ export default function (state = initialState, action) {
         type: action.payload.type,
       }
     }
-    case HIDE: {
+    case HIDE_NOTIFICATION: {
       return {
         ...state,
         isShown: false, //отобразить или нет
