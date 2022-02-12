@@ -1,9 +1,10 @@
 import React from 'react'
 import TestRenderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
-
+import { logRoles } from '@testing-library/dom'
 import Registration from '../pages/Registration'
 
+// ======================================================================================= Тестирование SNAPSHOTS
 // Мокаем useNavigate что бы внутри <Registration /> отдал просто функцию (ПО СУТИ МЫ МОКАЕМ ХУК)
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -40,3 +41,4 @@ it('Renders correctly', () => {
 
   expect(RegistrationExample).toMatchSnapshot()
 })
+// ======================================================================================= Тестирование SNAPSHOTS
