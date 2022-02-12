@@ -18,6 +18,7 @@ exports[`Renders correctly 1`] = `
   >
     <form
       className="max-w-xl flex flex-col justify-center w-full h-full lg:h-auto bg-white px-3 py-16 md:px-28 md:py-14 shadow-lg rounded-2xl"
+      data-testid="registration-form"
       onSubmit={[Function]}
     >
       <h4
@@ -35,6 +36,7 @@ exports[`Renders correctly 1`] = `
           autoComplete="off"
           className="mt-2 block w-full border-b-2 border-gray-300 shadow-sm focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me placeholder:text-gray-me"
           name="email"
+          onBlur={[Function]}
           onChange={[Function]}
           placeholder="mail@mail.ru"
           required={true}
@@ -52,6 +54,7 @@ exports[`Renders correctly 1`] = `
           autoComplete="off"
           className="mt-2 block w-full border-b-2 border-gray-300 shadow-sm focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me placeholder:text-gray-me"
           name="name"
+          onBlur={[Function]}
           onChange={[Function]}
           placeholder="Michael"
           required={true}
@@ -69,6 +72,7 @@ exports[`Renders correctly 1`] = `
           autoComplete="off"
           className="mt-2 block w-full border-b-2 border-gray-300 shadow-sm focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me placeholder:text-gray-me"
           name="surname"
+          onBlur={[Function]}
           onChange={[Function]}
           placeholder="Bashanov"
           required={true}
@@ -86,6 +90,7 @@ exports[`Renders correctly 1`] = `
           autoComplete="off"
           className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me placeholder:text-gray-me"
           name="password"
+          onBlur={[Function]}
           onChange={[Function]}
           placeholder="*************"
           required={true}
