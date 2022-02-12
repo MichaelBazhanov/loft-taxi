@@ -13,15 +13,15 @@ import three from '../assets/images/pre-login-image/pre-login-3.svg'
 
 import LoadingLogin from '../components/LoadingLogin'
 
+function classNames(...classes) {
+	return classes.filter(Boolean).join(' ')
+}
+
 const onSubmitFunction = (values, FormikBag, authenticate) => {
 	// console.log('===onSubmitFunction', values, FormikBag)
 	const { email, password } = values
 	authenticate(email, password)
 	FormikBag.setSubmitting(true) // защита от повторной отправки
-}
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ')
 }
 
 const Login = ({ authenticate, isLoggedIn, isLoading, onSubmit = onSubmitFunction }) => {
@@ -157,8 +157,6 @@ const Login = ({ authenticate, isLoggedIn, isLoading, onSubmit = onSubmitFunctio
 							}
 							return errors
 						}}
-
-
 					>
 						{({
 							values,
