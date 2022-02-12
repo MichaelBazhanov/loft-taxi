@@ -27,6 +27,10 @@ describe('authorizationSaga', () => {
           type: 'LOG_IN',
           payload: { token: '123' },
         },
+        {
+          type: 'SHOW_NOTIFICATION',
+          payload: { text: 'Authenticate success !', type: 'success' },
+        },
       ])
     })
     // ===============================================================================================
@@ -46,6 +50,10 @@ describe('authorizationSaga', () => {
         {
           type: 'LOG_IN_FAILURE',
           payload: { error: 'error' },
+        },
+        {
+          type: 'SHOW_NOTIFICATION',
+          payload: { text: 'error', type: 'error' },
         },
       ])
     })
