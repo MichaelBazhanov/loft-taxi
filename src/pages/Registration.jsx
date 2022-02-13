@@ -171,6 +171,7 @@ const Registration = ({ getRegistration, sendPaymentCardNewUser, token, isLogged
 
 							<button
 								type="submit"
+								disabled={isSubmitting || !isValid}
 								className="block text-center cursor-pointer mt-11 bg-yellow-me w-full py-4 text-2xl rounded-full disabled:opacity-75 disabled:cursor-default disabled:bg-gray-300 disabled:text-zinc-400">
 								Зарегистрироваться
 							</button>
