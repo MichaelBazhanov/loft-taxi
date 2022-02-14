@@ -29,6 +29,7 @@ const Profile = (props) => {
 	// 	setData({ ...data, cardName, cardNumber, expiryDate, cvc })
 	// }, [cardName, cardNumber, expiryDate, cvc])
 	useEffect(() => {
+		console.log('getPaymentCard(token)')
 		getPaymentCard(token)
 	}, [])
 	// if (isLoadingGetPaymentCard) return <Loading />
@@ -61,8 +62,15 @@ const Profile = (props) => {
 		cardNumber,
 		expiryDate,
 		cvc,
-		token
+		token,
+		validateOnMount,
 	} = props;
+
+	// const test = () => {
+	// 	console.log('setFieldValue ', setFieldValue)
+	// 	console.log('setFieldTouched ', setFieldTouched)
+	// }
+	// test()
 
 	return (
 		<div className="bg-map bg-center h-full relative">
@@ -172,13 +180,13 @@ const Profile = (props) => {
 										<div className="bg-white px-7 py-5 rounded-xl shadow-me-3  h-48">
 											<div className="flex justify-between items-center">
 												<img src={miniLogo} alt="mini-logo" />
-												<span className="text-xs">{values.expiryDate}</span>
+												<span className="text-xs">{values.expiryDate || expiryDate}</span>
 											</div>
-											<p className="text-xl mt-7">{values.cardNumber}</p>
+											<p className="text-xl mt-7">{values.cardNumber || cardNumber}</p>
 											<div className="flex justify-between items-center mt-9">
 												<div className="flex items-center">
 													<img src={vector} alt="vector" />
-													<span className="ml-2">{values.cardName}</span>
+													<span className="ml-2">{values.cardName || cardName}</span>
 												</div>
 												<img src={circle} alt="circle" />
 											</div>
@@ -238,7 +246,7 @@ Profile.propTypes = {
 	cardName: PropTypes.string,
 	cardNumber: PropTypes.string,
 	expiryDate: PropTypes.string,
-	cvc: PropTypes.string,
+	// cvc: PropTypes.string, // c сервера приходит всегда строка а само поле cvc работает с числом
 
 	isLoadingGetPaymentCard: PropTypes.bool,
 	isLoadingSendPaymentCard: PropTypes.bool,
@@ -247,7 +255,7 @@ Profile.propTypes = {
 
 const Formik = withFormik({
 	enableReinitialize: true,
-	// mapPropsToValues: props => console.log('props ',props),
+	validateOnMount: true,
 	mapPropsToValues({ cardName, cardNumber, expiryDate, cvc }) {
 		return {
 			cardName: cardName,
@@ -272,20 +280,33 @@ const Formik = withFormik({
 		}
 		return errors
 	},
-
+	// handleSubmit: (values, FormikBag) => {
+	// 	setTimeout(() => {
+	// 		FormikBag.props.sendPaymentCard(values.cardName, values.cardNumber, values.expiryDate, values.cvc, FormikBag.props.token)
+	// 		FormikBag.setSubmitting(false) // защита от повторной отправки
+	// 	}, 0);
+	// 	// console.log('withFormik values :', values)
+	// 	// console.log('withFormik FormikBag :', FormikBag)
+	// 	// console.log('withFormik props :', props) // дело в  этих пропсах
+	// 	// console.log('============================================= handleSubmit НАЧАЛСЯ')
+	// 	// FormikBag.props.sendPaymentCard(values.cardName, values.cardNumber, values.expiryDate, values.cvc, FormikBag.props.token)
+	// 	// FormikBag.setSubmitting(true) // защита от повторной отправки
+	// 	// return setSwitchView(false) // хз как это сюда вытащить
+	// 	// console.log('============================================= handleSubmit ЗАКОНЧИЛСЯ')
+	// }
 	handleSubmit: (values, { props, setSubmitting }) => {
-		console.log('Произощел сабмит сука!')
-		console.log('withFormik values :', values)
-		console.log('withFormik props :', props)
+		setTimeout(() => {
+			console.log('============================================= handleSubmit НАЧАЛСЯ')
+			console.log('withFormik values :', values)
+			console.log('withFormik props :', props) // дело в  этих пропсах
 
-		const { token, sendPaymentCard } = props
-		sendPaymentCard(values.cardName, values.cardNumber, values.expiryDate, values.cvc, token)
-		setSubmitting(true) // защита от повторной отправки
-		// return setSwitchView(false) // хз как это сюда вытащить
-		console.log('=============================================')
+			const { token, sendPaymentCard } = props
+			sendPaymentCard(values.cardName, values.cardNumber, values.expiryDate, values.cvc, token)
+			setSubmitting(true) // защита от повторной отправки
+			// return setSwitchView(false) // хз как это сюда вытащить
+			console.log('============================================= handleSubmit ЗАКОНЧИЛСЯ')
+		}, 500);
 	},
-
-	displayName: 'EnhancedProfile',
 })(Profile);
 
 export default connect(
@@ -294,7 +315,7 @@ export default connect(
 		cardName: state.paymentReducer.cardName,
 		cardNumber: state.paymentReducer.cardNumber,
 		expiryDate: state.paymentReducer.expiryDate,
-		cvc: String(state.paymentReducer.cvc),
+		cvc: state.paymentReducer.cvc,
 
 		isLoadingGetPaymentCard: state.paymentReducer.isLoadingGetPaymentCard,
 		isLoadingSendPaymentCard: state.paymentReducer.isLoadingSendPaymentCard,

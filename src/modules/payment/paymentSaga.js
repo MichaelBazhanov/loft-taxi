@@ -28,7 +28,8 @@ export function* sendingCard(action) {
       cvc,
       token,
     )
-
+    console.log('============== paymentSaga  SEND_PAYMENT_CARD входные данные:', cardName, cardNumber, expiryDate, cvc, token)
+    console.log('============== paymentSaga  SEND_PAYMENT_CARD выходные данные:',  success, error)
     if (success) {
       yield put(sendPaymentCardSuccess())
       yield put(
@@ -61,6 +62,7 @@ export function* gettingCard(action) {
 			serverGetCard,
 			token,
 		)
+    console.log('============== paymentSaga  GET_PAYMENT_CARD:', cardName, cardNumber, expiryDate, cvc, id, error)
 		if (token) {
 			yield put(getPaymentCardSuccess(cardName, cardNumber, expiryDate, cvc, id))
 		} else {
