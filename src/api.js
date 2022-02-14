@@ -1,3 +1,4 @@
+// Авторизация
 export const serverLogin = async (email, password) => {
   return fetch(`https://loft-taxi.glitch.me/auth`, {
     method: 'POST',
@@ -8,12 +9,24 @@ export const serverLogin = async (email, password) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      return { success: data.success, token: data.token }
+      return { success: data.success, token: data.token, error: data.error }
     })
 }
-// https://loft-taxi   => выполняем запрос по адресу сервера
-// glitch.me           => расположен на сервисе этом
-// auth?username=${email}&password=${password} => GET запрос
+
+// Регистрация
+export const serverRegistration = async (email, password, name, surname) => {
+  return fetch(`https://loft-taxi.glitch.me/register`, {
+    method: 'POST',
+    body: JSON.stringify({ email, name, password, surname }), // данные могут быть 'строкой' или {объектом}!
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      return { success: data.success, token: data.token, error: data.error }
+    })
+}
 
 // Отправка данных карты на сервер
 export const serverSendCard = async (
@@ -30,10 +43,10 @@ export const serverSendCard = async (
       'Content-Type': 'application/json',
     },
   })
-    .then((res) => res.json()) // res = {success: true/false}
+    .then((res) => res.json())
     .then((data) => {
-      return data.success
-    }) // true / false
+      return { success: data.success, error: data.error }
+    })
 }
 
 // Получение данных карты на клиенте
@@ -44,7 +57,7 @@ export const serverGetCard = async (token) => {
       'Content-Type': 'application/json',
     },
   })
-    .then((res) => (res.status === 200 ? res.json() : ''))
+    .then((res) => res.json())
     .then((data) => data)
 }
 
@@ -56,14 +69,14 @@ export const serverGetAddressList = async () => {
       'Content-Type': 'application/json',
     },
   })
-    .then((res) => (res.status === 200 ? res.json() : ''))
+    .then((res) => res.json())
     .then((data) => data)
 }
 
 // Получение доступных маршрутов на клиенте
 export const serverGetRoutes = async (address1, address2) => {
   return fetch(
-    `https://loft-taxi.glitch.me/route?address1=${address1}&address2=${address2}`,
+    `https://loft-taxi.glitch.me/route?address1=${address1.rout}&address2=${address2.rout}`,
     {
       method: 'GET',
       headers: {
@@ -71,6 +84,6 @@ export const serverGetRoutes = async (address1, address2) => {
       },
     },
   )
-    .then((res) => (res.status === 200 ? res.json() : 'error'))
+    .then((res) => res.json())
     .then((data) => data)
 }

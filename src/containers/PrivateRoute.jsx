@@ -14,7 +14,7 @@ const PrivateRoute = ({ children, isLoggedIn }) => {
 }
 
 export default connect(
-	state => ({ isLoggedIn: state.auth.isLoggedIn }) // selector
+	state => ({ isLoggedIn: state.authorizationReducer.isLoggedIn }) // selector
 )(PrivateRoute)
 //============================================================================Моя вставка на роутер
 

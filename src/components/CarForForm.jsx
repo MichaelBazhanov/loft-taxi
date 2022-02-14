@@ -1,3 +1,4 @@
+import React from "react";
 import PropTypes from "prop-types";
 
 function classNames(...classes) {
@@ -22,11 +23,11 @@ const CarForForm = ({ price, imgSRC, index, activeIndexCar, setActiveIndexCar })
 }
 
 CarForForm.propTypes = {
-	price: PropTypes.string.isRequired,
-	imgSRC: PropTypes.string.isRequired,
-	index: PropTypes.number.isRequired,
-	activeIndexCar: PropTypes.number.isRequired,
-	setActiveIndexCar: PropTypes.func.isRequired
+	price: PropTypes.string,
+	imgSRC: PropTypes.string,
+	index: PropTypes.number,
+	activeIndexCar: PropTypes.number,
+	setActiveIndexCar: PropTypes.func
 }
 
 export default CarForForm

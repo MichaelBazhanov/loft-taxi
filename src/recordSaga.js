@@ -4,7 +4,7 @@
 
 import { runSaga } from 'redux-saga'
 
-export const recordSaga = async (saga, initialAction = null) => {
+export const recordSaga = async (saga, initialAction = null) => { //console.log('######### saga, initialAction ',saga, initialAction)
   // saga - принимает сагу для тестирования
   // initialAction - экшен c которым сага должна запуститься
   const dispatched = [] // Хранит Action которые Saga задиспатчит в процессе свой работы
@@ -13,9 +13,11 @@ export const recordSaga = async (saga, initialAction = null) => {
     //запускаем сагу с параметрами и копим массив
     {
       //вместо настоящего dispatch записываем action в массив
-      dispatch: (action) => dispatched.push(action),
+      dispatch: (action) => dispatched.push(action), // сам action это реальный action с payload данными
+      //dispatch: срабатывает каждый раз когда в саге срабатывает yield put() те сначала put срабатывает в саге а потом приходит сюда в виде dispatch
+      // те dispatch это put(action) для того что бы все это в reducer Не уходило мы заменяем
     },
-    saga, // сага для теста
+    saga, // сага для теста (в этой саге ожидаем диспатчи других action и записываем их)
     initialAction, // Action для саги для теста
   ).done
 

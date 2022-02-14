@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux'
-import rootReducer from './reducers' // он подхватит index.js а там экспорт по умолчанию
+import rootReducer from './rootReducers' // он подхватит index.js а там экспорт по умолчанию
 
 //Подключаем главную SAGA
 import createSagaMiddleware from 'redux-saga'

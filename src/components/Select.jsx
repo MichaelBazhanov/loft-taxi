@@ -2,36 +2,31 @@
 import { Fragment, useEffect, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronDownIcon, LocationMarkerIcon, XIcon } from '@heroicons/react/solid'
-import { connect } from 'react-redux'
-import { routAddress1, routAddress2 } from '../actions' //просто импортируем action
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-function Example({ addressList, currentAddress, routAddress1, routAddress2, idx }) {
-	const [selected, setSelected] = useState(currentAddress)
-
-	useEffect(() => {
-		if (idx === '1') routAddress1(currentAddress)
-		if (idx === '2') routAddress2(currentAddress)
-	}, [])
+function CustomSelect({ addressList, placeholder, onChange, margin, roundedTop, roundedBottom }) {
+	const [selected, setSelected] = useState(addressList)
 
 	const changeSelected = (event) => {
 		setSelected(event)
-		if (idx === '1') routAddress1(event)
-		if (idx === '2') routAddress2(event)
+		onChange(event)
 	}
 
 	return (
 		<Listbox value={selected} onChange={changeSelected}>
 			{({ open }) => (
 				<>
-					<div className="mt-1 relative">
-						<Listbox.Button className="relative w-full bg-white border-b border-gray-300 pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-yellow-me focus:border-yellow-me sm:text-sm">
+					<div className={`${margin} relative`}>
+						<Listbox.Button className={`
+						${roundedTop} ? ${roundedTop} : ''
+						${roundedBottom} ? ${roundedBottom} : ''
+						relative w-full bg-white border-b border-gray-300 pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-yellow-me focus:border-yellow-me sm:text-sm`} placeholder={placeholder}>
 							<span className="flex items-center">
 								<div className="flex-shrink-0 h-3 w-3 rounded-full bg-black" />
-								<span className="ml-3 block truncate">{selected.rout}</span>
+								<span className="ml-3 block truncate">{selected && selected.rout ? selected.rout : placeholder}</span>
 							</span>
 							<span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none divide-x-2">
 								<XIcon className="h-5 w-5 text-gray-400 mr-1" aria-hidden="true" />
@@ -92,7 +87,4 @@ function Example({ addressList, currentAddress, routAddress1, routAddress2, idx 
 	)
 }
 
-export default connect(
-	null,
-	{ routAddress1, routAddress2 } // просто дергаем ACTION
-)(Example)
+export default CustomSelect
