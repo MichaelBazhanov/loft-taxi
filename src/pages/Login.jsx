@@ -30,6 +30,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, onSubmit = onSubmitFunctio
 	const navigate = useNavigate()
 
 	useEffect(() => {
+		if (width > 640) { setOpen(false) } else { setOpen(true) }
 		window.addEventListener("resize", updateDimensions);
 		return () => window.removeEventListener("resize", updateDimensions);
 	}, []);
@@ -40,6 +41,10 @@ const Login = ({ authenticate, isLoggedIn, isLoading, onSubmit = onSubmitFunctio
 
 	const updateDimensions = () => {
 		setWidth(window.innerWidth);
+		// console.log(width)
+		// if(width > 640 ) {
+		// 	setOpen(false)
+		// }
 	}
 	// const handleSubmit = (event) => {
 	// 	event.preventDefault()
@@ -55,6 +60,11 @@ const Login = ({ authenticate, isLoggedIn, isLoading, onSubmit = onSubmitFunctio
 
 
 	if (isLoading) return <LoadingLogin />
+
+
+	const handleSubmitFunction = (values, FormikBag) => {
+		onSubmit(values, FormikBag, authenticate)
+	}
 
 	const StartWindow = ({ setOpen }) => {
 		const [index, setIndex] = useState(0)
@@ -82,7 +92,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, onSubmit = onSubmitFunctio
 		return (
 			<>
 				{index >= 0 && (
-					<div className="absolute inset-0 bg-white flex flex-col flex-nowrap justify-center items-center text-center">
+					<div className="fixed inset-0 bg-white flex flex-col flex-nowrap justify-center items-center text-center bg-red-700">
 						<img src={windows[index].image} alt="Logo" className="h-80" />
 						<h2 className="text-3xl font-bold mt-12">{windows[index].title}</h2>
 						<p className="mt-5 text-xl text-gray-me">{windows[index].description}</p>
@@ -116,11 +126,6 @@ const Login = ({ authenticate, isLoggedIn, isLoading, onSubmit = onSubmitFunctio
 					</div>)}
 			</>
 		)
-	}
-
-	const handleSubmitFunction = (values, FormikBag) => {
-		// console.log('handleSubmitFunction', values, FormikBag)
-		onSubmit(values, FormikBag, authenticate)
 	}
 
 	return (
@@ -246,7 +251,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, onSubmit = onSubmitFunctio
 
 
 			{/* Дополнительные 4ре слайда перед логином */}
-			{width < 640 && open && <StartWindow setOpen={setOpen} />}
+			{open && <StartWindow setOpen={setOpen} />}
 		</>
 	)
 
