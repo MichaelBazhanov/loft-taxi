@@ -176,8 +176,8 @@ const Profile = (props) => {
 									</form>
 
 									{/* Платежная карта */}
-									<div className="flex flex-col sm:w-1/2 sm:px-12 justify-center order-1 sm:order-3 mt-7 sm:mt-auto">
-										<div className="bg-white px-7 py-5 rounded-xl shadow-me-3  h-48">
+									<div className="flex flex-col sm:w-1/2 md:px-12 justify-center order-1 sm:order-3 mt-7 sm:mt-auto">
+										<div className="bg-white px-7 py-5 rounded-xl shadow-me-3 h-48">
 											<div className="flex justify-between items-center">
 												<img src={miniLogo} alt="mini-logo" />
 												<span className="text-xs">{values.expiryDate || expiryDate}</span>
