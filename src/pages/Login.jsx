@@ -41,10 +41,6 @@ const Login = ({ authenticate, isLoggedIn, isLoading, onSubmit = onSubmitFunctio
 
 	const updateDimensions = () => {
 		setWidth(window.innerWidth);
-		// console.log(width)
-		// if(width > 640 ) {
-		// 	setOpen(false)
-		// }
 	}
 	// const handleSubmit = (event) => {
 	// 	event.preventDefault()
@@ -92,7 +88,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, onSubmit = onSubmitFunctio
 		return (
 			<>
 				{index >= 0 && (
-					<div className="fixed inset-0 bg-white flex flex-col flex-nowrap justify-center items-center text-center bg-red-700">
+					<div className="fixed inset-0 bg-white flex flex-col flex-nowrap justify-center items-center text-center">
 						<img src={windows[index].image} alt="Logo" className="h-80" />
 						<h2 className="text-3xl font-bold mt-12">{windows[index].title}</h2>
 						<p className="mt-5 text-xl text-gray-me">{windows[index].description}</p>

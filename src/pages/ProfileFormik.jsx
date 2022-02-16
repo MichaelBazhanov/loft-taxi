@@ -21,20 +21,21 @@ import Loading from '../components/Loading'
 // 	return setSwitchView(false)
 // }
 
+let setSwitchView_
+
 const Profile = (props) => {
-	console.log('RENDERING ', props)
+	// console.log('RENDERING ', props)
 	const [switchView, setSwitchView] = useState(true)
 	const navigate = useNavigate()
 	// useEffect(() => {
 	// 	setData({ ...data, cardName, cardNumber, expiryDate, cvc })
 	// }, [cardName, cardNumber, expiryDate, cvc])
 	useEffect(() => {
-		console.log('getPaymentCard(token)')
+		setSwitchView_ = setSwitchView // Простое переприсвоение чтобы протащить эту функцию в формик
 		getPaymentCard(token)
 	}, [])
-	// if (isLoadingGetPaymentCard) return <Loading />
-	// if (isLoadingSendPaymentCard) return <Loading />
-	// if (isLoadingSendPaymentCardNewUser) return <Loading />
+	if (isLoadingGetPaymentCard || isLoadingSendPaymentCard || isLoadingSendPaymentCardNewUser) return <Loading />
+
 	// const handleSubmitFunction = (values, FormikBag) => {
 	// 	// console.log('handleSubmitFunction', values, FormikBag)
 	// 	// onSubmit(values, FormikBag, token, setSwitchView, sendPaymentCard)
@@ -51,6 +52,7 @@ const Profile = (props) => {
 		handleBlur,
 		handleSubmit,
 		isValid,
+		isValidating,
 		isSubmitting,
 		logOut,
 		sendPaymentCard,
@@ -65,12 +67,6 @@ const Profile = (props) => {
 		token,
 		validateOnMount,
 	} = props;
-
-	// const test = () => {
-	// 	console.log('setFieldValue ', setFieldValue)
-	// 	console.log('setFieldTouched ', setFieldTouched)
-	// }
-	// test()
 
 	return (
 		<div className="bg-map bg-center h-full relative">
@@ -108,6 +104,7 @@ const Profile = (props) => {
 												type="text"
 												name="cardName"
 												required
+												maxLength={19}
 												placeholder="Loft"
 												autoComplete="off"
 												className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
@@ -126,6 +123,7 @@ const Profile = (props) => {
 												type="text"
 												name="cardNumber"
 												required
+												maxLength={19}
 												autoComplete="off"
 												placeholder="0000 0000 0000 0000"
 												className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
@@ -142,11 +140,12 @@ const Profile = (props) => {
 													onBlur={handleBlur}
 													onChange={handleChange}
 													value={values.expiryDate}
-													type="date"
+													maxLength={5}
+													type="text"
 													name="expiryDate"
 													required
 													autoComplete="off"
-													placeholder="15/05/08"
+													placeholder="mm/yy"
 													className="mt-1 block w-full border-b-2 h-7 border-gray-300 shadow-sm
 										focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
 										placeholder:text-gray-me"/>
@@ -160,12 +159,11 @@ const Profile = (props) => {
 													onBlur={handleBlur}
 													onChange={handleChange}
 													value={values.cvc}
-													type="number"
+													type="text"
 													maxLength={3}
 													name="cvc"
 													required
-													placeholder="667"
-													min="000" max="999"
+													placeholder="000"
 													autoComplete="off"
 													className="mt-1 block w-full border-b-2 h-7 border-gray-300 shadow-sm
 										focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
@@ -266,45 +264,31 @@ const Formik = withFormik({
 	},
 	validate: values => {
 		let errors = {}
-		if (values.cardName.trim().length < 1) {
-			errors.cardName = 'The field is empty !'
-		}
-		if (values.cardNumber.trim().length < 1) {
-			errors.cardNumber = 'The field is empty !'
-		}
-		if (values.expiryDate.trim().length < 1) {
-			errors.expiryDate = 'The field is empty !'
-		}
-		if (values.cvc.length < 1) {
-			errors.cvc = 'The field is empty !'
-		}
+		if (values.cardName.trim().length < 1) errors.cardName = 'The field is empty !'
+		if (values.cardName.trim().length > 19) errors.cardName = 'Too big field !'
+		if (values.cardNumber.trim().length < 1) errors.cardNumber = 'The field is empty !'
+		if (values.cardNumber.trim().length < 19) errors.cardNumber = 'The field must be smaller !'
+		if (values.cardNumber.trim().length > 19) errors.cardNumber = 'Too big field !'
+		if (values.expiryDate.trim().length < 1) errors.expiryDate = 'The field is empty !'
+		if (values.expiryDate.trim().length < 5) errors.expiryDate = 'The field must be smaller !'
+		if (values.expiryDate.trim().length > 5) errors.expiryDate = 'Too big field !'
+		if (values.cvc.trim().length < 1) errors.cvc = 'The field is empty !'
+		if (values.cvc.trim().length < 3) errors.cvc = 'he field must be smaller !'
+		if (values.cvc.trim().length > 3) errors.cvc = 'Too big field !'
 		return errors
 	},
-	// handleSubmit: (values, FormikBag) => {
-	// 	setTimeout(() => {
-	// 		FormikBag.props.sendPaymentCard(values.cardName, values.cardNumber, values.expiryDate, values.cvc, FormikBag.props.token)
-	// 		FormikBag.setSubmitting(false) // защита от повторной отправки
-	// 	}, 0);
-	// 	// console.log('withFormik values :', values)
-	// 	// console.log('withFormik FormikBag :', FormikBag)
-	// 	// console.log('withFormik props :', props) // дело в  этих пропсах
-	// 	// console.log('============================================= handleSubmit НАЧАЛСЯ')
-	// 	// FormikBag.props.sendPaymentCard(values.cardName, values.cardNumber, values.expiryDate, values.cvc, FormikBag.props.token)
-	// 	// FormikBag.setSubmitting(true) // защита от повторной отправки
-	// 	// return setSwitchView(false) // хз как это сюда вытащить
-	// 	// console.log('============================================= handleSubmit ЗАКОНЧИЛСЯ')
-	// }
 	handleSubmit: (values, { props, setSubmitting }) => {
-		setTimeout(() => {
-			console.log('============================================= handleSubmit НАЧАЛСЯ')
-			console.log('withFormik values :', values)
-			console.log('withFormik props :', props) // дело в  этих пропсах
+		// console.log('============================================= handleSubmit НАЧАЛСЯ')
+		// console.log('withFormik values :', values)
+		// console.log('withFormik props :', props) // дело в  этих пропсах
 
-			const { token, sendPaymentCard } = props
-			sendPaymentCard(values.cardName, values.cardNumber, values.expiryDate, values.cvc, token)
+		const { token, sendPaymentCard } = props
+		sendPaymentCard(values.cardName, values.cardNumber, values.expiryDate, values.cvc, token)
+		// console.log('============================================= handleSubmit ЗАКОНЧИЛСЯ')
+
+		setTimeout(() => {
 			setSubmitting(true) // защита от повторной отправки
-			// return setSwitchView(false) // хз как это сюда вытащить
-			console.log('============================================= handleSubmit ЗАКОНЧИЛСЯ')
+			setSwitchView_(false) // смена вида
 		}, 500);
 	},
 })(Profile);

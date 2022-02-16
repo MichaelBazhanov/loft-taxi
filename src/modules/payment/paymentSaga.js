@@ -13,7 +13,7 @@ import {
 } from './actions' // За этими actions следим
 import { serverSendCard, serverGetCard } from '../../api'
 
-import { call, put, select, takeEvery } from 'redux-saga/effects'
+import { call, put, takeEvery } from 'redux-saga/effects'
 import { showNotification } from '../tooltips'
 
 //============================================================================================Установка карты
@@ -28,8 +28,7 @@ export function* sendingCard(action) {
       cvc,
       token,
     )
-    console.log('============== paymentSaga  SEND_PAYMENT_CARD входные данные:', cardName, cardNumber, expiryDate, cvc, token)
-    console.log('============== paymentSaga  SEND_PAYMENT_CARD выходные данные:',  success, error)
+
     if (success) {
       yield put(sendPaymentCardSuccess())
       yield put(
@@ -37,9 +36,7 @@ export function* sendingCard(action) {
       ) // notification
     } else {
       yield put(sendPaymentCardFailure(error))
-      yield put(
-        showNotification({ type: 'error', text: error }),
-      ) // notification
+      yield put(showNotification({ type: 'error', text: error })) // notification
     }
   } catch (error) {
     console.error(error.message)
@@ -51,37 +48,35 @@ export function* paymentCardSendSaga() {
   yield takeEvery(SEND_PAYMENT_CARD, sendingCard)
 }
 
-
 //==========================================================================================Получение карты
 //===========================================================================На тестирование ==============
 export function* gettingCard(action) {
-	try {
+  try {
     const token = action.payload.token
 
-		const { cardName, cardNumber, expiryDate, cvc, id, error } = yield call(
-			serverGetCard,
-			token,
-		)
-    console.log('============== paymentSaga  GET_PAYMENT_CARD:', cardName, cardNumber, expiryDate, cvc, id, error)
-		if (token) {
-			yield put(getPaymentCardSuccess(cardName, cardNumber, expiryDate, cvc, id))
-		} else {
-			yield put(getPaymentCardFailure(error))
+    const { cardName, cardNumber, expiryDate, cvc, id, error } = yield call(
+      serverGetCard,
+      token,
+    )
+
+    if (token) {
       yield put(
-        showNotification({ type: 'error', text: error }),
-      ) // notification
-		}
-	} catch (error) {
-		console.error(error.message)
+        getPaymentCardSuccess(cardName, cardNumber, expiryDate, cvc, id),
+      )
+    } else {
+      yield put(getPaymentCardFailure(error))
+      yield put(showNotification({ type: 'error', text: error })) // notification
+    }
+  } catch (error) {
+    console.error(error.message)
     yield put(getPaymentCardFailure(error.response))
-	}
+  }
 }
 //===========================================================================На тестирование ==============
 export function* paymentCardGetSaga() {
   yield takeEvery(GET_PAYMENT_CARD, gettingCard)
 }
 //==========================================================================================Получение карты
-
 
 //===========================================================Установка карты для нового пользователя
 export function* sendingCardNewUser(action) {
@@ -93,7 +88,13 @@ export function* sendingCardNewUser(action) {
       expiryDate: ' ',
       cvc: ' ',
     }
-    const { cardName, cardNumber, expiryDate, cvc, token = action.payload.token } = paymentCardNewUser
+    const {
+      cardName,
+      cardNumber,
+      expiryDate,
+      cvc,
+      token = action.payload.token,
+    } = paymentCardNewUser
 
     const { success, error } = yield call(
       serverSendCard,
@@ -108,9 +109,7 @@ export function* sendingCardNewUser(action) {
       yield put(sendPaymentCardNewUserSuccess())
     } else {
       yield put(sendPaymentCardNewUserFailure(error))
-      yield put(
-        showNotification({ type: 'error', text: error }),
-      ) // notification
+      yield put(showNotification({ type: 'error', text: error })) // notification
     }
   } catch (error) {
     console.error(error.message)
