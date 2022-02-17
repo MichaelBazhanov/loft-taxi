@@ -34,7 +34,6 @@ const Profile = (props) => {
 		setSwitchView_ = setSwitchView // Простое переприсвоение чтобы протащить эту функцию в формик
 		getPaymentCard(token)
 	}, [])
-	if (isLoadingGetPaymentCard || isLoadingSendPaymentCard || isLoadingSendPaymentCardNewUser) return <Loading />
 
 	// const handleSubmitFunction = (values, FormikBag) => {
 	// 	// console.log('handleSubmitFunction', values, FormikBag)
@@ -67,6 +66,8 @@ const Profile = (props) => {
 		token,
 		validateOnMount,
 	} = props;
+
+	if (isLoadingGetPaymentCard || isLoadingSendPaymentCard || isLoadingSendPaymentCardNewUser) return <Loading />
 
 	return (
 		<div className="bg-map bg-center h-full relative">
@@ -134,7 +135,7 @@ const Profile = (props) => {
 
 										<div className="flex justify-between items-start">
 											<label
-												className="flex flex-col justify-between font-bold cursor-pointer mt-6 w-1/2">
+												className="flex flex-col justify-between font-bold cursor-pointer mt-6 w-[45%]">
 												<span>MM/YY*</span>
 												<input
 													onBlur={handleBlur}
@@ -153,7 +154,7 @@ const Profile = (props) => {
 											</label>
 
 											<label
-												className="flex flex-col justify-between font-bold cursor-pointer mt-6">
+												className="flex flex-col justify-between font-bold cursor-pointer mt-6 w-[45%]">
 												<span>CVC*</span>
 												<input
 													onBlur={handleBlur}
