@@ -56,6 +56,10 @@ describe('gettingCard', () => {
           type: 'GET_PAYMENT_CARD_FAILURE',
           payload: { error: 'error' },
         },
+        {
+          type: 'SHOW_NOTIFICATION',
+          payload: { text: 'error', type: 'error' },
+        },
       ])
     })
   })
@@ -84,6 +88,10 @@ describe('sendingCard', () => {
         {
           type: 'SEND_PAYMENT_CARD_SUCCESS',
         },
+        {
+          type: 'SHOW_NOTIFICATION',
+          payload: { text: 'Payment card success !', type: 'success' },
+        },
       ])
     })
     // ===============================================================================================
@@ -104,6 +112,10 @@ describe('sendingCard', () => {
         {
           type: 'SEND_PAYMENT_CARD_FAILURE',
           payload: { error: 'error' },
+        },
+        {
+          type: 'SHOW_NOTIFICATION',
+          payload: { text: 'error', type: 'error' },
         },
       ])
     })
@@ -153,6 +165,10 @@ describe('sendingCardNewUser', () => {
         {
           type: 'SEND_PAYMENT_CARD_NEW_USER_FAILURE',
           payload: { error: 'error' },
+        },
+        {
+          type: 'SHOW_NOTIFICATION',
+          payload: { text: 'error', type: 'error' },
         },
       ])
     })

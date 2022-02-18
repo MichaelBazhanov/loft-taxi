@@ -5,7 +5,16 @@
 @tailwind utilities;
 
 @layer base {
-	.active-toggle-menu > div {
-		@apply text-yellow-me;
-	}
+  .active-toggle-menu > div {
+    @apply text-yellow-me;
+  }
+  .success {
+    @apply bg-green-500;
+  }
+  .warning {
+    @apply bg-yellow-me;
+  }
+  .error {
+    @apply bg-red-600;
+  }
 }

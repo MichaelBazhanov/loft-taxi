@@ -25,6 +25,10 @@ describe('registration', () => {
       expect(dispatched).toEqual([
         { type: 'LOG_IN', payload: { token: '123' } },
         { type: 'REGISTRATION_SUCCESS', payload: { success: true } },
+        {
+          type: 'SHOW_NOTIFICATION',
+          payload: { text: 'Registration success !', type: 'success' },
+        },
       ])
     })
     // ===============================================================================================
@@ -44,6 +48,10 @@ describe('registration', () => {
         {
           type: 'REGISTRATION_FAILURE',
           payload: { error: 'error' },
+        },
+        {
+          type: 'SHOW_NOTIFICATION',
+          payload: { text: 'error', type: 'error' },
         },
       ])
     })

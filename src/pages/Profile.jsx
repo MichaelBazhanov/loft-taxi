@@ -11,14 +11,9 @@ import miniLogo from '../assets/images/mini-logo.svg'
 import circle from '../assets/images/circle.svg'
 
 import Loading from '../components/Loading'
-import Error from '../components/Error'
-
-function classNames(...classes) {
-	return classes.filter(Boolean).join(' ')
-}
 
 const Profile = ({
-	logOut, sendPaymentCard, getPaymentCard, isLoadingGetPaymentCard, errorGetPaymentCard, isLoadingSendPaymentCard, errorSendPaymentCard, isLoadingSendPaymentCardNewUser, errorSendPaymentCardNewUser, cardName, cardNumber, expiryDate, cvc, token
+	logOut, sendPaymentCard, getPaymentCard, isLoadingGetPaymentCard, isLoadingSendPaymentCard, isLoadingSendPaymentCardNewUser, cardName, cardNumber, expiryDate, cvc, token
 }) => {
 	const [data, setData] = useState({
 		cardName: "",
@@ -51,11 +46,8 @@ const Profile = ({
 	}, [])
 
 	if (isLoadingGetPaymentCard) return <Loading />
-	if (errorGetPaymentCard) return <Error error={errorGetPaymentCard} />
 	if (isLoadingSendPaymentCard) return <Loading />
-	if (errorSendPaymentCard) return <Error error={errorSendPaymentCard} />
 	if (isLoadingSendPaymentCardNewUser) return <Loading />
-	if (errorSendPaymentCardNewUser) return <Error error={errorSendPaymentCardNewUser} />
 
 	return (
 		<div className="bg-map bg-center h-full relative">
@@ -202,6 +194,18 @@ const Profile = ({
 
 Profile.propTypes = {
 	logOut: PropTypes.func.isRequired,
+	sendPaymentCard: PropTypes.func.isRequired,
+	getPaymentCard: PropTypes.func.isRequired,
+
+	token: PropTypes.string,
+	cardName: PropTypes.string,
+	cardNumber: PropTypes.string,
+	expiryDate: PropTypes.string,
+	cvc: PropTypes.string,
+
+	isLoadingGetPaymentCard: PropTypes.bool,
+	isLoadingSendPaymentCard: PropTypes.bool,
+	isLoadingSendPaymentCardNewUser: PropTypes.bool,
 }
 
 export default connect(
@@ -213,11 +217,8 @@ export default connect(
 		cvc: state.paymentReducer.cvc,
 
 		isLoadingGetPaymentCard: state.paymentReducer.isLoadingGetPaymentCard,
-		errorGetPaymentCard: state.paymentReducer.errorGetPaymentCard,
 		isLoadingSendPaymentCard: state.paymentReducer.isLoadingSendPaymentCard,
-		errorSendPaymentCard: state.paymentReducer.errorSendPaymentCard,
 		isLoadingSendPaymentCardNewUser: state.paymentReducer.isLoadingSendPaymentCardNewUser,
-		errorSendPaymentCardNewUser: state.paymentReducer.errorSendPaymentCardNewUser,
 	}),
 	{ logOut, sendPaymentCard, getPaymentCard }
 )(Profile)

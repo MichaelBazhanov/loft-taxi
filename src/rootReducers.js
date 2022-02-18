@@ -5,6 +5,7 @@ import { default as registrationReducer } from './modules/registration'
 import { default as paymentReducer } from './modules/payment'
 import { default as addressReducer } from './modules/address'
 import { default as routesReducer } from './modules/route'
+import { default as tooltipsReducer } from './modules/tooltips'
 
 export default combineReducers({
   authorizationReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   paymentReducer,
   addressReducer,
   routesReducer,
+  tooltipsReducer,
 })

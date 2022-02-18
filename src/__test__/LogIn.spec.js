@@ -13,6 +13,7 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => jest.fn(),
 }))
+
 // Формируем замоканый стор
 const mockStore = {
   getState: () => ({
@@ -25,19 +26,22 @@ const mockStore = {
   }),
   subscribe: () => {},
   dispatch: () => {
-    // диспачим внутри компонента
-    authenticate: jest.fn()
+    authenticate: jest.fn(); // диспачим внутри компонента
   },
 }
 
 it('Renders correctly', () => {
-  const LoginExample = TestRenderer.create(
-    <Provider store={mockStore}>
-      <Login />
-    </Provider>,
-  ).toJSON()
+  let LoginExample
+  TestRenderer.act(()=>{
+    LoginExample = TestRenderer.create(
+      <Provider store={mockStore}>
+        <Login />
+      </Provider>,
+    )
+  })
+  const LoginExampleJSON = LoginExample.toJSON()
 
-  expect(LoginExample).toMatchSnapshot()
+  expect(LoginExampleJSON).toMatchSnapshot()
 })
 // ======================================================================================= Тестирование SNAPSHOTS
 

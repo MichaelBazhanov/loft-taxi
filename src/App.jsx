@@ -5,7 +5,8 @@ import { Route, Routes } from "react-router-dom";
 import Login from './pages/Login'
 import Registration from './pages/Registration'
 import Map from './pages/Map'
-import Profile from './pages/Profile'
+// import Profile from './pages/Profile'
+import Profile from './pages/ProfileFormik'
 
 import Layout from './Layout/Layout'
 
