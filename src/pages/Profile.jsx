@@ -163,6 +163,7 @@ const Profile = ({
 							</button>
 						</div>
 					}
+
 					{!switchView &&
 						<div
 							className={'flex flex-wrap flex-col max-w-4xl w-full bg-white py-14 px-11 rounded-xl shadow-me-2'}

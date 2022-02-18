@@ -29,8 +29,7 @@ const mockStore = {
     },
   }),
   subscribe: () => {},
-  dispatch: () => {
-    // диспачим внутри компонента
+  dispatch: () => { // диспачим внутри компонента
     logOut: jest.fn()
     sendPaymentCard: jest.fn()
     getPaymentCard: jest.fn()
