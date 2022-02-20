@@ -1,8 +1,13 @@
 language: node_js
 node_js:
-  - "stable"
+- stable
 cache:
   directories:
   - node_modules
 script:
-  - npm test
+- npm test
+deploy:
+  provider: heroku
+  api_key:
+    secure: OsOFL9cXm1u5qJoR9dugRXdpnSkNTulcGIHv7eNy/TCzorHv+9I4J+o20krgqsHuXmmnvXXhDZhvLi8QC90lfof/0EK7WtP3I6ptE1O6XQM2Kf+xZKgOOcjKY0EzRWpC3uV3HtABDL0Eg77UxPDF6riOwio/nSN/5JFnNwZoiY/84wZ7BeKaBPFOHsuFXeqWe5aDrHJ/h26r1GKaeUzVEwLwFzoz9k/8r1ZIpwM7JwRJoWq7i+3RyE/JS/OeHlBRRv7uxYmYgXGK80HBnzRVH5qPvP6IxG4eTCJ8bKLobf61WaWU/By+K9iQz/o7vS3DM4PGctS+d+SJnGTDv5j7k1CXP83SwYEtkue5dNF77ZqKO4GbaWmf41EhprUH1mp4pWH1NhJqWEqXu/X39Qb6bkPpdeVrzmkWb7AE+k88IWcMwAkonbz6t7OMa3Lhtv+k8/OH+6pqYMQX3BQzl6oWbTAkA92bh7IAfE03qPGqrxJ8bpd7+BX8A00ac9Fg8SDddBcw5klD+cEEetCnbG8BQjcJ383CbgWmsBxxVTJPpIYqqEf1MBuh9vctRaCFKoDgVLlJ1NMWYF+HKC5CZ0eaDcY7UGjccB6f3Plyb8jvdcADJ9XpAr6XlAmtsuOBp4BLvITZMLhTUAmoaHScR2kEjIAxauz9zLfjfWwmhAnhs3M=
+  app: rocky-headland-00301
