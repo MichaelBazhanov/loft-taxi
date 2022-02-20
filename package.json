@@ -28,6 +28,7 @@
     "test": "react-scripts test --env=jsdom --watchAll=false --bail",
     "eject": "react-scripts eject",
     "prepare": "husky install",
+    "local_build_start": "serve -s build",
     "heroku-postbuild": "npm run build"
   },
   "eslintConfig": {

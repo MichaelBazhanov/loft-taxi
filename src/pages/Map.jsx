@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import mapboxGl from "mapbox-gl";
+import mapboxGl from 'mapbox-gl';
 import { connect } from 'react-redux'
 
 import FormForMap from '../components/FormForMap'
