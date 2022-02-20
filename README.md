@@ -68,3 +68,32 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### Танцы с бубном на момент 20.02.2022
+---
+
+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
+
+Логинимся при помощи GitHab токена который мы создали на GitHab
+travis login --com --github-token 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
+
+Отдаем этот токен на Heroku
+travis encrypt $(heroku auth:token) --com --add deploy.api_key
+
+
+Добавляем в .travis.yml
+before_deploy:
+  - rvm $(travis_internal_ruby) --fuzzy do ruby -S gem install faraday -v 1.8.0
+
+Устанавливаем
+npm install serve --s
+
+Добавляем в package.json сценарии для локального билда и билда на Heroku
+"local_build_start": "serve -s build",
+"heroku-postbuild": "npm run build",
+
+Расширяем память для Heroku приложения а то при сборке вылетает ошибка
+Settings -> Config Vars добавляем key и value
+NODE_OPTIONS     --max_old_space_size=1024 value.
+
+---
