@@ -75,34 +75,34 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 > 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 <br/>
 
 Скачиваем и устанавливаем Heroku CLI<br/>
-<https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up><br/>
+  <https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up> <br/>
 
-Скачиваем Ruby на официальном сайте<br/>
-<https://www.ruby-lang.org/en/downloads><br/>
+Скачиваем Ruby на официальном сайте <br/>
+  <https://www.ruby-lang.org/en/downloads> <br/>
 
 Через Ruby устанавливаем Travis CLI<br/>
-> <https://github.com/travis-ci/travis.rb#installation>
-> <https://github.com/travis-ci/travis.rb/releases>
-<br/>
+  <https://github.com/travis-ci/travis.rb#installation>
+  <https://github.com/travis-ci/travis.rb/releases>
+
 Логинимся при помощи GitHab токена который мы создали на GitHab<br/>
-> travis login --com --github-token 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
-<br/>
-Отдаем этот токен на Heroku<br/>
-> travis encrypt $(heroku auth:token) --com --add deploy.api_key
-<br/>
-Добавляем в .travis.yml<br/>
-> before_deploy:<br/>
-> - rvm $(travis_internal_ruby) --fuzzy do ruby -S gem install faraday -v 1.8.0<br/>
-<br/>
+  travis login --com --github-token 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 <br/>
+
+Отдаем этот токен на Heroku <br/>
+  travis encrypt $(heroku auth:token) --com --add deploy.api_key <br/>
+
+Добавляем в .travis.yml <br/>
+  before_deploy: <br/>
+    - rvm $(travis_internal_ruby) --fuzzy do ruby -S gem install faraday -v 1.8.0 <br/>
+
 Устанавливаем<br/>
-> npm install serve --s
-<br/>
-Добавляем в package.json сценарии для локального билда и билда на Heroku<br/>
-> "local_build_start": "serve -s build",<br/>
-> "heroku-postbuild": "npm run build",<br/>
-<br/>
-Расширяем память для Heroku приложения а то при сборке вылетает ошибка<br/>
-> Settings -> Config Vars добавляем key и value<br/>
-> NODE_OPTIONS     --max_old_space_size=1024 value.<br/>
-<br/>
+  npm install serve --s <br/>
+
+Добавляем в package.json сценарии для локального билда и билда на Heroku <br/>
+  "local_build_start": "serve -s build", <br/>
+  "heroku-postbuild": "npm run build", <br/>
+
+Расширяем память для Heroku приложения а то при сборке вылетает ошибка <br/>
+  Settings -> Config Vars добавляем key и value <br/>
+  NODE_OPTIONS     --max_old_space_size=1024 value <br/>
+
 ---
