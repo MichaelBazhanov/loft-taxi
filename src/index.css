@@ -17,4 +17,13 @@
   .error {
     @apply bg-red-600;
   }
+  html ::selection {
+    @apply text-yellow-me;
+  }
+  html ::-webkit-scrollbar {
+    @apply bg-gray-400 w-1 h-1;
+  }
+  html ::-webkit-scrollbar-thumb {
+    @apply rounded-sm bg-yellow-me;
+  }
 }
