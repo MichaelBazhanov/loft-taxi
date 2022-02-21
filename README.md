@@ -69,7 +69,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-### Танцы с бубном на момент 20.02.2022
+### "Танцы с бубном" на момент 20.02.2022
 ---
 
 > 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 <br/>
@@ -80,11 +80,11 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 Скачиваем Ruby на официальном сайте <br/>
   <https://www.ruby-lang.org/en/downloads> <br/>
 
-Через Ruby устанавливаем Travis CLI<br/>
-  <https://github.com/travis-ci/travis.rb#installation>
-  <https://github.com/travis-ci/travis.rb/releases>
+Через Ruby устанавливаем Travis CLI <br/>
+  <https://github.com/travis-ci/travis.rb#installation> <br/>
+  <https://github.com/travis-ci/travis.rb/releases> <br/>
 
-Логинимся при помощи GitHab токена который мы создали на GitHab<br/>
+Логинимся при помощи GitHab токена который мы создали на GitHab <br/>
   travis login --com --github-token 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 <br/>
 
 Отдаем этот токен на Heroku <br/>
