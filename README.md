@@ -72,14 +72,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ### Танцы с бубном на момент 20.02.2022
 ---
 
-> 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
-<br/>
+> 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 <br/>
+
 Скачиваем и устанавливаем Heroku CLI<br/>
-><https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up>
-<br/>
+<https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up><br/>
+
 Скачиваем Ruby на официальном сайте<br/>
-> <https://www.ruby-lang.org/en/downloads>
-<br/>
+<https://www.ruby-lang.org/en/downloads><br/>
+
 Через Ruby устанавливаем Travis CLI<br/>
 > <https://github.com/travis-ci/travis.rb#installation>
 > <https://github.com/travis-ci/travis.rb/releases>
