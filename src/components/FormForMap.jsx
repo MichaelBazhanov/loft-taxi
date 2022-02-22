@@ -150,10 +150,10 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, resetRoutesAndAddres
 				{/* Заказ размещен */}
 				{activeIndex === 'next-order' &&
 					<div className={classNames(
-						width < 640 ? 'mt-auto' : '',
-						'max-w-[486px] w-full bg-white sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left')}>
-						<p className="font-bold text-xl sm:text-4xl">Заказ размещен</p>
-						<p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.</p>
+						width < 1024 ? 'mt-auto' : '',
+						'max-w-[486px] w-full bg-white lg:mt-16 xl:ml-24 rounded-xl shadow-lg p-3 lg:py-10 lg:px-11 pointer-events-auto text-center lg:text-left')}>
+						<p className="font-bold text-sm lg:text-4xl">Заказ размещен</p>
+						<p className="mt-3 xl:mt-4 text-base lg:text-lg text-gray-me">Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.</p>
 						<button onClick={
 							() => {
 								resetRoutesAndAddress(); //обнуляем в redux
@@ -162,7 +162,7 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, resetRoutesAndAddres
 								setAddressEnd(null); //обнуляем state
 								setActiveIndexCar(1) // устанавливаем первый индекс
 							}
-						} type="button" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Сделать новый заказ</button>
+						} type="button" className="text-sm lg:text-2xl py-2 lg:py-4 w-full bg-yellow-me rounded-full mt-2 lg:mt-7" >Сделать новый заказ</button>
 					</div>
 				}
 

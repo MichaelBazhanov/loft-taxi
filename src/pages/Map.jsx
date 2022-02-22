@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import FormForMap from '../components/FormForMap'
 
-export const drawRoute = (map, coordinates) => {
+export const drawRoute = (map, coordinates, width) => {
 	map.flyTo({
 		center: coordinates[0],
 		zoom: 10
@@ -34,11 +34,30 @@ export const drawRoute = (map, coordinates) => {
 			"line-width": 8
 		}
 	});
+
+	//Вписываем маршрут в размер экрана
+	const bounds = new mapboxGl.LngLatBounds(
+		coordinates[0],
+		coordinates[0]
+	);
+	for (const coord of coordinates) {
+		bounds.extend(coord);
+	}
+	let cord = width < 1024 ? {padding: {top: 20, bottom:180, left: 20, right: 20}} : {padding: 40}
+	map.fitBounds(bounds, cord);
+
 };
 
 class Map extends Component {
+	state = { width: window.innerWidth}; // ресайз
 	map = null
 	mapContainer = React.createRef(); // создаем ссылку
+
+	updateDimensions = () => {
+		this.setState({
+			width: window.innerWidth
+		})
+	}
 
 	componentDidMount() {
 		mapboxGl.accessToken = 'pk.eyJ1IjoibWljaGFlbDMzIiwiYSI6ImNreG4xYWVycjA0NDgybm9lbW55ZTN6d2EifQ.v5o2tFYQgax6FxvwN-Vd1g'
@@ -48,7 +67,11 @@ class Map extends Component {
 			style: 'mapbox://styles/mapbox/streets-v11', // style URL
 			center: [40.41667, 56.13333], // starting position [lng, lat]
 		})
-
+		// const bbox = [[-79, 43], [-73, 45]];
+		// this.map.fitBounds(bbox, {
+		// 	padding: 20
+		// });
+		window.addEventListener("resize", this.updateDimensions);
 	}
 
 	componentDidUpdate() {
@@ -59,12 +82,13 @@ class Map extends Component {
 			this.map.removeSource('route');
 		}
 		if (this.props.coordinates.length > 0) {
-			drawRoute(this.map, [...this.props.coordinates])
+			drawRoute(this.map, [...this.props.coordinates], this.state.width)
 		}
 	}
 
 	componentWillUnmount() {
 		this.map.remove(); // удаляем карту
+		window.removeEventListener("resize", this.updateDimensions);
 	}
 
 	render() {
