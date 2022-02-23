@@ -43,7 +43,7 @@ export const drawRoute = (map, coordinates, width) => {
 	for (const coord of coordinates) {
 		bounds.extend(coord);
 	}
-	let cord = width < 1024 ? {padding: {top: 20, bottom:180, left: 20, right: 20}} : {padding: 40}
+	let cord = width < 1024 ? {padding: {top: 20, bottom:200, left: 20, right: 20}} : {padding: 40}
 	map.fitBounds(bounds, cord);
 
 };

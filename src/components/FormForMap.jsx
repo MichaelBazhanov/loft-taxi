@@ -152,7 +152,7 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, resetRoutesAndAddres
 					<div className={classNames(
 						width < 1024 ? 'mt-auto' : '',
 						'max-w-[486px] w-full bg-white lg:mt-16 xl:ml-24 rounded-xl shadow-lg p-3 lg:py-10 lg:px-11 pointer-events-auto text-center lg:text-left')}>
-						<p className="font-bold text-sm lg:text-4xl">Заказ размещен</p>
+						<p className="font-bold text-xl lg:text-4xl">Заказ размещен</p>
 						<p className="mt-3 xl:mt-4 text-base lg:text-lg text-gray-me">Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.</p>
 						<button onClick={
 							() => {
@@ -162,7 +162,7 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, resetRoutesAndAddres
 								setAddressEnd(null); //обнуляем state
 								setActiveIndexCar(1) // устанавливаем первый индекс
 							}
-						} type="button" className="text-sm lg:text-2xl py-2 lg:py-4 w-full bg-yellow-me rounded-full mt-2 lg:mt-7" >Сделать новый заказ</button>
+						} type="button" className="text-lg lg:text-2xl py-2 lg:py-4 w-full bg-yellow-me rounded-full mt-2 lg:mt-7" >Сделать новый заказ</button>
 					</div>
 				}
 
@@ -173,7 +173,7 @@ const FormForMap = ({ getAddressList, getRoutesCoordinates, resetRoutesAndAddres
 						'max-w-[486px] w-full bg-white sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left')}>
 						<p className="font-bold text-xl sm:text-4xl">Заполните платежные данные</p>
 						<p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">Укажите информацию о платежной карте что бы сделать заказ.</p>
-						<button onClick={() => { navigate('/profile') }} type="button" className="text-sm sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Перейти в профиль</button>
+						<button onClick={() => { navigate('/profile') }} type="button" className="text-lg sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7" >Перейти в профиль</button>
 					</div>
 				}
 
