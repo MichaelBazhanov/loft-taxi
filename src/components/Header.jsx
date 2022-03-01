@@ -104,9 +104,9 @@ const Header = ({ logOut }) => {
 						id="toggle-menu-content">
 
 						<nav className="h-full flex flex-col justify-center items-center text-white select-none">
-							<CustomLink to={'map'} text={'Карта!!!'} toggleMenuDefault={toggleMenuDefault}/>
-							<CustomLink to={'profile'} text={'Профиль!!!'} toggleMenuDefault={toggleMenuDefault}/>
-							<CustomLink to={'login'} text={'Выйти!!!'} toggleMenuDefault={toggleMenuDefault} logOut={logOut}/>
+							<CustomLink to={'map'} text={'Карта'} toggleMenuDefault={toggleMenuDefault}/>
+							<CustomLink to={'profile'} text={'Профиль'} toggleMenuDefault={toggleMenuDefault}/>
+							<CustomLink to={'login'} text={'Выйти'} toggleMenuDefault={toggleMenuDefault} logOut={logOut}/>
 						</nav>
 
 					</div>
