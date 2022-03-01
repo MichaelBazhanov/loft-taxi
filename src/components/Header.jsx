@@ -3,12 +3,14 @@ import logoTaxi from '../assets/images/logo-taxi.svg';
 import PropTypes from "prop-types";
 import { connect } from 'react-redux'
 import { logOut } from '../modules/authorization' //просто импортируем action
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
+import CustomLink from "./CustomLink";
 
 const setActive = ({ isActive }) => isActive ? 'text-yellow-me' : ''
 
 const Header = ({ logOut }) => {
 	const [width, setWidth] = useState(window.innerWidth);
+	const [activeIndexLink, setActiveIndexLink] = useState('');
 	const updateDimensions = () => {
 		setWidth(window.innerWidth);
 	}
@@ -42,6 +44,11 @@ const Header = ({ logOut }) => {
 		const menu = document.querySelector('#toggle-menu')
 		menu.classList.remove('active-toggle-menu'); //убираем класс
 	}
+
+	// const setActiveFunction = ({ isActive }) => {
+	// 	console.log('setActiveFunction')
+	// 	isActive ? setActiveMe(true) : setActiveMe(false)
+	// }
 
 	return (
 		<>
@@ -97,29 +104,9 @@ const Header = ({ logOut }) => {
 						id="toggle-menu-content">
 
 						<nav className="h-full flex flex-col justify-center items-center text-white select-none">
-
-							<button onClick={() => { toggleMenuDefault() }} type="button" className="hover:text-yellow-me text-3xl leading-loose flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-								</svg>
-								<NavLink to={'map'} className={({ isActive }) => (isActive ? 'text-yellow-me ml-2' : 'ml-2' )}>Карта</NavLink>
-							</button>
-
-							<button onClick={() => { toggleMenuDefault() }} type="button" className="hover:text-yellow-me text-3xl leading-loose flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-								</svg>
-								<NavLink to={'profile'} className={({ isActive }) => (isActive ? 'text-yellow-me ml-2' : 'ml-2' )}>Профиль</NavLink>
-							</button>
-
-							<button onClick={() => { logOut(); toggleMenuDefault() }} type="button" className="hover:text-yellow-me text-3xl leading-loose flex items-center">
-								<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-								</svg>
-								<NavLink to={'login'} className={({ isActive }) => (isActive ? 'text-yellow-me ml-2' : 'ml-2' )}>Выйти</NavLink>
-							</button>
-
+							<CustomLink to={'map'} text={'Карта!!!'} toggleMenuDefault={toggleMenuDefault}/>
+							<CustomLink to={'profile'} text={'Профиль!!!'} toggleMenuDefault={toggleMenuDefault}/>
+							<CustomLink to={'login'} text={'Выйти!!!'} toggleMenuDefault={toggleMenuDefault} logOut={logOut}/>
 						</nav>
 
 					</div>
