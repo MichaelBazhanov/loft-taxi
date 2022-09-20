@@ -106,3 +106,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
   NODE_OPTIONS     --max_old_space_size=1024 value <br/>
 
 ---
+
+##Публикация на сервисе heroku через "танцы с бубном"
+https://rocky-headland-00301.herokuapp.com/
