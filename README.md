@@ -109,3 +109,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ##Публикация на сервисе heroku через "танцы с бубном"
 https://rocky-headland-00301.herokuapp.com/
+отсюда ушел на Vercel
