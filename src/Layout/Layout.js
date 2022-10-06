@@ -7,6 +7,12 @@ import { hideNotification } from "../modules/tooltips";
 import PropTypes from "prop-types";
 import styles from "./Layout.style";
 
+import {
+  getTooltipsIsShow,
+  getTooltipsText,
+  getTooltipsType,
+} from "./selector";
+
 const Layout = ({
   isTooltipShown,
   tooltipText,
@@ -51,9 +57,9 @@ Layout.propTypes = {
 
 export default connect(
   (state) => ({
-    isTooltipShown: state.tooltipsReducer.isShown,
-    tooltipText: state.tooltipsReducer.text,
-    tooltipType: state.tooltipsReducer.type,
+    isTooltipShown: getTooltipsIsShow(state),
+    tooltipText: getTooltipsText(state),
+    tooltipType: getTooltipsType(state),
   }),
   { hideNotification }
 )(Layout);
