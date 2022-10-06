@@ -11,7 +11,7 @@ import {
   getTooltipsIsShow,
   getTooltipsText,
   getTooltipsType,
-} from "./selector";
+} from "./Layout.selectors";
 
 const Layout = ({
   isTooltipShown,
