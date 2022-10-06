@@ -2,7 +2,7 @@ export const styles = {
   container: ({ type }) =>
     [
       "min-w-[400px]",
-      "relative0",
+      "relative",
       "flex",
       "justify-between",
       "items-center",

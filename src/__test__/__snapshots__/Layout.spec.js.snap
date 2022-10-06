@@ -18,11 +18,11 @@ exports[`Renders correctly 1`] = `
       <div
         className="min-w-[400px] relative flex justify-between items-center text-white rounded-t-lg success"
       >
-        <div
+        <p
           className="pl-5 select-none"
         >
           
-        </div>
+        </p>
         <button
           className="p-5 text-white ml-5 cursor-pointer hover:text-white transition-colors duration-500 ease-in-out"
           onClick={[Function]}
