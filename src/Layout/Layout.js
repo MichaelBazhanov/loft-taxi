@@ -5,13 +5,14 @@ import Header from "../components/Header";
 import Notification from "../components/Notification";
 import { hideNotification } from "../modules/tooltips";
 import PropTypes from "prop-types";
-import styles from "./Layout.style";
+import { styles } from "./styles";
 
 import {
   getTooltipsIsShow,
   getTooltipsText,
   getTooltipsType,
-} from "./Layout.selectors";
+} from "./selectors";
+
 
 const Layout = ({
   isTooltipShown,

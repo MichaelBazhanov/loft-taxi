@@ -8,9 +8,9 @@ import Map from './pages/Map'
 // import Profile from './pages/Profile'
 import Profile from './pages/ProfileFormik'
 
-import Layout from './Layout/Layout'
+import Layout from './Layout'
 
-import PrivateRoute from './containers/PrivateRoute'
+import PrivateRoute from './containers'
 
 const App = () => {
 

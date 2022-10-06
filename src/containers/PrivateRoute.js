@@ -1,21 +1,22 @@
-import React from 'react'
-import { Navigate, useLocation } from 'react-router-dom'
-import { connect } from 'react-redux'
+import React from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { connect } from "react-redux";
+import { getIsLoggedIn } from "./selectors";
 
 //============================================================================Моя вставка на роутер
 const PrivateRoute = ({ children, isLoggedIn }) => {
-	// const location = useLocation();
+  // const location = useLocation();
 
-
-	if (!isLoggedIn) {
-		return <Navigate to='/login' state={{ replace: true }} /> //те в '/login' сможем узнать то откуда мы пришли через {state: location}
-	}
-	return children
-}
+  if (!isLoggedIn) {
+    return <Navigate to="/login" state={{ replace: true }} />; //те в '/login' сможем узнать то откуда мы пришли через {state: location}
+  }
+  return children;
+};
 
 export default connect(
-	state => ({ isLoggedIn: state.authorizationReducer.isLoggedIn }) // selector
-)(PrivateRoute)
+  (state) => ({ isLoggedIn: getIsLoggedIn(state) }), // selector
+  null
+)(PrivateRoute);
 //============================================================================Моя вставка на роутер
 
 //====================================================================из LoftSchool по старому роуту
