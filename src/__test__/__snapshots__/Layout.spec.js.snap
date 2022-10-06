@@ -2,7 +2,7 @@
 
 exports[`Renders correctly 1`] = `
 <div
-  className="App sans antialiased grid auto-cols-fr grid-rows-[auto_1fr] relative h-screen"
+  className="font-sans antialiased grid auto-cols-fr grid-rows-[auto_1fr] relative h-screen"
 >
   <main>
     <section
@@ -13,7 +13,7 @@ exports[`Renders correctly 1`] = `
     className="fixed top-full left-1/2 -translate-x-1/2"
   >
     <div
-      className="transition-transform duration-300"
+      className="transition-transform duration-300 "
     >
       <div
         className="min-w-[400px] relative flex justify-between items-center text-white rounded-t-lg success"

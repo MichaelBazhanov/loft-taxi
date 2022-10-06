@@ -1,11 +1,11 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
-import Header from "../components/Header";
-import PropTypes from "prop-types";
-import { useLocation } from "react-router-dom";
-import Notification from "../components/Notification";
 import { connect } from "react-redux";
+import { Outlet, useLocation } from "react-router-dom";
+import Header from "../components/Header";
+import Notification from "../components/Notification";
 import { hideNotification } from "../modules/tooltips";
+import PropTypes from "prop-types";
+import styles from "./Layout.style";
 
 const Layout = ({
   isTooltipShown,
@@ -20,23 +20,17 @@ const Layout = ({
     location.pathname !== "/registration";
 
   return (
-    <div className="App sans antialiased grid auto-cols-fr grid-rows-[auto_1fr] relative h-screen">
+    <div className={styles.container}>
       {showedHeader && <Header />}
 
       <main>
-        <section className="h-full bg-black-me">
+        <section className={styles.section}>
           <Outlet />
         </section>
       </main>
 
-      <div className="fixed top-full left-1/2 -translate-x-1/2">
-        <div
-          className={
-            isTooltipShown
-              ? "transition-transform duration-300 -translate-y-full"
-              : "transition-transform duration-300"
-          }
-        >
+      <div className={styles["container-notification"]}>
+        <div className={styles["tooltip-show"]({ isTooltipShown })}>
           <Notification
             text={tooltipText}
             type={tooltipType}
