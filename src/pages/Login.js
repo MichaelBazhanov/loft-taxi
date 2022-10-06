@@ -36,7 +36,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, onSubmit = onSubmitFunctio
 	}, []);
 
 	useEffect(() => { // Следим за isLoggedIn в redux
-		isLoggedIn ? navigate("/map", { replace: true }) : navigate("/login", { replace: true })
+		isLoggedIn && navigate("/map", { replace: true })
 	}, [isLoggedIn])
 
 	const updateDimensions = () => {
