@@ -1,1 +1,2 @@
-export { default } from './CustomLink' // экспорт по умолчанию
+export { default } from './CustomLink'
+export { styles } from "./styles";

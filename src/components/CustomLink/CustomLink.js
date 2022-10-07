@@ -1,9 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link, useMatch } from "react-router-dom";
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import { styles } from "./styles";
 
 const CustomLink = ({ to, text, defaultMenu, logOut }) => {
   const match = useMatch(to);
@@ -14,14 +12,11 @@ const CustomLink = ({ to, text, defaultMenu, logOut }) => {
         typeof logOut === "function" ? (logOut(), defaultMenu()) : defaultMenu()
       }
       type="button"
-      className={classNames(
-        match ? "text-yellow-me" : "",
-        "hover:text-yellow-me text-3xl leading-loose flex items-center"
-      )}
+      className={styles.button({ match })}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="h-8 w-8"
+        className={styles["svg-size"]}
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -40,14 +35,18 @@ const CustomLink = ({ to, text, defaultMenu, logOut }) => {
         />
       </svg>
 
-      <Link
-        to={to}
-        className={classNames(match ? "text-yellow-me" : "", "ml-2")}
-      >
+      <Link to={to} className={styles.link({ match })}>
         {text}
       </Link>
     </button>
   );
+};
+
+CustomLink.propTypes = {
+  logOut: PropTypes.func,
+  defaultMenu: PropTypes.func.isRequired,
+  to: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
 };
 
 export default CustomLink;
