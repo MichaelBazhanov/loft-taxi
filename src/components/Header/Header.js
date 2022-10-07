@@ -19,10 +19,10 @@ const Header = ({ logOut }) => {
   }, []);
 
   return (
-    <>
+    <header>
       {width >= 640 && <HeaderDesktop logOut={logOut} />}
       {width < 640 && <HeaderMobile logOut={logOut} />}
-    </>
+    </header>
   );
 };
 Header.propTypes = {

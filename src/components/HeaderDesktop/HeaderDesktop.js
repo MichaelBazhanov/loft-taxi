@@ -4,7 +4,7 @@ import { styles } from "./styles";
 
 const HeaderDesktop = ({ logOut }) => {
   return (
-    <header className={styles.header}>
+    <>
       <div className={styles["header-container"]}>
         <div className={styles.div}>
           <img src={logoTaxi} alt="logo-taxi" />
@@ -12,7 +12,7 @@ const HeaderDesktop = ({ logOut }) => {
           <NavigationDesktop logOut={logOut} />
         </div>
       </div>
-    </header>
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ import CustomLink from "../CustomLink";
 const NavigationMobile = ({
   logOut,
   navigationMobileRef,
-  toggleMenuDefault,
+  defaultMenu,
 }) => {
   return (
     <div
@@ -15,17 +15,17 @@ const NavigationMobile = ({
         <CustomLink
           to={"map"}
           text={"Карта"}
-          toggleMenuDefault={toggleMenuDefault}
+          defaultMenu={defaultMenu}
         />
         <CustomLink
           to={"profile"}
           text={"Профиль"}
-          toggleMenuDefault={toggleMenuDefault}
+          defaultMenu={defaultMenu}
         />
         <CustomLink
           to={"login"}
           text={"Выйти"}
-          toggleMenuDefault={toggleMenuDefault}
+          defaultMenu={defaultMenu}
           logOut={logOut}
         />
       </nav>
