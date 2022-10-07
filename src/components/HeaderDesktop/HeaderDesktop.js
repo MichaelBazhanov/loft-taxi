@@ -1,5 +1,6 @@
 import logoTaxi from "../../assets/images/logo-taxi.svg";
 import NavigationDesktop from "../NavigationDesktop";
+import PropTypes from "prop-types";
 import { styles } from "./styles";
 
 const HeaderDesktop = ({ logOut }) => {
@@ -14,6 +15,11 @@ const HeaderDesktop = ({ logOut }) => {
       </div>
     </>
   );
+};
+HeaderDesktop.propTypes = {
+  props: PropTypes.shape({
+    logOut: PropTypes.func.isRequired,
+  }),
 };
 
 export default HeaderDesktop;
