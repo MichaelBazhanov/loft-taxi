@@ -16,4 +16,5 @@ export const styles = {
     "transform",
     "-translate-x-full",
   ].join(" "),
+  "icon-size": ["w-8", "h-8"].join(" "),
 };

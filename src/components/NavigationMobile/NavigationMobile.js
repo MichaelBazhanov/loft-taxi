@@ -6,13 +6,27 @@ const NavigationMobile = ({ logOut, navigationMobileRef, defaultMenu }) => {
   return (
     <div className={styles.container} ref={navigationMobileRef}>
       <nav className={styles.nav}>
-        <CustomLink to={"map"} text={"Карта"} defaultMenu={defaultMenu} />
-        <CustomLink to={"profile"} text={"Профиль"} defaultMenu={defaultMenu} />
+        <CustomLink
+          to={"map"}
+          text={"Карта"}
+          defaultMenu={defaultMenu}
+          iconName="map"
+          iconSize={styles["icon-size"]}
+        />
+        <CustomLink
+          to={"profile"}
+          text={"Профиль"}
+          defaultMenu={defaultMenu}
+          iconName="profile"
+          iconSize={styles["icon-size"]}
+        />
         <CustomLink
           to={"login"}
           text={"Выйти"}
           defaultMenu={defaultMenu}
           logOut={logOut}
+          iconName="logout"
+          iconSize={styles["icon-size"]}
         />
       </nav>
     </div>
