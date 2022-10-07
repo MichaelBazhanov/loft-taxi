@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import NavigationMobile from "../NavigationMobile";
+import PropTypes from "prop-types";
 import { styles } from "./styles";
 
 const toggleMenu = ({ menuButton, menuContent, active_, in_, out_ }) => {
@@ -73,6 +74,12 @@ const HeaderMobile = ({ logOut }) => {
       />
     </>
   );
+};
+
+HeaderMobile.propTypes = {
+  props: PropTypes.shape({
+    logOut: PropTypes.func.isRequired,
+  }),
 };
 
 export default HeaderMobile;
