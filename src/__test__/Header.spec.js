@@ -2,7 +2,7 @@ import React from 'react'
 import TestRenderer from 'react-test-renderer'
 import { Provider } from 'react-redux'
 
-import Header from '../components/Header.jsx'
+import Header from '../components/Header'
 
 // Мокаем NavLink что бы внутри <Header /> отдал просто функцию
 jest.mock('react-router-dom', () => ({
@@ -10,7 +10,7 @@ jest.mock('react-router-dom', () => ({
   NavLink: () => <div>NavLink component</div>,
 }))
 
-// Формируем замоканый стор
+// Формируем замоканный store
 const mockStore = {
   getState: () => {},
   subscribe: () => {},
