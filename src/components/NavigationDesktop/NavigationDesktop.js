@@ -1,29 +1,24 @@
 import { NavLink } from "react-router-dom";
-const setActive = ({ isActive }) => (isActive ? "text-yellow-me" : "");
+import { styles } from "./styles";
+import PropTypes from "prop-types";
 
-const HeaderDesktop = ({ logOut }) => {
+const NavigationDesktop = ({ logOut }) => {
   return (
-    <nav className="flex text-white space-x-7">
-      <button type="button" className="hover:text-yellow-me text-xl">
-        <NavLink to={"map"} className={setActive}>
+    <nav className={styles.nav}>
+      <button type="button" className={styles.button}>
+        <NavLink to={"map"} className={styles.setActive}>
           Карта
         </NavLink>
       </button>
 
-      <button type="button" className="hover:text-yellow-me text-xl">
-        <NavLink to={"profile"} className={setActive}>
+      <button type="button" className={styles.button}>
+        <NavLink to={"profile"} className={styles.setActive}>
           Профиль
         </NavLink>
       </button>
 
-      <button
-        onClick={() => {
-          logOut();
-        }}
-        type="button"
-        className="hover:text-yellow-me text-xl"
-      >
-        <NavLink to={"login"} className={setActive}>
+      <button onClick={() => logOut()} type="button" className={styles.button}>
+        <NavLink to={"login"} className={styles.setActive}>
           Выйти
         </NavLink>
       </button>
@@ -31,4 +26,10 @@ const HeaderDesktop = ({ logOut }) => {
   );
 };
 
-export default HeaderDesktop;
+NavigationDesktop.propTypes = {
+  props: PropTypes.shape({
+    logOut: PropTypes.func.isRequired,
+  }),
+};
+
+export default NavigationDesktop;
