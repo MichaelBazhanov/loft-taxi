@@ -1,19 +1,15 @@
 import CustomLink from "../CustomLink";
 
-const NavigationMobile = ({ logOut }) => {
-  const toggleMenuDefault = () => {
-    const menuContent = document.querySelector("#toggle-menu-content");
-    menuContent.classList.remove("animate-menu-in"); //убираем класс
-    menuContent.classList.remove("animate-menu-out"); //убираем класс
-
-    const menu = document.querySelector("#toggle-menu");
-    menu.classList.remove("active-toggle-menu"); //убираем класс
-  };
-
+const NavigationMobile = ({
+  logOut,
+  navigationMobileRef,
+  toggleMenuDefault,
+}) => {
   return (
     <div
       className="bg-black absolute inset-0 z-10 transform -translate-x-full"
       id="toggle-menu-content"
+      ref={navigationMobileRef}
     >
       <nav className="h-full flex flex-col justify-center items-center text-white select-none">
         <CustomLink
