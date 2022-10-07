@@ -27,9 +27,7 @@ const NavigationDesktop = ({ logOut }) => {
 };
 
 NavigationDesktop.propTypes = {
-  props: PropTypes.shape({
-    logOut: PropTypes.func.isRequired,
-  }),
+  logOut: PropTypes.func.isRequired,
 };
 
 export default NavigationDesktop;

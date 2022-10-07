@@ -77,9 +77,7 @@ const HeaderMobile = ({ logOut }) => {
 };
 
 HeaderMobile.propTypes = {
-  props: PropTypes.shape({
-    logOut: PropTypes.func.isRequired,
-  }),
+  logOut: PropTypes.func.isRequired,
 };
 
 export default HeaderMobile;
