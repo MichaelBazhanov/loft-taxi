@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import mapboxGl from '!mapbox-gl';
 import { connect } from 'react-redux'
 
-import FormForMap from '../components/FormForMap'
+import MapContainer from '../components/MapContainer'
 
 export const drawRoute = (map, coordinates, width) => {
 	map.flyTo({
@@ -100,7 +100,7 @@ class Map extends Component {
 					className="absolute inset-0"
 					ref={this.mapContainer}
 				/>
-				<FormForMap />
+				<MapContainer />
 			</div>
 		)
 	}
