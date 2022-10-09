@@ -2,6 +2,7 @@ import { ContextMap } from "../MapContainer";
 import SelectPoints from "../SelectPoints";
 import SelectCar from "../SelectCar";
 import { useContext } from "react";
+import { styles } from "./styles";
 
 const handleSubmit = (
   e,
@@ -11,10 +12,15 @@ const handleSubmit = (
   addressEnd
 ) => {
   e.preventDefault();
-  setActiveBlock("next-order"); // Следующий заказ
 
-  if (addressStart && addressEnd && addressStart.rout && addressEnd.rout) {
+  const addressesSelected =
+    addressStart && addressStart?.rout && addressEnd && addressEnd?.rout;
+
+  if (addressesSelected) {
+    setActiveBlock("next-order"); // Следующий заказ
     getRoutesCoordinates(addressStart, addressEnd);
+  } else {
+    throw new Error("Входящие адреса не установлены")
   }
 };
 
@@ -31,7 +37,7 @@ const OrderForm = () => {
   } = useContext(ContextMap);
 
   return (
-    <div className="flex flex-col h-full">
+    <div className={styles.container}>
       <form
         onSubmit={(e) =>
           handleSubmit(
@@ -42,9 +48,7 @@ const OrderForm = () => {
             addressEnd
           )
         }
-        className="sm:max-w-[486px]  w-full sm:mt-16 lg:ml-24 rounded-xl sm:shadow-lg
-    flex flex-col h-full sm:h-auto sm:bg-white
-    "
+        className={styles.form}
       >
         <SelectPoints
           className={

@@ -1,7 +1,16 @@
 export const styles = {
-  "header-container": ["text-black-me"].join(" "),
-  svg: ["cursor-pointer", "fill-current"].join(" "),
-  active_: ["active-toggle-menu"].join(" "),
-  in_: ["animate-menu-in"].join(" "),
-  out_: ["animate-menu-out"].join(" "),
+  container: ["flex", "flex-col", "h-full"].join(" "),
+  form: [
+    "sm:max-w-[486px] ",
+    "w-full",
+    "sm:mt-16",
+    "lg:ml-24",
+    "rounded-xl",
+    "sm:shadow-lg",
+    "flex",
+    "flex-col",
+    "h-full",
+    "sm:h-auto",
+    "sm:bg-white",
+  ].join(" "),
 };
