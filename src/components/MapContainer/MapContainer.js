@@ -9,26 +9,25 @@ import { getAddressList } from "../../modules/address";
 import Select from "../Select";
 import { useNavigate } from "react-router-dom";
 
-//img
-import imgStandart from "../../assets/images/car-standart.jpg";
-import imgPremium from "../../assets/images/car-premium.jpg";
-import imgBusiness from "../../assets/images/car-business.jpg";
-
 import Loading from "../Loading";
 import Error from "../Error";
 
 //Car
-import CarForForm from "../CarForForm";
+// import CarForForm from "../CarForForm";
 
 //=========================================
-import FormSelectors from "../FormSelectors";
+import SelectPoints from "../SelectPoints";
+import SelectCar from "../SelectCar";
+import OrderForm from "../OrderForm";
 //=========================================
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const FormForMap = ({
+const ContextMap = React.createContext(null); // Context API
+
+const MapContainer = ({
   getAddressList,
   getRoutesCoordinates,
   resetRoutesAndAddress,
@@ -60,22 +59,13 @@ const FormForMap = ({
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setActiveBlock("next-order"); // Следующий заказ
-
-    if (addressStart && addressEnd && addressStart.rout && addressEnd.rout) {
-      getRoutesCoordinates(addressStart, addressEnd);
-    }
-  };
-
   //Все useEffect при первом рендере выполняются !!!
   useEffect(() => {
     getAddressList();
   }, []);
 
   useEffect(() => {
-    if (!isLoadingSendPaymentCardNewUser) getPaymentCard(token); // Если для нового пользователя карта уже установлена то ...
+    if (!isLoadingSendPaymentCardNewUser) getPaymentCard(token); // Если для нового пользователя банковская карта уже установлена то ...
   }, [isLoadingSendPaymentCardNewUser]);
 
   useEffect(() => {
@@ -103,134 +93,85 @@ const FormForMap = ({
   return (
     <div className="container mx-auto relative pointer-events-none h-full">
       <div className="flex flex-col items-center lg:items-stretch h-full">
+        <ContextMap.Provider
+          value={{
+            width: width,
+            address: address,
+            activeBlock: activeBlock,
+            addressStart: addressStart,
+            addressEnd: addressEnd,
+            setAddressStart: setAddressStart,
+            setAddressEnd: setAddressEnd,
+            activeIndexCar: activeIndexCar,
+            setActiveIndexCar: setActiveIndexCar,
+            setActiveBlock: setActiveBlock,
+            getRoutesCoordinates: getRoutesCoordinates,
+          }}
+        >
+          {/* Форма заказа */}
+          {activeBlock === "without-card" && (<OrderForm />)}
 
-        {/* Форма */}
-        {activeBlock === "without-card" && (
-          <div className="flex flex-col h-full">
-            <form
-              onSubmit={handleSubmit}
-              className="sm:max-w-[486px]  w-full sm:mt-16 lg:ml-24 rounded-xl sm:shadow-lg
-              flex flex-col h-full sm:h-auto sm:bg-white
-              "
+          {/* Заказ размещен */}
+          {activeBlock === "next-order" && (
+            <div
+              className={classNames(
+                width < 1024 ? "mt-auto" : "",
+                "max-w-[486px] w-full bg-white lg:mt-16 xl:ml-24 rounded-xl shadow-lg p-3 lg:py-10 lg:px-11 pointer-events-auto text-center lg:text-left"
+              )}
             >
-              <FormSelectors
-                className={
-                  width > 640
-                    ? "p-6 pb-0 bg-white pointer-events-auto shadow-lg sm:shadow-none"
-                    : "bg-white pointer-events-auto shadow-lg sm:shadow-none p-3 pb-0 sm:hidden mt-10 rounded-xl w-full"
-                }
-                margin={width > 640 ? "mt-1" : "mt-0"}
-                placeholders={["Откуда", "Куда"]}
-                address={address}
-                addressStart={addressStart}
-                addressEnd={addressEnd}
-                setAddressStart={setAddressStart}
-                setAddressEnd={setAddressEnd}
-              />
+              <p className="font-bold text-xl lg:text-4xl">Заказ размещен</p>
+              <p className="mt-3 xl:mt-4 text-base lg:text-lg text-gray-me">
+                Ваше такси уже едет к вам. Прибудет приблизительно через 10
+                минут.
+              </p>
+              <button
+                onClick={() => {
+                  resetRoutesAndAddress(); //обнуляем в redux
+                  setActiveBlock("without-card"); // активный индекс "блока"
+                  setAddressStart(null); //обнуляем state
+                  setAddressEnd(null); //обнуляем state
+                  setActiveIndexCar(1); // устанавливаем первый индекс
+                }}
+                type="button"
+                className="text-lg lg:text-2xl py-2 lg:py-4 w-full bg-yellow-me rounded-full mt-2 lg:mt-7"
+              >
+                Сделать новый заказ
+              </button>
+            </div>
+          )}
 
-              {/* Машинки и заказать */}
-              <div className="py-4 px-3 sm:py-8 sm:px-10 sm:mt-6 rounded-xl border mt-auto bg-white shadow-lg sm:shadow-none pointer-events-auto">
-                <div className="flex -mx-3">
-                  <CarForForm
-                    price={"150 ₽"}
-                    imgSRC={imgStandart}
-                    index={1}
-                    setActiveIndexCar={setActiveIndexCar}
-                    activeIndexCar={activeIndexCar}
-                  />
-                  <CarForForm
-                    price={"200 ₽"}
-                    imgSRC={imgPremium}
-                    index={2}
-                    setActiveIndexCar={setActiveIndexCar}
-                    activeIndexCar={activeIndexCar}
-                  />
-                  <CarForForm
-                    price={"300 ₽"}
-                    imgSRC={imgBusiness}
-                    index={3}
-                    setActiveIndexCar={setActiveIndexCar}
-                    activeIndexCar={activeIndexCar}
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="text-2xl py-4 w-full bg-yellow-me rounded-full mt-7 disabled:opacity-75"
-                  disabled={
-                    !(
-                      addressStart &&
-                      addressStart.rout &&
-                      addressEnd &&
-                      addressEnd.rout
-                    )
-                  }
-                >
-                  Заказать
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
-
-        {/* Заказ размещен */}
-        {activeBlock === "next-order" && (
-          <div
-            className={classNames(
-              width < 1024 ? "mt-auto" : "",
-              "max-w-[486px] w-full bg-white lg:mt-16 xl:ml-24 rounded-xl shadow-lg p-3 lg:py-10 lg:px-11 pointer-events-auto text-center lg:text-left"
-            )}
-          >
-            <p className="font-bold text-xl lg:text-4xl">Заказ размещен</p>
-            <p className="mt-3 xl:mt-4 text-base lg:text-lg text-gray-me">
-              Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.
-            </p>
-            <button
-              onClick={() => {
-                resetRoutesAndAddress(); //обнуляем в redux
-                setActiveBlock("without-card"); // активный индекс "блока"
-                setAddressStart(null); //обнуляем state
-                setAddressEnd(null); //обнуляем state
-                setActiveIndexCar(1); // устанавливаем первый индекс
-              }}
-              type="button"
-              className="text-lg lg:text-2xl py-2 lg:py-4 w-full bg-yellow-me rounded-full mt-2 lg:mt-7"
+          {/* Заполните платежные данные */}
+          {activeBlock === "default" && (
+            <div
+              className={classNames(
+                width < 640 ? "mt-auto" : "",
+                "max-w-[486px] w-full bg-white sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left"
+              )}
             >
-              Сделать новый заказ
-            </button>
-          </div>
-        )}
-
-        {/* Заполните платежные данные */}
-        {activeBlock === "default" && (
-          <div
-            className={classNames(
-              width < 640 ? "mt-auto" : "",
-              "max-w-[486px] w-full bg-white sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left"
-            )}
-          >
-            <p className="font-bold text-xl sm:text-4xl">
-              Заполните платежные данные
-            </p>
-            <p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">
-              Укажите информацию о платежной карте что бы сделать заказ.
-            </p>
-            <button
-              onClick={() => {
-                navigate("/profile");
-              }}
-              type="button"
-              className="text-lg sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7"
-            >
-              Перейти в профиль
-            </button>
-          </div>
-        )}
+              <p className="font-bold text-xl sm:text-4xl">
+                Заполните платежные данные
+              </p>
+              <p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">
+                Укажите информацию о платежной карте что бы сделать заказ.
+              </p>
+              <button
+                onClick={() => {
+                  navigate("/profile");
+                }}
+                type="button"
+                className="text-lg sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7"
+              >
+                Перейти в профиль
+              </button>
+            </div>
+          )}
+        </ContextMap.Provider>
       </div>
     </div>
   );
 };
-export default connect(
+
+const HOCMapContainer = connect(
   (state) => ({
     token: state.authorizationReducer.token,
 
@@ -254,4 +195,6 @@ export default connect(
     getPaymentCard,
     resetRoutesAndAddress,
   } // просто дергаем ACTION
-)(FormForMap);
+)(MapContainer);
+
+export { HOCMapContainer, ContextMap };

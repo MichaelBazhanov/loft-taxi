@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Select from "../Select";
 
-const FormSelectors = ({
+const SelectPoints = ({
   className,
   margin,
   roundedTops = "",
@@ -49,4 +49,4 @@ const FormSelectors = ({
   );
 };
 
-export default FormSelectors;
+export default SelectPoints;

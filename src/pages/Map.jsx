@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import mapboxGl from '!mapbox-gl';
 import { connect } from 'react-redux'
 
-import MapContainer from '../components/MapContainer'
+import { HOCMapContainer } from '../components/MapContainer'
 
 export const drawRoute = (map, coordinates, width) => {
 	map.flyTo({
@@ -43,13 +43,13 @@ export const drawRoute = (map, coordinates, width) => {
 	for (const coord of coordinates) {
 		bounds.extend(coord);
 	}
-	let cord = width < 1024 ? {padding: {top: 20, bottom:200, left: 20, right: 20}} : {padding: 40}
+	let cord = width < 1024 ? { padding: { top: 20, bottom: 200, left: 20, right: 20 } } : { padding: 40 }
 	map.fitBounds(bounds, cord);
 
 };
 
 class Map extends Component {
-	state = { width: window.innerWidth}; // ресайз
+	state = { width: window.innerWidth }; // ресайз
 	map = null
 	mapContainer = React.createRef(); // создаем ссылку
 
@@ -100,7 +100,7 @@ class Map extends Component {
 					className="absolute inset-0"
 					ref={this.mapContainer}
 				/>
-				<MapContainer />
+				<HOCMapContainer />
 			</div>
 		)
 	}

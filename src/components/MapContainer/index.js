@@ -1,2 +1,2 @@
-export { default } from "./MapContainer";
+export { HOCMapContainer, ContextMap } from "./MapContainer";
 export { styles } from "./styles";
