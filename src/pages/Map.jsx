@@ -40,16 +40,17 @@ export const drawRoute = (map, coordinates, width) => {
 		coordinates[0],
 		coordinates[0]
 	);
+
 	for (const coord of coordinates) {
 		bounds.extend(coord);
 	}
+
 	let cord = width < 1024 ? { padding: { top: 20, bottom: 200, left: 20, right: 20 } } : { padding: 40 }
 	map.fitBounds(bounds, cord);
-
 };
 
 class Map extends Component {
-	state = { width: window.innerWidth }; // ресайз
+	state = { width: window.innerWidth }; // resize
 	map = null
 	mapContainer = React.createRef(); // создаем ссылку
 
@@ -60,18 +61,21 @@ class Map extends Component {
 	}
 
 	componentDidMount() {
-		mapboxGl.accessToken = 'pk.eyJ1IjoibWljaGFlbDMzIiwiYSI6ImNreG4xYWVycjA0NDgybm9lbW55ZTN6d2EifQ.v5o2tFYQgax6FxvwN-Vd1g'
+		mapboxGl.accessToken = 'pk.eyJ1IjoibWljaGFlbDMzIiwiYSI6ImNreG4xYWVycjA0NDgybm9lbW55ZTN6d2EifQ.v5o2tFYQgax6FxvwN-Vd1g' // hard code
 
 		this.map = new mapboxGl.Map({ // создаем карту и вкладываем настройки
 			container: this.mapContainer.current, // это ссылка на элемент которому мы передали референс
 			style: 'mapbox://styles/mapbox/streets-v11', // style URL
 			center: [40.41667, 56.13333], // starting position [lng, lat]
 		})
-		// const bbox = [[-79, 43], [-73, 45]];
-		// this.map.fitBounds(bbox, {
-		// 	padding: 20
-		// });
+
 		window.addEventListener("resize", this.updateDimensions);
+
+		if (this.props.coordinates && this.props.coordinates.length > 0) {
+			this.map.on('load', () => { // после загрузки карты производим все манипуляции
+				drawRoute(this.map, [...this.props.coordinates], this.state.width)
+			});
+		}
 	}
 
 	componentDidUpdate() {
@@ -81,7 +85,7 @@ class Map extends Component {
 		if (this.map.getSource('route')) {
 			this.map.removeSource('route');
 		}
-		if (this.props.coordinates.length > 0) {
+		if (this.props.coordinates && this.props.coordinates.length > 0) {
 			drawRoute(this.map, [...this.props.coordinates], this.state.width)
 		}
 	}

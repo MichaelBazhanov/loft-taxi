@@ -28,6 +28,7 @@ function classNames(...classes) {
 const ContextMap = React.createContext(null); // Context API
 
 const MapContainer = ({
+  coordinates,
   getAddressList,
   getRoutesCoordinates,
   resetRoutesAndAddress,
@@ -97,6 +98,7 @@ const MapContainer = ({
           value={{
             width: width,
             address: address,
+            coordinates: coordinates,
             activeBlock: activeBlock,
             addressStart: addressStart,
             addressEnd: addressEnd,
@@ -174,6 +176,8 @@ const MapContainer = ({
 const HOCMapContainer = connect(
   (state) => ({
     token: state.authorizationReducer.token,
+
+    coordinates: state.routesReducer.coordinates,
 
     isLoading: state.addressReducer.isLoading,
     error: state.addressReducer.error,

@@ -3,10 +3,10 @@ import SelectPoints from "../SelectPoints";
 import SelectCar from "../SelectCar";
 import { useContext } from "react";
 import { styles } from "./styles";
+import { useEffect } from "react";
 
 const handleSubmit = (
   e,
-  setActiveBlock,
   getRoutesCoordinates,
   addressStart,
   addressEnd
@@ -17,10 +17,7 @@ const handleSubmit = (
     addressStart && addressStart?.rout && addressEnd && addressEnd?.rout;
 
   if (addressesSelected) {
-    setActiveBlock("next-order"); // Следующий заказ
     getRoutesCoordinates(addressStart, addressEnd);
-  } else {
-    throw new Error("Входящие адреса не установлены")
   }
 };
 
@@ -28,6 +25,7 @@ const OrderForm = () => {
   const {
     width,
     address,
+    coordinates,
     addressStart,
     addressEnd,
     setAddressStart,
@@ -35,6 +33,12 @@ const OrderForm = () => {
     getRoutesCoordinates,
     setActiveBlock,
   } = useContext(ContextMap);
+
+  useEffect(() => {
+    if (coordinates && coordinates.length > 0) {
+      setActiveBlock("next-order"); // Если координаты успешно получены то получаем возможность сделать Следующий заказ
+    }
+  }, [coordinates]);
 
   return (
     <div className={styles.container}>
@@ -45,7 +49,8 @@ const OrderForm = () => {
             setActiveBlock,
             getRoutesCoordinates,
             addressStart,
-            addressEnd
+            addressEnd,
+            coordinates
           )
         }
         className={styles.form}

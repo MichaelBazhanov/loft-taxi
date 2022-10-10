@@ -15,6 +15,10 @@ const mockStore = {
     // входящие пропсы
     authorizationReducer: { token: "123" },
 
+    routesReducer: {
+      coordinates: [1,2],
+    },
+
     addressReducer: {
       address: [
         { id: 1, root: "Адрес 1" },
