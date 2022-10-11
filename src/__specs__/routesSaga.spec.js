@@ -43,7 +43,7 @@ describe("coordinates", () => {
         coordinates, // сама сага
         getRoutesCoordinates() // action на который тригерим эту сагу
       );
-
+      console.log(dispatched);
       expect(dispatched).toEqual([
         {
           type: "SHOW_NOTIFICATION",
@@ -52,7 +52,15 @@ describe("coordinates", () => {
             text: "Внимание! Обнаружена ошибка построения адресов.",
           },
         },
-        { type: "ROUTES_COORDINATES_FAILURE", payload: { error: "error" } },
+        {
+          type: "ROUTES_COORDINATES_FAILURE",
+          payload: {
+            error: {
+              name: "Error",
+              message: "serverGetRoutes пришли необрабатываемые данные!",
+            },
+          },
+        },
       ]);
     });
   });

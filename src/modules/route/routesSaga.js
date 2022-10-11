@@ -25,12 +25,12 @@ export function* coordinates(action) {
     }
   } catch (error) {
     yield put(
-      routesCoordinatesFailure('error') // error для упрощения тестирования
-      // routesCoordinatesFailure({
-      //   name: error.name,
-      //   message: error.message,
-      //   stack: error.stack,
-      // })
+      // routesCoordinatesFailure('error') // error для упрощения тестирования
+      routesCoordinatesFailure({
+        name: error.name,
+        message: error.message,
+        // stack: error.stack,
+      })
     );
   }
 }
