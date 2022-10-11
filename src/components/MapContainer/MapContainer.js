@@ -6,22 +6,13 @@ import {
 } from "../../modules/route";
 import { getPaymentCard } from "../../modules/payment";
 import { getAddressList } from "../../modules/address";
-import Select from "../Select";
-import { useNavigate } from "react-router-dom";
 
 import Loading from "../Loading";
 import Error from "../Error";
 
-//=========================================
-import SelectPoints from "../SelectPoints";
-import SelectCar from "../SelectCar";
 import OrderForm from "../OrderForm";
 import OrderNext from "../OrderNext";
-//=========================================
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
+import NeedCard from "../NeedCard";
 
 const ContextMap = React.createContext(null); // Context API
 
@@ -50,8 +41,6 @@ const MapContainer = ({
   const [addressStart, setAddressStart] = useState(null);
   const [addressEnd, setAddressEnd] = useState(null);
 
-  const navigate = useNavigate();
-
   const updateDimensions = () => {
     setWidth(window.innerWidth);
   };
@@ -62,7 +51,8 @@ const MapContainer = ({
   }, []); //Все useEffect при первом рендере выполняются !!!
 
   useEffect(() => {
-    if (coordinates && coordinates.length === 0) { // Заказа еще нет
+    if (coordinates && coordinates.length === 0) {
+      // Заказа еще нет
       setAddressStart(null);
       setAddressEnd(null);
       setActiveIndexCar(1);
@@ -116,6 +106,7 @@ const MapContainer = ({
           }}
         >
           {/* На будущее можно сделать 4ое состояние для Loading, отображая его между загрузками activeBlock */}
+          {/* {activeBlock === "" && <Loading />} */}
 
           {/* Форма заказа */}
           {activeBlock === "order-form" && <OrderForm />}
@@ -124,30 +115,8 @@ const MapContainer = ({
           {activeBlock === "order-next" && <OrderNext />}
 
           {/* Заполните платежные данные */}
-          {activeBlock === "need-card" && (
-            <div
-              className={classNames(
-                width < 640 ? "mt-auto" : "",
-                "max-w-[486px] w-full bg-white sm:mt-16 sm:ml-24 rounded-xl shadow-lg p-3 sm:py-10 sm:px-11 pointer-events-auto text-center sm:text-left"
-              )}
-            >
-              <p className="font-bold text-xl sm:text-4xl">
-                Заполните платежные данные
-              </p>
-              <p className="mt-3 sm:mt-4 text-base sm:text-lg text-gray-me">
-                Укажите информацию о платежной карте что бы сделать заказ.
-              </p>
-              <button
-                onClick={() => {
-                  navigate("/profile");
-                }}
-                type="button"
-                className="text-lg sm:text-2xl py-2 sm:py-4 w-full bg-yellow-me rounded-full mt-2 sm:mt-7"
-              >
-                Перейти в профиль
-              </button>
-            </div>
-          )}
+          {activeBlock === "need-card" && <NeedCard />}
+
         </ContextMap.Provider>
       </div>
     </div>
