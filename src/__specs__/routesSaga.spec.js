@@ -43,7 +43,7 @@ describe("coordinates", () => {
         coordinates, // сама сага
         getRoutesCoordinates() // action на который тригерим эту сагу
       );
-      console.log(dispatched);
+
       expect(dispatched).toEqual([
         {
           type: "SHOW_NOTIFICATION",
