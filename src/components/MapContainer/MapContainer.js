@@ -45,7 +45,7 @@ const MapContainer = ({
   token,
 }) => {
   const [width, setWidth] = useState(window.innerWidth);
-  const [activeBlock, setActiveBlock] = useState("without-card"); //1 = 'without-card', 2 = 'next-order', 3 = 'default'
+  const [activeBlock, setActiveBlock] = useState("order-form"); //1 = 'order-form', 2 = 'order-next', 3 = 'need-card'
   const [activeIndexCar, setActiveIndexCar] = useState(1);
   const [addressStart, setAddressStart] = useState(null);
   const [addressEnd, setAddressEnd] = useState(null);
@@ -66,9 +66,9 @@ const MapContainer = ({
       setAddressStart(null);
       setAddressEnd(null);
       setActiveIndexCar(1);
-      setActiveBlock("without-card");
+      setActiveBlock("order-form");
     } else {
-      setActiveBlock("next-order"); // Заказ уже есть
+      setActiveBlock("order-next"); // Заказ уже есть
     }
   }, [coordinates]);
 
@@ -85,7 +85,7 @@ const MapContainer = ({
         expiryDate.trim() === "" ||
         cvc.trim() === ""
       ) {
-        setActiveBlock("default"); // Данные карты пустые!
+        setActiveBlock("need-card"); // Данные карты пустые!
       }
     }
   }, [id]);
@@ -118,13 +118,13 @@ const MapContainer = ({
           {/* На будущее можно сделать 4ое состояние для Loading, отображая его между загрузками activeBlock */}
 
           {/* Форма заказа */}
-          {activeBlock === "without-card" && <OrderForm />}
+          {activeBlock === "order-form" && <OrderForm />}
 
           {/* Заказ размещен */}
-          {activeBlock === "next-order" && <OrderNext />}
+          {activeBlock === "order-next" && <OrderNext />}
 
           {/* Заполните платежные данные */}
-          {activeBlock === "default" && (
+          {activeBlock === "need-card" && (
             <div
               className={classNames(
                 width < 640 ? "mt-auto" : "",

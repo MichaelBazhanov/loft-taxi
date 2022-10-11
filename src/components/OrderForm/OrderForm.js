@@ -36,7 +36,7 @@ const OrderForm = () => {
 
   useEffect(() => {
     if (coordinates && coordinates.length > 0) {
-      setActiveBlock("next-order"); // Если координаты успешно получены то получаем возможность сделать Следующий заказ
+      setActiveBlock("order-next"); // Если координаты успешно получены то получаем возможность сделать Следующий заказ
     }
   }, [coordinates]);
 

@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders correctly 1`] = `
+<div
+  className="container mx-auto relative pointer-events-none h-full"
+>
+  <div
+    className="flex flex-col items-center lg:items-stretch h-full"
+  >
+    <div
+      className="max-w-[486px] w-full mt-auto lg:mt-16 xl:ml-24 lg:py-10 lg:px-11 bg-white lg:text-left rounded-xl shadow-lg p-3 pointer-events-auto text-center"
+    >
+      <p
+        className="font-bold text-xl lg:text-4xl"
+      >
+        Заказ размещен
+      </p>
+      <p
+        className="mt-3 xl:mt-4 text-base lg:text-lg text-gray-me"
+      >
+        Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.
+      </p>
+      <button
+        className="w-full py-2 mt-2 lg:mt-7 lg:py-4 text-lg lg:text-2xl bg-yellow-me rounded-full"
+        onClick={[Function]}
+        type="button"
+      >
+        Сделать новый заказ
+      </button>
+    </div>
+  </div>
+</div>
+`;
