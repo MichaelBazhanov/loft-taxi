@@ -5,12 +5,7 @@ import { useContext } from "react";
 import { styles } from "./styles";
 import { useEffect } from "react";
 
-const handleSubmit = (
-  e,
-  getRoutesCoordinates,
-  addressStart,
-  addressEnd,
-) => {
+const handleSubmit = (e, getRoutesCoordinates, addressStart, addressEnd) => {
   e.preventDefault();
 
   const addressesSelected =
@@ -40,39 +35,26 @@ const OrderForm = () => {
     }
   }, [coordinates]);
 
-
-
   return (
-    <div className={styles.container}>
-      <form
-        onSubmit={(e) =>
-          handleSubmit(
-            e,
-            getRoutesCoordinates,
-            addressStart,
-            addressEnd,
-            setActiveBlock
-          )
-        }
-        className={styles.form}
+    <div
+      className={classNames(
+        width < 1024 ? "mt-auto" : "",
+        "max-w-[486px] w-full bg-white lg:mt-16 xl:ml-24 rounded-xl shadow-lg p-3 lg:py-10 lg:px-11 pointer-events-auto text-center lg:text-left"
+      )}
+    >
+      <p className="font-bold text-xl lg:text-4xl">Заказ размещен</p>
+      <p className="mt-3 xl:mt-4 text-base lg:text-lg text-gray-me">
+        Ваше такси уже едет к вам. Прибудет приблизительно через 10 минут.
+      </p>
+      <button
+        onClick={() => {
+          resetRoutesAndAddress(); //обнуляем в redux
+        }}
+        type="button"
+        className="text-lg lg:text-2xl py-2 lg:py-4 w-full bg-yellow-me rounded-full mt-2 lg:mt-7"
       >
-        <SelectPoints
-          className={
-            width > 640
-              ? "p-6 pb-0 bg-white pointer-events-auto shadow-lg sm:shadow-none"
-              : "bg-white pointer-events-auto shadow-lg sm:shadow-none p-3 pb-0 sm:hidden mt-10 rounded-xl w-full"
-          }
-          margin={width > 640 ? "mt-1" : "mt-0"}
-          placeholders={["Откуда", "Куда"]}
-          address={address}
-          addressStart={addressStart}
-          addressEnd={addressEnd}
-          setAddressStart={setAddressStart}
-          setAddressEnd={setAddressEnd}
-        />
-
-        <SelectCar />
-      </form>
+        Сделать новый заказ
+      </button>
     </div>
   );
 };

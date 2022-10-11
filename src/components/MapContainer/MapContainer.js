@@ -33,6 +33,8 @@ const MapContainer = ({
   getRoutesCoordinates,
   resetRoutesAndAddress,
   getPaymentCard,
+  id,
+  isLoadingGetPaymentCard,
   isLoadingSendPaymentCardNewUser,
   errorSendPaymentCardNewUser,
   isLoading,
@@ -70,26 +72,25 @@ const MapContainer = ({
     } else {
       setActiveBlock("next-order");
     }
-  },[coordinates]);
+  }, [coordinates]);
 
   useEffect(() => {
     if (!isLoadingSendPaymentCardNewUser) getPaymentCard(token); // Если для нового пользователя банковская карта уже установлена то ...
   }, [isLoadingSendPaymentCardNewUser]);
 
   useEffect(() => {
-    if (
-      cardName === "" ||
-      cardName === " " ||
-      cardNumber === "" ||
-      cardNumber === " " ||
-      expiryDate === "" ||
-      expiryDate === " " ||
-      cvc === "" ||
-      cvc === " "
-    ) {
-      setActiveBlock("default"); // Данные карты пустые!
+    if (!isLoadingGetPaymentCard && id !== "") {
+      // те id заполнен
+      if (
+        cardName.trim() === "" ||
+        cardNumber.trim() === "" ||
+        expiryDate.trim() === "" ||
+        cvc.trim() === ""
+      ) {
+        setActiveBlock("default"); // Данные карты пустые!
+      }
     }
-  }, [cardName, cardNumber, expiryDate, cvc]);
+  }, [id]);
 
   if (isLoading) return <Loading />;
   if (error) return <Error />;
@@ -115,8 +116,10 @@ const MapContainer = ({
             getRoutesCoordinates: getRoutesCoordinates,
           }}
         >
+          {/* На будущее можно сделать 4ое состояние для Loading, отображая его между загрузками activeBlock */}
+
           {/* Форма заказа */}
-          {activeBlock === "without-card" && (<OrderForm />)}
+          {activeBlock === "without-card" && <OrderForm />}
 
           {/* Заказ размещен */}
           {activeBlock === "next-order" && (
@@ -133,15 +136,7 @@ const MapContainer = ({
               </p>
               <button
                 onClick={() => {
-                  // console.log('1')
-                  // console.log(activeBlock)
-
                   resetRoutesAndAddress(); //обнуляем в redux
-
-                  // setAddressStart(null); //обнуляем state
-                  // setAddressEnd(null); //обнуляем state
-                  // setActiveIndexCar(1); // устанавливаем первый индекс
-                  // setActiveBlock("without-card"); // активный индекс "блока"
                 }}
                 type="button"
                 className="text-lg lg:text-2xl py-2 lg:py-4 w-full bg-yellow-me rounded-full mt-2 lg:mt-7"
@@ -192,11 +187,13 @@ const HOCMapContainer = connect(
     error: state.addressReducer.error,
     address: state.addressReducer.address,
 
+    id: state.paymentReducer.id,
     cardName: state.paymentReducer.cardName,
     cardNumber: state.paymentReducer.cardNumber,
     expiryDate: state.paymentReducer.expiryDate,
     cvc: state.paymentReducer.cvc,
 
+    isLoadingGetPaymentCard: state.paymentReducer.isLoadingGetPaymentCard,
     isLoadingSendPaymentCardNewUser:
       state.paymentReducer.isLoadingSendPaymentCardNewUser,
     errorSendPaymentCardNewUser:
