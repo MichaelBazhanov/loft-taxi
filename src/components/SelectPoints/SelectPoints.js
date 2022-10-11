@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
 import Select from "../Select";
+import { styles } from "./styles";
 
 const SelectPoints = ({
-  className,
-  margin,
-  roundedTops = "",
-  roundedBottoms = "",
   placeholders,
   address,
   addressStart,
@@ -27,19 +24,15 @@ const SelectPoints = ({
 
   return (
     <>
-      <div className={className}>
+      <div className={styles.container}>
         <Select
-          margin={margin}
-          roundedTop={roundedTops && roundedTops[0]}
-          roundedBottom={roundedBottoms && roundedBottoms[0]}
+          margin={styles.margin}
           placeholder={placeholders && placeholders[0]}
           addressList={filterAddress}
           onChange={setAddressStart}
         />
         <Select
-          margin={margin}
-          roundedTop={roundedTops && roundedTops[1]}
-          roundedBottom={roundedBottoms && roundedBottoms[1]}
+          margin={"mt-0 sm:mt-1"}
           placeholder={placeholders && placeholders[1]}
           addressList={filterAddress}
           onChange={setAddressEnd}

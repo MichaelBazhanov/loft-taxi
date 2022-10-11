@@ -7,7 +7,7 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-function CustomSelect({ addressList, placeholder, onChange, margin, roundedTop, roundedBottom }) {
+function CustomSelect({ addressList, placeholder, onChange, margin, roundedTop = '', roundedBottom = '' }) {
 	const [selected, setSelected] = useState(addressList)
 
 	const changeSelected = (event) => {
@@ -21,8 +21,8 @@ function CustomSelect({ addressList, placeholder, onChange, margin, roundedTop, 
 				<>
 					<div className={`${margin} relative`}>
 						<Listbox.Button
-						className={classNames(`${roundedTop} ${roundedBottom} relative w-full bg-white border-b border-gray-300 pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-yellow-me focus:border-yellow-me sm:text-sm`)}
-						placeholder={placeholder}>
+							className={classNames(`${roundedTop} ${roundedBottom} relative w-full bg-white border-b border-gray-300 pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-yellow-me focus:border-yellow-me sm:text-sm`)}
+							placeholder={placeholder}>
 							<span className="flex items-center">
 								<div className="flex-shrink-0 h-3 w-3 rounded-full bg-black" />
 								<span className="ml-3 block truncate">{selected && selected.rout ? selected.rout : placeholder}</span>

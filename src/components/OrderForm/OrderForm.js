@@ -57,12 +57,6 @@ const OrderForm = () => {
         className={styles.form}
       >
         <SelectPoints
-          className={
-            width > 640
-              ? "p-6 pb-0 bg-white pointer-events-auto shadow-lg sm:shadow-none"
-              : "bg-white pointer-events-auto shadow-lg sm:shadow-none p-3 pb-0 sm:hidden mt-10 rounded-xl w-full"
-          }
-          margin={width > 640 ? "mt-1" : "mt-0"}
           placeholders={["Откуда", "Куда"]}
           address={address}
           addressStart={addressStart}

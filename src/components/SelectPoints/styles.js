@@ -1,7 +1,17 @@
 export const styles = {
-  "header-container": ["text-black-me"].join(" "),
-  svg: ["cursor-pointer", "fill-current"].join(" "),
-  active_: ["active-toggle-menu"].join(" "),
-  in_: ["animate-menu-in"].join(" "),
-  out_: ["animate-menu-out"].join(" "),
+  container: [
+    "w-full",
+    "p-3",
+    "pb-0",
+    "sm:p-6",
+    "sm:pb-0",
+    "mt-10",
+    "sm:mt-auto",
+    "bg-white",
+    "pointer-events-auto",
+    "shadow-lg",
+    "sm:shadow-none",
+    "rounded-xl",
+  ].join(" "),
+  margin: ["mt-0", " sm:mt-1"].join(" "),
 };
