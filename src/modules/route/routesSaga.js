@@ -15,12 +15,12 @@ export function* coordinates(action) {
     if (Array.isArray(coordinates) && coordinates && coordinates.length > 0) {
       yield put(routesCoordinatesSuccess(coordinates));
     } else {
-      // yield put(
-      //   showNotification({
-      //     type: "warning",
-      //     text: "Внимание! Обнаружена ошибка построения адресов.",
-      //   })
-      // ); // notification
+      yield put(
+        showNotification({
+          type: "warning",
+          text: "Внимание! Обнаружена ошибка построения адресов.",
+        })
+      ); // notification
       throw new Error("serverGetRoutes пришли необрабатываемые данные!");
     }
   } catch (error) {
