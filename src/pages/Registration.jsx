@@ -6,10 +6,10 @@ import { getRegistration } from '../modules/registration'
 import { sendPaymentCardNewUser } from '../modules/payment'
 import { Formik } from 'formik';
 
-import Loading from '../components/Loading'
+import LoadingFullPage from '../components/LoadingFullPage'
 
 const onSubmitFunction = (values, FormikBag, getRegistration) => {
-	const { email, password, name, surname} = values
+	const { email, password, name, surname } = values
 	getRegistration(email, password, name, surname)
 	FormikBag.setSubmitting(true) // защита от повторной отправки
 }
@@ -27,7 +27,7 @@ const Registration = ({ getRegistration, sendPaymentCardNewUser, token, isLogged
 
 	}, [isLoggedIn])
 
-	if (isLoading) return <Loading />
+	if (isLoading) return <LoadingFullPage />
 
 	const handleSubmitFunction = (values, FormikBag) => {
 		onSubmit(values, FormikBag, getRegistration)

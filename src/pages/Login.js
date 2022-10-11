@@ -11,7 +11,7 @@ import one from '../assets/images/pre-login-image/pre-login-1.svg'
 import two from '../assets/images/pre-login-image/pre-login-2.svg'
 import three from '../assets/images/pre-login-image/pre-login-3.svg'
 
-import LoadingLogin from '../components/LoadingLogin'
+import LoadingFullPage from '../components/LoadingFullPage'
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
@@ -55,7 +55,7 @@ const Login = ({ authenticate, isLoggedIn, isLoading, onSubmit = onSubmitFunctio
 	// const { email, password } = state
 
 
-	if (isLoading) return <LoadingLogin />
+	if (isLoading) return <LoadingFullPage />
 
 
 	const handleSubmitFunction = (values, FormikBag) => {
