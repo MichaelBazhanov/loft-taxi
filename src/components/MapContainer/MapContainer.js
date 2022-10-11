@@ -56,14 +56,21 @@ const MapContainer = ({
     setWidth(window.innerWidth);
   };
   useEffect(() => {
+    getAddressList();
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
-  }, []);
+  }, []); //Все useEffect при первом рендере выполняются !!!
 
-  //Все useEffect при первом рендере выполняются !!!
   useEffect(() => {
-    getAddressList();
-  }, []);
+    if (coordinates && coordinates.length === 0) {
+      setAddressStart(null);
+      setAddressEnd(null);
+      setActiveIndexCar(1);
+      setActiveBlock("without-card");
+    } else {
+      setActiveBlock("next-order");
+    }
+  },[coordinates]);
 
   useEffect(() => {
     if (!isLoadingSendPaymentCardNewUser) getPaymentCard(token); // Если для нового пользователя банковская карта уже установлена то ...
@@ -81,8 +88,6 @@ const MapContainer = ({
       cvc === " "
     ) {
       setActiveBlock("default"); // Данные карты пустые!
-    } else {
-      setActiveBlock("without-card"); // Данные карты НЕ пустые!
     }
   }, [cardName, cardNumber, expiryDate, cvc]);
 
@@ -128,11 +133,15 @@ const MapContainer = ({
               </p>
               <button
                 onClick={() => {
+                  // console.log('1')
+                  // console.log(activeBlock)
+
                   resetRoutesAndAddress(); //обнуляем в redux
-                  setActiveBlock("without-card"); // активный индекс "блока"
-                  setAddressStart(null); //обнуляем state
-                  setAddressEnd(null); //обнуляем state
-                  setActiveIndexCar(1); // устанавливаем первый индекс
+
+                  // setAddressStart(null); //обнуляем state
+                  // setAddressEnd(null); //обнуляем state
+                  // setActiveIndexCar(1); // устанавливаем первый индекс
+                  // setActiveBlock("without-card"); // активный индекс "блока"
                 }}
                 type="button"
                 className="text-lg lg:text-2xl py-2 lg:py-4 w-full bg-yellow-me rounded-full mt-2 lg:mt-7"

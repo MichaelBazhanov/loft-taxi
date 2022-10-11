@@ -9,7 +9,8 @@ const handleSubmit = (
   e,
   getRoutesCoordinates,
   addressStart,
-  addressEnd
+  addressEnd,
+  setActiveBlock,
 ) => {
   e.preventDefault();
 
@@ -18,6 +19,7 @@ const handleSubmit = (
 
   if (addressesSelected) {
     getRoutesCoordinates(addressStart, addressEnd);
+    setActiveBlock("next-order"); // Если координаты успешно получены то получаем возможность сделать Следующий заказ
   }
 };
 
@@ -34,11 +36,14 @@ const OrderForm = () => {
     setActiveBlock,
   } = useContext(ContextMap);
 
-  useEffect(() => {
-    if (coordinates && coordinates.length > 0) {
-      setActiveBlock("next-order"); // Если координаты успешно получены то получаем возможность сделать Следующий заказ
-    }
-  }, [coordinates]);
+  // useEffect(() => {
+  //   if (coordinates && coordinates.length > 0) {
+  //     console.log('Координаты болшье нуля: ', coordinates)
+  //     // setActiveBlock("next-order"); // Если координаты успешно получены то получаем возможность сделать Следующий заказ
+  //   }
+  // });
+
+
 
   return (
     <div className={styles.container}>
@@ -49,6 +54,7 @@ const OrderForm = () => {
             getRoutesCoordinates,
             addressStart,
             addressEnd,
+            setActiveBlock
           )
         }
         className={styles.form}
