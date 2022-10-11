@@ -46,11 +46,9 @@ const OrderForm = () => {
         onSubmit={(e) =>
           handleSubmit(
             e,
-            setActiveBlock,
             getRoutesCoordinates,
             addressStart,
             addressEnd,
-            coordinates
           )
         }
         className={styles.form}
