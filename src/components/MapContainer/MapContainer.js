@@ -12,13 +12,11 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
 import Error from "../Error";
 
-//Car
-// import CarForForm from "../CarForForm";
-
 //=========================================
 import SelectPoints from "../SelectPoints";
 import SelectCar from "../SelectCar";
 import OrderForm from "../OrderForm";
+import OrderNext from "../OrderNext";
 //=========================================
 
 function classNames(...classes) {
@@ -64,13 +62,13 @@ const MapContainer = ({
   }, []); //Все useEffect при первом рендере выполняются !!!
 
   useEffect(() => {
-    if (coordinates && coordinates.length === 0) {
+    if (coordinates && coordinates.length === 0) { // Заказа еще нет
       setAddressStart(null);
       setAddressEnd(null);
       setActiveIndexCar(1);
       setActiveBlock("without-card");
     } else {
-      setActiveBlock("next-order");
+      setActiveBlock("next-order"); // Заказ уже есть
     }
   }, [coordinates]);
 
@@ -114,6 +112,7 @@ const MapContainer = ({
             setActiveIndexCar: setActiveIndexCar,
             setActiveBlock: setActiveBlock,
             getRoutesCoordinates: getRoutesCoordinates,
+            resetRoutesAndAddress: resetRoutesAndAddress,
           }}
         >
           {/* На будущее можно сделать 4ое состояние для Loading, отображая его между загрузками activeBlock */}
@@ -122,29 +121,7 @@ const MapContainer = ({
           {activeBlock === "without-card" && <OrderForm />}
 
           {/* Заказ размещен */}
-          {activeBlock === "next-order" && (
-            <div
-              className={classNames(
-                width < 1024 ? "mt-auto" : "",
-                "max-w-[486px] w-full bg-white lg:mt-16 xl:ml-24 rounded-xl shadow-lg p-3 lg:py-10 lg:px-11 pointer-events-auto text-center lg:text-left"
-              )}
-            >
-              <p className="font-bold text-xl lg:text-4xl">Заказ размещен</p>
-              <p className="mt-3 xl:mt-4 text-base lg:text-lg text-gray-me">
-                Ваше такси уже едет к вам. Прибудет приблизительно через 10
-                минут.
-              </p>
-              <button
-                onClick={() => {
-                  resetRoutesAndAddress(); //обнуляем в redux
-                }}
-                type="button"
-                className="text-lg lg:text-2xl py-2 lg:py-4 w-full bg-yellow-me rounded-full mt-2 lg:mt-7"
-              >
-                Сделать новый заказ
-              </button>
-            </div>
-          )}
+          {activeBlock === "next-order" && <OrderNext />}
 
           {/* Заполните платежные данные */}
           {activeBlock === "default" && (
