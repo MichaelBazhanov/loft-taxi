@@ -2,10 +2,11 @@ import { LOG_IN, LOG_OUT, AUTHENTICATE, LOG_IN_FAILURE } from './actions'
 
 const login =  localStorage.getItem('isLoggedIn') //пытаемся получить данные
 const token = localStorage.getItem('token') //пытаемся получить данные
+
 let initialState
-if (login !== null) {
+if (login === "true") {
   initialState = {
-    isLoggedIn: login,
+    isLoggedIn: true,
     token: token,
     isLoading: false,
     error: null,
