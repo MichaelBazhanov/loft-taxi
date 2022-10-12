@@ -1,38 +1,49 @@
-import { useContext } from 'react';
-import Cars from '../Cars'
+import { useContext } from "react";
 import { ContextMap } from "../MapContainer";
+import Car from "../Car";
 
-//img
 import imgStandart from "../../assets/images/car-standart.jpg";
 import imgPremium from "../../assets/images/car-premium.jpg";
 import imgBusiness from "../../assets/images/car-business.jpg";
+
+// fake data
+const data = [
+  {
+    name: "Стандарт",
+    price: "150 ₽",
+    imgSrc: imgStandart,
+  },
+  {
+    name: "Премиум",
+    price: "250 ₽",
+    imgSrc: imgPremium,
+  },
+  {
+    name: "Бизнес",
+    price: "350 ₽",
+    imgSrc: imgBusiness,
+  },
+];
 
 const CarsContainer = () => {
   const { activeIndexCar, setActiveIndexCar } = useContext(ContextMap);
 
   return (
-    <div className="flex -mx-3">
-      <Cars
-        price={"150 ₽"}
-        imgSRC={imgStandart}
-        index={1}
-        setActiveIndexCar={setActiveIndexCar}
-        activeIndexCar={activeIndexCar}
-      />
-      <Cars
-        price={"200 ₽"}
-        imgSRC={imgPremium}
-        index={2}
-        setActiveIndexCar={setActiveIndexCar}
-        activeIndexCar={activeIndexCar}
-      />
-      <Cars
-        price={"300 ₽"}
-        imgSRC={imgBusiness}
-        index={3}
-        setActiveIndexCar={setActiveIndexCar}
-        activeIndexCar={activeIndexCar}
-      />
+    // Альтернатива -mx-3 in px-3
+    <div className="flex gap-6">
+      {data.map((car, idx) => {
+        return (
+          <Car
+            key={`${car.name}${idx}`}
+            name={car.name}
+            price={car.price}
+            imgSrc={car.imgSrc}
+            index={idx}
+            setActiveIndexCar={setActiveIndexCar}
+            activeIndexCar={activeIndexCar}
+          />
+        );
+      })}
     </div>
   );
 };

@@ -1,2 +1,2 @@
-export { default } from "./Cars";
+export { default } from "./Car";
 export { styles } from "./styles";
