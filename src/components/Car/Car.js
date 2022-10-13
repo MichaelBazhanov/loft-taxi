@@ -17,7 +17,7 @@ const Cars = ({
       className={styles.container({ flag })}
       onClick={() => setActiveIndexCar(index)}
     >
-      <div className={styles.car({ flag })}>
+      <div className={styles.car}>
         <p>{name}</p>
         <p className={styles["price-name"]}>Стоимость</p>
         <p className={styles.price}>{price}</p>

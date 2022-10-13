@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Select from "../Select";
+import Select from "../Select/Select";
 import { styles } from "./styles";
 
 const SelectPoints = ({
