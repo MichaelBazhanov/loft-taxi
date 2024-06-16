@@ -34,7 +34,9 @@ exports[`Renders correctly 1`] = `
         </span>
         <input
           autoComplete="off"
-          className="mt-2 block w-full border-b-2 border-gray-300 shadow-sm focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me placeholder:text-gray-me"
+          className="mt-2 block w-full border-b-2 border-gray-300 shadow-sm
+ focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
+ placeholder:text-gray-me"
           name="email"
           onBlur={[Function]}
           onChange={[Function]}
@@ -52,7 +54,9 @@ exports[`Renders correctly 1`] = `
         </span>
         <input
           autoComplete="off"
-          className="mt-2 block w-full border-b-2 border-gray-300 shadow-sm focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me placeholder:text-gray-me"
+          className="mt-2 block w-full border-b-2 border-gray-300 shadow-sm
+ focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
+ placeholder:text-gray-me"
           name="name"
           onBlur={[Function]}
           onChange={[Function]}
@@ -70,7 +74,9 @@ exports[`Renders correctly 1`] = `
         </span>
         <input
           autoComplete="off"
-          className="mt-2 block w-full border-b-2 border-gray-300 shadow-sm focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me placeholder:text-gray-me"
+          className="mt-2 block w-full border-b-2 border-gray-300 shadow-sm
+ focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
+ placeholder:text-gray-me"
           name="surname"
           onBlur={[Function]}
           onChange={[Function]}
@@ -88,7 +94,9 @@ exports[`Renders correctly 1`] = `
         </span>
         <input
           autoComplete="off"
-          className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me placeholder:text-gray-me"
+          className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
+ focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
+ placeholder:text-gray-me"
           name="password"
           onBlur={[Function]}
           onChange={[Function]}

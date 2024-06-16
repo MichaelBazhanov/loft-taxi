@@ -41,7 +41,9 @@ exports[`Renders correctly 1`] = `
                 Имя владельца*
               </span>
               <input
-                className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me placeholder:text-gray-me"
+                className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
+ focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
+ placeholder:text-gray-me"
                 name="cardName"
                 onChange={[Function]}
                 placeholder="Loft"
@@ -57,7 +59,9 @@ exports[`Renders correctly 1`] = `
                 Номер карты*
               </span>
               <input
-                className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me placeholder:text-gray-me"
+                className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
+ focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
+ placeholder:text-gray-me"
                 name="cardNumber"
                 onChange={[Function]}
                 placeholder="0000 0000 0000 0000"
@@ -76,7 +80,9 @@ exports[`Renders correctly 1`] = `
                   MM/YY*
                 </span>
                 <input
-                  className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me placeholder:text-gray-me"
+                  className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
+ focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
+ placeholder:text-gray-me"
                   name="expiryDate"
                   onChange={[Function]}
                   placeholder="15/05/08"
@@ -92,7 +98,9 @@ exports[`Renders correctly 1`] = `
                   CVC*
                 </span>
                 <input
-                  className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me placeholder:text-gray-me"
+                  className="mt-1 block w-full border-b-2 border-gray-300 shadow-sm
+ focus:outline-none focus:border-yellow-me focus:ring-yellow-me focus:placeholder-yellow-me
+ placeholder:text-gray-me"
                   max="999"
                   maxLength={3}
                   min="000"

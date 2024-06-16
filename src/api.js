@@ -5,7 +5,9 @@ export const serverLogin = async (email, password) => {
     body: JSON.stringify({ email, password }), // данные могут быть 'строкой' или {объектом}!
     headers: {
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'no-cors',
     },
+    mode: 'no-cors'
   })
     .then((res) => res.json())
     .then((data) => {
@@ -20,7 +22,9 @@ export const serverRegistration = async (email, password, name, surname) => {
     body: JSON.stringify({ email, name, password, surname }), // данные могут быть 'строкой' или {объектом}!
     headers: {
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'no-cors',
     },
+    mode: 'no-cors'
   })
     .then((res) => res.json())
     .then((data) => {
@@ -41,7 +45,9 @@ export const serverSendCard = async (
     body: JSON.stringify({ cardName, cardNumber, expiryDate, cvc, token }), // данные могут быть 'строкой' или {объектом}!
     headers: {
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'no-cors',
     },
+    mode: 'no-cors'
   })
     .then((res) => res.json())
     .then((data) => {
@@ -55,7 +61,9 @@ export const serverGetCard = async (token) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'no-cors',
     },
+    mode: 'no-cors'
   })
     .then((res) => res.json())
     .then((data) => data)
@@ -67,7 +75,9 @@ export const serverGetAddressList = async () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': 'no-cors',
     },
+    mode: 'no-cors'
   })
     .then((res) => res.json())
     .then((data) => data)
@@ -81,7 +91,9 @@ export const serverGetRoutes = async (address1, address2) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': 'no-cors',
       },
+      mode: 'no-cors'
     },
   )
     .then((res) => res.json())
